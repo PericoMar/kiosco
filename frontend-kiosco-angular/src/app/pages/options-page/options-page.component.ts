@@ -4,11 +4,12 @@ import { ConsumptionOptionComponent } from '../../components/consumption-option/
 import { ConsumptionOption } from '../../interfaces/consumption-option';
 import { LanguageOption } from '../../interfaces/language-option';
 import { LanguageOptionComponent } from '../../components/language-option/language-option.component';
+import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-options-page',
   standalone: true,
-  imports: [ConsumptionOptionComponent, LanguageOptionComponent],
+  imports: [ConsumptionOptionComponent, LanguageOptionComponent,FooterComponent],
   templateUrl: './options-page.component.html',
   styleUrl: './options-page.component.css'
 })

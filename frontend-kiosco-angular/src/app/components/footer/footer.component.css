@@ -1,0 +1,27 @@
+footer{
+    height: 100px;
+    box-shadow: 0 -3px 3px rgba(0, 0, 0, 0.1); /* Sombra en la parte superior */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.reduced-movility-button{
+    width: 400px;
+    font-size: 1.6rem;
+    border-radius: 4px;
+    background-color: white;
+    color: rgb(177, 177, 177);
+    border: 3px solid #ccc; /* Borde más moderno con color gris claro */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+}
+
+.reduced-movility-button:hover{
+    border-color: #aaa;
+}

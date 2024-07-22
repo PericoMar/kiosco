@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './pages/layouts/main-layout/main-layout.component';
 import { OptionsPageComponent } from './pages/options-page/options-page.component';
+import { FamilySelectedPageComponent } from './components/family-selected-page/family-selected-page.component';
 
 export const routes: Routes = [
     {
@@ -11,7 +12,7 @@ export const routes: Routes = [
     path: 'products-selection',
     component: MainLayoutComponent,
     children: [
-        // { path: '', component: ProductOperationsComponent, canActivate: [authGuard] },
+        { path: 'family/{id}', component: FamilySelectedPageComponent },
     ]
     },
     { path: '**', redirectTo: 'l' },

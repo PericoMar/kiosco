@@ -1,0 +1,30 @@
+a.family-button {
+    width: 100%;
+    text-decoration: none;
+    color: black;
+    margin: 0;
+    display: flex; /* Asegura que el elemento ocupe el ancho completo del contenedor */
+    justify-content: space-around;
+    align-items: center;
+    border-right: 2px solid #ccc; 
+    border-bottom: 2px solid #ccc; 
+    border-top: 2px solid #ccc; 
+    border-top-right-radius: 8px; /* Borde redondeado en la esquina superior derecha */
+    border-bottom-right-radius: 8px; /* Borde redondeado en la esquina inferior derecha */
+    padding: 10px; /* Espaciado interno */
+    box-sizing: border-box; /* Incluye el borde y el padding en el ancho total */
+}
+
+a.family-button h2, 
+a.family-button img {
+    margin: 0; /* Asegura que no haya margen en los elementos internos */
+}
+
+hr{
+    height: 6px;
+    background-color: rgb(106, 106, 235);
+}
+
+a.family-button img{
+    width: 30%;
+}
