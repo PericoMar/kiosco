@@ -1,0 +1,33 @@
+
+
+h1{
+    font-size: 5rem;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    gap: 120px;
+}
+
+.consumption-opts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 160px;
+}
+
+.language-section{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.language-opts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+}

@@ -1,0 +1,40 @@
+/* Estilo para el título dentro del enlace */
+h2 {
+    font-size: 2.5rem; /* Tamaño del texto */
+    font-weight: 400;  /* Peso del texto */
+    margin: 16px; /* Espaciado alrededor del título */
+    padding:0px;
+}
+
+/* Estilo para el contenedor del enlace */
+.consumption-opt {
+    padding:20px;
+    width: 400px; /* Ajustar el ancho al contenedor padre */
+    max-width: 400px; /* Ancho máximo del contenedor */
+    height: 450px;
+    border: 2px solid #ccc; /* Borde más moderno con color gris claro */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out, border-color 0.3s ease;
+    overflow: hidden; /* Evitar que el contenido se desborde del borde redondeado */
+}
+
+.consumption-opt img {
+    width: 60%; /* Imagen ajustada al ancho del contenedor */
+    height: auto; /* Altura de la imagen ajustada automáticamente */
+}
+
+.consumption-opt:hover {
+    border-color: #aaa; /* Cambio de color del borde al pasar el ratón */
+}
+
+.consumption-opt:active {
+    transform: translateY(4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

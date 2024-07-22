@@ -1,0 +1,23 @@
+<header class="text-center">
+    <h1>¿Dónde quiere comer?</h1>
+</header>
+
+<main>
+    <section class="consumption-opts">
+        @for(consumptionOption of consumptionOptions; track $index){
+            <app-consumption-option [consumptionOption]="consumptionOption"></app-consumption-option>
+        }
+    </section>
+    <section class="language-section">
+        <h2>Seleccione su idioma</h2>
+        <div class="language-opts">
+            @for(languageOption of languageOptions; track $index){
+                <app-language-option [languageOption]="languageOption"></app-language-option>
+            }
+        </div>
+    </section>
+</main>
+
+<footer>
+    
+</footer>
