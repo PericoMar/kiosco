@@ -20,7 +20,8 @@ export class OptionsPageComponent {
   consumptionOptions : ConsumptionOption[] = [
     {
       name: "comer_aqui",
-      title: "Comer aquí"
+      title: "Comer aquí",
+      img: "../../../assets/Fork_spoon_dish_icon__outline_style-removebg-preview.png"
     },
     {
       name: "llevar",
