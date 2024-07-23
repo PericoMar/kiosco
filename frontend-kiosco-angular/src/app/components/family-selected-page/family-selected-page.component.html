@@ -1,1 +1,4 @@
-<p>family-selected-page works!</p>
+<h1>{{ family.name }}</h1>
+@for(product of products; track product.id){
+    <app-product [product]="product"></app-product>
+}

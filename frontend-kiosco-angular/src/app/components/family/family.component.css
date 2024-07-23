@@ -1,3 +1,4 @@
+/* src/app/pages/family-list/family-list.component.css */
 a.family-button {
     width: 100%;
     text-decoration: none;
@@ -13,7 +14,13 @@ a.family-button {
     border-bottom-right-radius: 8px; /* Borde redondeado en la esquina inferior derecha */
     padding: 10px; /* Espaciado interno */
     box-sizing: border-box; /* Incluye el borde y el padding en el ancho total */
+    transition: transform 0.3s ease-in-out; /* Transición suave para cambios de transform */
 }
+
+a.family-button:hover {
+    transform: scale(1.1); /* Escala al pasar el ratón */
+}
+
 
 a.family-button h2, 
 a.family-button img {
@@ -23,6 +30,7 @@ a.family-button img {
 hr{
     height: 6px;
     background-color: rgb(106, 106, 235);
+    border: none;
 }
 
 a.family-button img{

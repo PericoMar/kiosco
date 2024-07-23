@@ -1,24 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FamilyService } from '../../services/family.service';
+import { Product } from '../../interfaces/product';
+import { ProductService } from '../../services/product.service';
+import { ProductComponent } from '../product/product.component';
 
 @Component({
   selector: 'app-family-selected-page',
   standalone: true,
-  imports: [],
+  imports: [ProductComponent],
   templateUrl: './family-selected-page.component.html',
   styleUrl: './family-selected-page.component.css'
 })
-export class FamilySelectedPageComponent {
+export class FamilySelectedPageComponent implements OnInit {
   family: any;
+  products!: Product[];
 
   constructor(
     private route: ActivatedRoute,
-    private familyService: FamilyService
+    private familyService: FamilyService,
+    private productService: ProductService
   ) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    // this.family = this.familyService.getFamilyById(id);
+    this.route.paramMap.subscribe(paramMap => {
+      const id = paramMap.get('id')!;
+      this.updateFamilyData(id);
+    });
+  }
+
+  private updateFamilyData(id: string): void {
+    this.family = this.familyService.getFamilyById(id);
+    this.products = this.productService.getProductsByFamilyId(id);
+    console.log(this.products);
   }
 }

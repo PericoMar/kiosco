@@ -33,4 +33,7 @@ export class FamilyService {
       }
     ]
   }
+  getFamilyById(id: string) : Family {
+    return this.getFamilies().find(family => family.id === id) as Family;
+  }
 }

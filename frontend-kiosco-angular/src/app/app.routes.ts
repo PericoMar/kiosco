@@ -12,8 +12,8 @@ export const routes: Routes = [
     path: 'products-selection',
     component: MainLayoutComponent,
     children: [
-        { path: 'family/{id}', component: FamilySelectedPageComponent },
+        { path: 'family/:id', component: FamilySelectedPageComponent },
     ]
     },
-    { path: '**', redirectTo: 'l' },
+    { path: '**', redirectTo: '' },
 ];

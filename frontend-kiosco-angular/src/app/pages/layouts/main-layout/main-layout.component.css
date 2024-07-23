@@ -13,6 +13,18 @@
     height: 100%;
 }
 
+.side-bar{
+    width: var(--side-bar-width);
+}
+
+.family-page{
+    flex: 1;
+    padding: 0px 80px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 footer{
     width: 100%;
 }
