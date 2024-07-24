@@ -1,4 +1,4 @@
-<a [routerLink]="['/products-selection']" class="consumption-opt" (click)="safeConsumptionOption(consumptionOption.name)">
+<a [routerLink]="['/products-selection/family/1']" class="consumption-opt" (click)="safeConsumptionOption(consumptionOption.name)">
     <h2>{{ consumptionOption.title }}</h2>
     <img *ngIf="consumptionOption.img; else noPhoto" [src]="consumptionOption.img" [alt]="consumptionOption.title">
     <ng-template #noPhoto>
