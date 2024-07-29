@@ -1,8 +1,10 @@
 .nav-bar{
+    margin-top: 244px;
     height: 70%;
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    gap: 16px;
     align-items: baseline;
     flex-direction: column;
 }

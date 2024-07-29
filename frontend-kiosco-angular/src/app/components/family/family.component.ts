@@ -11,4 +11,8 @@ import { RouterModule } from '@angular/router';
 })
 export class FamilyComponent {
   @Input() family!: Family;
+  familyIsSelected: boolean = false;
+
+  
+
 }

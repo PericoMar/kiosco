@@ -14,7 +14,7 @@ export class ProductService {
         id: "1",
         name: "Muzzarella",
         price: 350,
-        img : "../../../assets/muzzarella.png",
+        img : "../../../assets/pizza.png",
         familyId: "1",
         description: "Muzzarella, tomate y aceitunas"
       },
@@ -22,7 +22,7 @@ export class ProductService {
         id: "2",
         name: "Fugazzeta",
         price: 400,
-        img : "../../../assets/fugazzeta.png",
+        img : "../../../assets/pizza.png",
         familyId: "1",
         description: "Fugazzeta con cebolla y queso"
       },

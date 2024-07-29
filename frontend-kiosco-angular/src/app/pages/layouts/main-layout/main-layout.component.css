@@ -15,14 +15,12 @@
 
 .side-bar{
     width: var(--side-bar-width);
+    min-width: 350px;
 }
 
 .family-page{
     width: 100%;
-    padding: 0px 80px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    padding: 0px 5%;
 }
 
 footer{

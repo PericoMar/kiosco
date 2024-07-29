@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Product } from '../../interfaces/product';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-product',
@@ -11,7 +12,10 @@ import { Product } from '../../interfaces/product';
 export class ProductComponent {
   @Input() product!: Product;
 
+  constructor(private orderService: OrderService) { }
+
   addToCart(product: Product) {
-    console.log('Product added to cart', product);
+    // this.orderService.addProduct(product);
+    // Abrir modal de confirmación
   }
 }

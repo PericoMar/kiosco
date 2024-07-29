@@ -1,4 +1,8 @@
-<h1>{{ family.name }}</h1>
+<header>
+    <!-- GO back anchor -->
+    <!-- <a routerLink="/families" class="back">Volver</a> -->
+    <h1>{{ family.name }}</h1>
+</header>
 <section class="products">
     @for(product of products; track product.id){
         <app-product [product]="product"></app-product>

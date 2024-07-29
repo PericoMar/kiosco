@@ -27,6 +27,10 @@ a.family-button img {
     margin: 0; /* Asegura que no haya margen en los elementos internos */
 }
 
+.family-name{
+    min-width: 192px;
+}
+
 hr{
     height: 6px;
     background-color: rgb(106, 106, 235);
