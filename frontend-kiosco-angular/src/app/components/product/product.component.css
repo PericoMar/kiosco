@@ -29,3 +29,18 @@
     font-weight: bold;
     margin: 0;
 }
+
+@keyframes slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .product {
+    animation: slide-up 0.5s ease-out;
+  }

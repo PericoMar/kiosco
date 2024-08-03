@@ -15,6 +15,7 @@ a.family-button {
     padding: 10px; /* Espaciado interno */
     box-sizing: border-box; /* Incluye el borde y el padding en el ancho total */
     transition: transform 0.3s ease-in-out; /* Transición suave para cambios de transform */
+    font-weight: 200;
 }
 
 a.family-button:hover {
@@ -32,11 +33,19 @@ a.family-button img {
 }
 
 hr{
-    height: 6px;
-    background-color: rgb(106, 106, 235);
+    height: 3px;
+    background-color: var(--secondary-color);
     border: none;
 }
 
+
+
 a.family-button img{
     width: 30%;
+}
+
+a.selected{
+    border : 2px solid var(--secondary-color);
+    border-left: none;
+    transform: scale(1.05);
 }

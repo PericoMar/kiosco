@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
     --side-bar-width: 30%;
+    --secondary-color: rgb(144, 144, 240);
 }
 
 body{
