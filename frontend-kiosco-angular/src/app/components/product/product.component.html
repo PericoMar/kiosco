@@ -1,4 +1,4 @@
-<article class="product">
+<article class="product" (click)="openConfirmModal(product)">
     <main class="product-info">
         <img [src]="product.img" [alt]="product.name">
         <h1 class="product-name">{{ product.name }}</h1>
@@ -6,3 +6,5 @@
         <p>{{ product.price }} €</p>
     </main>
 </article>
+
+<app-confirm-modal #confirmModal (confirmAction)="onConfirm()" (cancelAction)="onCancel()"></app-confirm-modal>

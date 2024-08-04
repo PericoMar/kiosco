@@ -1,6 +1,6 @@
 footer{
     height: 100px;
-    box-shadow: 0 -3px 3px rgba(0, 0, 0, 0.1); /* Sombra en la parte superior */
+    /* box-shadow: 0 -3px 3px rgba(0, 0, 0, 0.1); */
     width: 100%;
     display: flex;
     justify-content: center;

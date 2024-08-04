@@ -1,0 +1,19 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="close()"></div>
+<div class="modal-container" *ngIf="isVisible">
+  <div class="modal-header">
+    <h2>Confirmación</h2>
+    <button class="close-button" (click)="close()">×</button>
+  </div>
+  <div class="modal-content">
+    <p>¿Desea confirmar la acción para el siguiente producto?</p>
+    <div *ngIf="data">
+      <p><strong>Nombre:</strong> {{ data.name }}</p>
+      <p><strong>Precio:</strong> {{ data.price | currency }}</p>
+      <p><strong>Descripción:</strong> {{ data.description }}</p>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <button class="cancel-button" (click)="close()">Cancelar</button>
+    <button class="confirm-button" (click)="confirm()">Confirmar</button>
+  </div>
+</div>
