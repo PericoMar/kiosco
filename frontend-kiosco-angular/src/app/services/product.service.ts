@@ -26,6 +26,71 @@ export class ProductService {
         familyId: "1",
         description: "Fugazzeta con cebolla y queso"
       },
+      //Insertar al menos 8 productos mas de la familia 1 para poder ver el scroll
+      {
+        id: "9",
+        name: "Napolitana",
+        price: 450,
+        img: "../../../assets/pizza.png",
+        familyId: "1",
+        description: "Muzzarella, tomate y ajo"
+      },
+      {
+        id: "10",
+        name: "Calabresa",
+        price: 500,
+        img: "../../../assets/pizza.png",
+        familyId: "1",
+        description: "Muzzarella y calabresa"
+      },
+      {
+        id: "11",
+        name: "Cuatro Quesos",
+        price: 550,
+        img: "../../../assets/pizza.png",
+        familyId: "1",
+        description: "Muzzarella, provolone, roquefort y parmesano"
+      },
+      {
+        id: "12",
+        name: "Hawaiana",
+        price: 450,
+        img: "../../../assets/pizza.png",
+        familyId: "1",
+        description: "Muzzarella, jamón y ananá"
+      },
+      {
+        id: "13",
+        name: "Pepperoni",
+        price: 500,
+        img: "../../../assets/pizza.png",
+        familyId: "1",
+        description: "Muzzarella y pepperoni"
+      },
+      {
+        id: "14",
+        name: "Vegetariana",
+        price: 400,
+        img: "../../../assets/pizza.png",
+        familyId: "1",
+        description: "Muzzarella, pimientos, cebolla, aceitunas y champiñones"
+      },
+      {
+        id: "15",
+        name: "Margherita",
+        price: 450,
+        img: "../../../assets/pizza.png",
+        familyId: "1",
+        description: "Muzzarella, tomate y albahaca"
+      },
+      {
+        id: "16",
+        name: "Barbacoa",
+        price: 600,
+        img: "../../../assets/pizza.png",
+        familyId: "1",
+        description: "Muzzarella, carne, cebolla y salsa barbacoa"
+      },
       {
         id: "3",
         name: "Coca Cola",
