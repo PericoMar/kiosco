@@ -2,6 +2,7 @@
 :root{
     --side-bar-width: 30%;
     --secondary-color: rgb(144, 144, 240);
+    --max-confirm-modal-width: 1000px;
 }
 
 body{
