@@ -4,16 +4,14 @@ import { OptionsPageComponent } from './pages/options-page/options-page.componen
 import { FamilySelectedPageComponent } from './components/family-selected-page/family-selected-page.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        component: OptionsPageComponent,
-    },
-    {
+  {
+    path: '',
+    component: OptionsPageComponent,
+  },
+  {
     path: 'products-selection',
     component: MainLayoutComponent,
-    children: [
-        { path: 'family/:id', component: FamilySelectedPageComponent },
-    ]
-    },
-    { path: '**', redirectTo: '' },
+    children: [{ path: 'family/:id', component: FamilySelectedPageComponent }],
+  },
+  { path: '**', redirectTo: '' },
 ];
