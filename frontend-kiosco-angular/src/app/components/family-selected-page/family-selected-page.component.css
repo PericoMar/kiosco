@@ -17,7 +17,7 @@ h1{
 
 /* Personalización de la barra de desplazamiento para navegadores WebKit (Chrome, Safari) */
 .products::-webkit-scrollbar {
-    width: 30px; /* Ancho de la barra de desplazamiento */
+    width: 10px; /* Ancho de la barra de desplazamiento */
   }
   
   .products::-webkit-scrollbar-track {
@@ -25,7 +25,7 @@ h1{
   }
   
   .products::-webkit-scrollbar-thumb {
-    background-color: rgba(21, 20, 20, 0.4); /* Color de la barra de desplazamiento */
+    background-color: rgba(111, 104, 104, 0.4); /* Color de la barra de desplazamiento */
     border-radius: 20px; /* Redondeo de la barra de desplazamiento */
     border: 2px solid transparent; /* Espaciado para hacer la barra más delgada */
     background-clip: content-box; /* Clipping para el borde */
