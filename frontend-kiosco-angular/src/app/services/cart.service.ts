@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CartService {
 
+  private consumptionOption!: string;
   private cartProducts: Product[] = [];
   private _products: BehaviorSubject<Product[]>;
 
@@ -21,5 +22,13 @@ export class CartService {
   addProduct(product: Product){
     this.cartProducts.push(product);
     this._products.next(this.cartProducts);
+  }
+
+  setConsumptionOption(option: string) {
+    this.consumptionOption = option;
+  }
+
+  getConsumptionOption(): string {
+    return this.consumptionOption;
   }
 }

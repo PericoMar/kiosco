@@ -1,6 +1,5 @@
-import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Input, ViewChild} from '@angular/core';
 import { Product } from '../../interfaces/product';
-import { OrderService } from '../../services/order.service';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { CartService } from '../../services/cart.service';
 
@@ -14,7 +13,7 @@ import { CartService } from '../../services/cart.service';
 export class ProductComponent {
   @Input() product!: Product;
 
-  constructor(private orderService: OrderService,
+  constructor(
     private cartService: CartService,
 
 

@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class CartComponent implements OnInit{
   products: Product[] = [];
   total: number = 0;
-  countProducts: number =0;
+  countProducts: number = 0;
 
   constructor(private cartService: CartService) {}
 
