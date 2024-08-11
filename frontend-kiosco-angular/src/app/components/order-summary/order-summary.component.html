@@ -7,9 +7,7 @@
   <div class="cart-items">
     <div class="cart-item" *ngFor="let product of products">
       <div class="item-wrapper">
-        <span class="item-count">{{ product.amount }}x</span
-        ><!-- Cambiar por el numero de items -->
-        <button class="less-item" id="lessItem" (click)="subtractProduct(product)">-</button>
+        <span class="item-count">{{ product.amount }}x</span>
         <div class="item-info">
           <img [src]="product.img" [alt]="product.name" />
           <div class="item-details">
@@ -20,6 +18,7 @@
           </div>
         </div>
         <div class="item-price">{{ product.price }} €</div>
+        <button class="less-item" id="lessItem" (click)="subtractProduct(product)">-</button>
         <button class="more-item" id="moreItem" (click)="addSameProduct(product)">+</button>
       </div>
     </div>

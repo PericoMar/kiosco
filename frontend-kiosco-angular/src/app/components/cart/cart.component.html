@@ -1,32 +1,22 @@
-<div class="cart-container" id="cartContainer">
+<div class="cart-component" (click)="toggleCart()">
   <div class="cart-header">
-    <h1 class="title-cart-header">Pedido</h1>
-    <button class="continue-shopping" (click)="toggleCart()">X</button>
-  </div>
-
-  <div class="cart-items">
-    <div class="cart-item" *ngFor="let product of products">
-      <div class="item-wrapper">
-        <span class="item-count">{{ product.amount }}x</span
-        ><!-- Cambiar por el numero de items -->
-        <button class="less-item" id="lessItem" (click)="subtractProduct(product)">-</button>
-        <div class="item-info">
-          <img [src]="product.img" [alt]="product.name" />
-          <div class="item-details">
-            <h2>{{ product.name }}</h2>
-            <p>
-              {{ product.description }}
-            </p>
-          </div>
+    <div class="cart-section">
+      <div class="cart-icon">
+        <div class="cart-icon-container">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
+            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+          </svg>
+          <span class="cart-counter">{{this.countProducts}}</span>
         </div>
-        <div class="item-price">{{ product.price }} €</div>
-        <button class="more-item" id="moreItem" (click)="addSameProduct(product)">+</button>
       </div>
     </div>
   </div>
-
-  <div class="cart-footer">
-    <div class="total-price">Total: {{ this.totalPrice }} €</div>
-    <button class="checkout-btn">Pagar</button>
+  <div class="checkout-btn">
+    <span>Ver Pedido</span>
+  </div>
+  <div class="total-price">
+    <span id="totalAmount">€{{this.totalPrice}}</span>
   </div>
 </div>
+
+<app-order-summary></app-order-summary>

@@ -1,9 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Injectable, Input } from '@angular/core';
 import { ConsumptionOption } from '../../interfaces/consumption-option';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { OrderService } from '../../services/order.service';
 
-import { CartService } from '../../services/cart.service';
+@Injectable({
+  providedIn: "root",
+})
 
 @Component({
   selector: 'app-consumption-option',
@@ -16,7 +19,7 @@ export class ConsumptionOptionComponent {
   @Input() consumptionOption! : ConsumptionOption;
   noPhotoOptionSrc : string = "../../../assets/image.svg";
 
-  constructor (private cartService : CartService){
+  constructor (private cartService : OrderService){
     
   }
 
