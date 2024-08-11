@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
     --side-bar-width: 30%;
-    --secondary-color: rgb(144, 144, 240);
-    --max-confirm-modal-width: 1000px;
+    --secondary-color: #ffcc00;
+    --max-confirm-modal-width: 900px;
+    --max-confirm-modal-height: 1200px;
 }
 
 body{

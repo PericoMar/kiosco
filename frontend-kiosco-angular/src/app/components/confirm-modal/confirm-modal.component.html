@@ -1,19 +1,35 @@
 <div class="modal-overlay" *ngIf="isVisible" (click)="close()"></div>
 <div class="modal-container" *ngIf="isVisible">
   <div class="modal-header">
-    <h2>Confirmación</h2>
+    <h1>¿Añadir {{data.name}} al carrito?</h1>
     <button class="close-button" (click)="close()">×</button>
   </div>
   <div class="modal-content">
-    <p>¿Desea confirmar la acción para el siguiente producto?</p>
-    <div *ngIf="data">
-      <p><strong>Nombre:</strong> {{ data.name }}</p>
-      <p><strong>Precio:</strong> {{ data.price | currency }}</p>
-      <p><strong>Descripción:</strong> {{ data.description }}</p>
+    <div class="modal-image">
+      <img [src]="data.img" alt="Imagen de {{ data.name }}" />
+    </div>
+    <div *ngIf="data" class="modal-product-data">
+      <h1><strong>{{ data.name }}</strong></h1>
+      <h2><strong>{{ data.price }}€</strong></h2>
+      <h3>{{ data.description }}</h3>
     </div>
   </div>
   <div class="modal-actions">
     <button class="cancel-button" (click)="close()">Cancelar</button>
-    <button class="confirm-button" (click)="confirm()">Confirmar</button>
+    <button class="confirm-button" (click)="confirm()">
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="50"
+        height="50"
+        fill="currentColor"
+        class="bi bi-cart2"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
+        />
+      </svg>
+      Añadir
+    </button>
   </div>
 </div>

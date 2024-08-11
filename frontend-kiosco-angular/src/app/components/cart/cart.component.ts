@@ -14,7 +14,7 @@ import { OrderSummaryComponent } from '../order-summary/order-summary.component'
 export class CartComponent implements OnInit {
   products: Product[] = [];
   totalPrice: number = 0;
-  countProducts: number = 0;
+  countProducts: number =0;
 
   constructor(private cartService: OrderService) {}
 

@@ -2,7 +2,8 @@ import { Component, Input } from '@angular/core';
 import { ConsumptionOption } from '../../interfaces/consumption-option';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { OrderService } from '../../services/order.service';
+
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-consumption-option',
@@ -15,12 +16,12 @@ export class ConsumptionOptionComponent {
   @Input() consumptionOption! : ConsumptionOption;
   noPhotoOptionSrc : string = "../../../assets/image.svg";
 
-  constructor (private orderService : OrderService){
+  constructor (private cartService : CartService){
     
   }
 
   safeConsumptionOption(consumptionOption: string){
-    this.orderService.setConsumptionOption(consumptionOption);
+    this.cartService.setConsumptionOption(consumptionOption);
   }
 
 }

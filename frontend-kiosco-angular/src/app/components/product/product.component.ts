@@ -1,7 +1,7 @@
-import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Input, ViewChild} from '@angular/core';
 import { Product } from '../../interfaces/product';
-import { OrderService } from '../../services/order.service';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-product',
@@ -14,13 +14,11 @@ export class ProductComponent {
   @Input() product!: Product;
 
   constructor(private orderService: OrderService,
-    private cartService: OrderService,
-
 
   ) { }
 
   addThisProductToCart(product: Product): void{
-    this.cartService.addProduct(product);
+    this.orderService.addProduct(product);
   }
 
   @ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;

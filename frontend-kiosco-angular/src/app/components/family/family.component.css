@@ -45,7 +45,7 @@ a.family-button img{
 }
 
 a.selected{
-    border : 2px solid var(--secondary-color);
+    border : 2px solid #ccc;
     border-left: none;
     transform: scale(1.05);
 }
