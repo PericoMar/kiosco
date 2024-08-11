@@ -1,43 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../interfaces/product';
-import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
+import { OrderService } from '../../services/order.service';
+import { OrderSummaryComponent } from '../order-summary/order-summary.component';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,OrderSummaryComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
-export class CartComponent implements OnInit{
+export class CartComponent implements OnInit {
   products: Product[] = [];
-  total: number = 0;
-  countProducts: number =0;
+  totalPrice: number = 0;
+  countProducts: number = 0;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: OrderService) {}
 
-  getTotalPrice(){
-    this.total = this.products.reduce((sum, product) => sum + product.price, 0);
-  }
 
-  countTotalProducts(){
-    this.countProducts = this.products.length;
-  }
-
-  ngOnInit() {
-    this.cartService.products.subscribe(products =>{
-      console.log(products)
+  ngOnInit(): void{
+    this.cartService.products.subscribe((products) => {
       this.products = products;
-      this.getTotalPrice();
-      this.countTotalProducts();
-    })
+      this.totalPrice = this.cartService.totalPrice;
+      this.countProducts = this.cartService.countTotalProducts;
+    });
   }
-
-  toggleCart() {
+  
+  toggleCart(): void{
     const cartContainer = document.getElementById('cartContainer');
-    const cartButton = document.getElementById('cart-button');
     cartContainer?.classList.toggle('open');
-    cartButton?.classList.toggle('hidden');
   }
 }

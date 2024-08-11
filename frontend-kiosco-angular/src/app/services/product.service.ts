@@ -16,7 +16,8 @@ export class ProductService {
         price: 350,
         img : "../../../assets/pizza.png",
         familyId: "1",
-        description: "Muzzarella, tomate y aceitunas"
+        description: "Muzzarella, tomate y aceitunas",
+        amount: 0
       },
       {
         id: "2",
@@ -24,7 +25,8 @@ export class ProductService {
         price: 400,
         img : "../../../assets/pizza.png",
         familyId: "1",
-        description: "Fugazzeta con cebolla y queso"
+        description: "Fugazzeta con cebolla y queso",
+        amount: 0
       },
       //Insertar al menos 8 productos mas de la familia 1 para poder ver el scroll
       {
@@ -33,7 +35,8 @@ export class ProductService {
         price: 450,
         img: "../../../assets/pizza.png",
         familyId: "1",
-        description: "Muzzarella, tomate y ajo"
+        description: "Muzzarella, tomate y ajo",
+        amount: 0
       },
       {
         id: "10",
@@ -41,7 +44,8 @@ export class ProductService {
         price: 500,
         img: "../../../assets/pizza.png",
         familyId: "1",
-        description: "Muzzarella y calabresa"
+        description: "Muzzarella y calabresa",
+        amount: 0
       },
       {
         id: "11",
@@ -49,7 +53,8 @@ export class ProductService {
         price: 550,
         img: "../../../assets/pizza.png",
         familyId: "1",
-        description: "Muzzarella, provolone, roquefort y parmesano"
+        description: "Muzzarella, provolone, roquefort y parmesano",
+        amount: 0
       },
       {
         id: "12",
@@ -57,7 +62,8 @@ export class ProductService {
         price: 450,
         img: "../../../assets/pizza.png",
         familyId: "1",
-        description: "Muzzarella, jamón y ananá"
+        description: "Muzzarella, jamón y ananá",
+        amount: 0
       },
       {
         id: "13",
@@ -65,7 +71,8 @@ export class ProductService {
         price: 500,
         img: "../../../assets/pizza.png",
         familyId: "1",
-        description: "Muzzarella y pepperoni"
+        description: "Muzzarella y pepperoni",
+        amount: 0
       },
       {
         id: "14",
@@ -73,7 +80,8 @@ export class ProductService {
         price: 400,
         img: "../../../assets/pizza.png",
         familyId: "1",
-        description: "Muzzarella, pimientos, cebolla, aceitunas y champiñones"
+        description: "Muzzarella, pimientos, cebolla, aceitunas y champiñones",
+        amount: 0
       },
       {
         id: "15",
@@ -81,7 +89,8 @@ export class ProductService {
         price: 450,
         img: "../../../assets/pizza.png",
         familyId: "1",
-        description: "Muzzarella, tomate y albahaca"
+        description: "Muzzarella, tomate y albahaca",
+        amount: 0
       },
       {
         id: "16",
@@ -89,7 +98,8 @@ export class ProductService {
         price: 600,
         img: "../../../assets/pizza.png",
         familyId: "1",
-        description: "Muzzarella, carne, cebolla y salsa barbacoa"
+        description: "Muzzarella, carne, cebolla y salsa barbacoa",
+        amount: 0
       },
       {
         id: "3",
@@ -97,7 +107,8 @@ export class ProductService {
         price: 100,
         img : "../../../assets/coca.png",
         familyId: "2",
-        description: "Coca Cola 1.5L"
+        description: "Coca Cola 1.5L",
+        amount: 0
       },
       {
         id: "4",
@@ -105,7 +116,8 @@ export class ProductService {
         price: 100,
         img : "../../../assets/fanta.png",
         familyId: "2",
-        description: "Fanta 1.5L"
+        description: "Fanta 1.5L",
+        amount: 0
       },
       {
         id: "5",
@@ -113,7 +125,8 @@ export class ProductService {
         price: 150,
         img : "../../../assets/hamburguesa.png",
         familyId: "3",
-        description: "Hamburguesa con queso"
+        description: "Hamburguesa con queso",
+        amount: 0
       },
       {
         id: "6",
@@ -121,7 +134,8 @@ export class ProductService {
         price: 50,
         img : "../../../assets/papas.png",
         familyId: "3",
-        description: "Papas fritas"
+        description: "Papas fritas",
+        amount: 0
       },
       {
         id: "7",
@@ -129,7 +143,8 @@ export class ProductService {
         price: 200,
         img : "../../../assets/helado.png",
         familyId: "4",
-        description: "Helado de chocolate"
+        description: "Helado de chocolate",
+        amount: 0
       },
       {
         id: "8",
@@ -137,7 +152,8 @@ export class ProductService {
         price: 150,
         img : "../../../assets/brownie.png",
         familyId: "4",
-        description: "Brownie de chocolate"
+        description: "Brownie de chocolate",
+        amount: 0
       }
     ].filter(product => product.familyId === id);
   }

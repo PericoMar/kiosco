@@ -2,7 +2,6 @@ import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { Product } from '../../interfaces/product';
 import { OrderService } from '../../services/order.service';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
-import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -15,19 +14,13 @@ export class ProductComponent {
   @Input() product!: Product;
 
   constructor(private orderService: OrderService,
-    private cartService: CartService,
+    private cartService: OrderService,
 
 
   ) { }
 
-  addThisProductToCart(product: Product){
+  addThisProductToCart(product: Product): void{
     this.cartService.addProduct(product);
-  }
-
-  addToCart(product: Product) {
-    // this.orderService.addProduct(product);
-    // Abrir modal de confirmación
-    
   }
 
   @ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
@@ -36,7 +29,8 @@ export class ProductComponent {
     this.confirmModal.open(product);
   }
 
-  onConfirm(): void {
+  onConfirm(product: Product): void {
+    this.addThisProductToCart(product)
     console.log('Confirmado');
   }
 

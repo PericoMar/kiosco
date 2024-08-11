@@ -3,6 +3,7 @@ import { SideBarComponent } from '../../../components/side-bar/side-bar.componen
 import { FooterComponent } from '../../../components/footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { CartComponent } from '../../../components/cart/cart.component';
+import { OrderSummaryComponent } from '../../../components/order-summary/order-summary.component';
 
 @Component({
   selector: 'app-main-layout',

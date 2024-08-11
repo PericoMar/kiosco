@@ -1,1 +1,32 @@
-<p>order-summary works!</p>
+<div class="cart-container" id="cartContainer">
+  <div class="cart-header">
+    <h1 class="title-cart-header">Pedido</h1>
+    <button class="continue-shopping" (click)="toggleCart()">X</button>
+  </div>
+
+  <div class="cart-items">
+    <div class="cart-item" *ngFor="let product of products">
+      <div class="item-wrapper">
+        <span class="item-count">{{ product.amount }}x</span
+        ><!-- Cambiar por el numero de items -->
+        <button class="less-item" id="lessItem" (click)="subtractProduct(product)">-</button>
+        <div class="item-info">
+          <img [src]="product.img" [alt]="product.name" />
+          <div class="item-details">
+            <h2>{{ product.name }}</h2>
+            <p>
+              {{ product.description }}
+            </p>
+          </div>
+        </div>
+        <div class="item-price">{{ product.price }} €</div>
+        <button class="more-item" id="moreItem" (click)="addSameProduct(product)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-footer">
+    <div class="total-price">Total: {{ this.totalPrice }} €</div>
+    <button class="checkout-btn">Pagar</button>
+  </div>
+</div>
