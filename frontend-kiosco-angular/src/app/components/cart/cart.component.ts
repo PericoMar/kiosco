@@ -12,7 +12,7 @@ import { OrderSummaryComponent } from '../order-summary/order-summary.component'
   styleUrl: './cart.component.css',
 })
 export class CartComponent implements OnInit {
-  products: Product[] = [];
+  products: Product[][] = [];
   totalPrice: number = 0;
   countProducts: number =0;
 

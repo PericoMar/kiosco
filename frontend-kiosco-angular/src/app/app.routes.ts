@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './pages/layouts/main-layout/main-layout.component';
 import { OptionsPageComponent } from './pages/options-page/options-page.component';
 import { FamilySelectedPageComponent } from './components/family-selected-page/family-selected-page.component';
+import { PaymentComponent } from './pages/payment/payment.component';
 
 export const routes: Routes = [
   {
@@ -12,6 +13,10 @@ export const routes: Routes = [
     path: 'products-selection',
     component: MainLayoutComponent,
     children: [{ path: 'family/:id', component: FamilySelectedPageComponent }],
+  },
+  {
+    path: 'payment',
+    component: PaymentComponent,
   },
   { path: '**', redirectTo: '' },
 ];

@@ -6,26 +6,40 @@
 
   <div class="cart-items">
     <div class="cart-item" *ngFor="let product of products">
-      <div class="item-wrapper">
-        <span class="item-count">{{ product.amount }}x</span>
-        <div class="item-info">
-          <img [src]="product.img" [alt]="product.name" />
-          <div class="item-details">
-            <h2>{{ product.name }}</h2>
-            <p>
-              {{ product.description }}
-            </p>
+      <div *ngIf="product.length > 0">
+        <div class="item-wrapper">
+          <span class="item-count">{{ product.length }}x</span>
+          <div class="item-info">
+            <img [src]="product[0].img" [alt]="product[0].name" />
+            <div class="item-details">
+              <h2>{{ product[0].name }}</h2>
+              <p>
+                {{ product[0].description }}
+              </p>
+            </div>
           </div>
+          <div class="item-price">{{ product[0].price }} €</div>
+          <button
+            class="less-item"
+            id="lessItem"
+            (click)="subtractProduct(product[0])"
+          >
+            -
+          </button>
+          <button
+            class="more-item"
+            id="moreItem"
+            (click)="addSameProduct(product[0])"
+          >
+            +
+          </button>
         </div>
-        <div class="item-price">{{ product.price }} €</div>
-        <button class="less-item" id="lessItem" (click)="subtractProduct(product)">-</button>
-        <button class="more-item" id="moreItem" (click)="addSameProduct(product)">+</button>
       </div>
     </div>
   </div>
 
   <div class="cart-footer">
     <div class="total-price">Total: {{ this.totalPrice }} €</div>
-    <button class="checkout-btn">Pagar</button>
+    <button class="checkout-btn" (click)="displayPaymentPage()">Finalizar Pedido</button>
   </div>
 </div>

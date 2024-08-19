@@ -3,6 +3,7 @@ import { CartComponent } from '../cart/cart.component';
 import { OrderService } from '../../services/order.service';
 import { Product } from '../../interfaces/product';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-summary',
@@ -12,10 +13,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './order-summary.component.css',
 })
 export class OrderSummaryComponent {
-  products: Product[] = [];
+  products: Product[][] = [];
   totalPrice: number = 0;
 
-  constructor(private cartService: OrderService) {}
+  constructor(private cartService: OrderService, private router: Router) {}
 
   ngOnInit() {
     this.cartService.products.subscribe((products) => {
@@ -32,6 +33,11 @@ export class OrderSummaryComponent {
     this.cartService.addProduct(product);
   }
   
+  displayPaymentPage(): void{
+    localStorage.setItem('order', JSON.stringify(this.products));
+    this.router.navigate(['/payment']);
+  }
+
   toggleCart(): void{
     const cartContainer = document.getElementById('cartContainer');
     cartContainer?.classList.toggle('open');
