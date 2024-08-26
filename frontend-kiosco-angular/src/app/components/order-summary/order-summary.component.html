@@ -5,31 +5,31 @@
   </div>
 
   <div class="cart-items">
-    <div class="cart-item" *ngFor="let product of products">
-      <div *ngIf="product.length > 0">
+    <div class="cart-item" *ngFor="let product of products?.items">
+      <div *ngIf="product.quantity > 0">
         <div class="item-wrapper">
-          <span class="item-count">{{ product.length }}x</span>
+          <span class="item-count">{{ product.quantity }}x</span>
           <div class="item-info">
-            <img [src]="product[0].img" [alt]="product[0].name" />
+            <img [src]="product.details.img" [alt]="product.details.name" />
             <div class="item-details">
-              <h2>{{ product[0].name }}</h2>
+              <h2>{{ product.details.name }}</h2>
               <p>
-                {{ product[0].description }}
+                {{ product.details.description }}
               </p>
             </div>
           </div>
-          <div class="item-price">{{ product[0].price }} €</div>
+          <div class="item-price">{{ product.details.price }} €</div>
           <button
             class="less-item"
             id="lessItem"
-            (click)="subtractProduct(product[0])"
+            (click)="subtractProduct(product.details)"
           >
             -
           </button>
           <button
             class="more-item"
             id="moreItem"
-            (click)="addSameProduct(product[0])"
+            (click)="addSameProduct(product.details)"
           >
             +
           </button>

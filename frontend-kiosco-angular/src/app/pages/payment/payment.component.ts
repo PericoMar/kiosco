@@ -1,9 +1,8 @@
 import { Component, input } from '@angular/core';
-import { Product } from '../../interfaces/product';
+import { Product } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
-import { CartComponent } from '../../components/cart/cart.component';
 import { OrderService } from '../../services/order.service';
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-payment',

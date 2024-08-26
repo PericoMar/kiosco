@@ -24,8 +24,8 @@ export class ProductComponent {
     this.confirmModal.open(product);
   }
 
-  onConfirm(product: Product | Menu): void {
-    this.orderService.addProduct(product);
+  onConfirm(quantity : number): void {
+    this.orderService.addProduct(this.product as Product | Menu, quantity);
     console.log('Confirmado');
   }
 

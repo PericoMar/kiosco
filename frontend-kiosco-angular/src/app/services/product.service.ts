@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Menu, Product } from '../interfaces/pedido';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class ProductService {
 
   constructor(private http : HttpClient) { }
 
-  getProductsByFamilyId(id: string){
+  getProductsByFamilyId(id: string): (Product | Menu)[] {
     return [
       {
         id: "1",

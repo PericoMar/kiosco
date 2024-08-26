@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../../interfaces/pedido';
+import { Order, Product } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order.service';
 import { OrderSummaryComponent } from '../order-summary/order-summary.component';
@@ -12,9 +12,9 @@ import { OrderSummaryComponent } from '../order-summary/order-summary.component'
   styleUrl: './cart.component.css',
 })
 export class CartComponent implements OnInit {
-  products: Product[][] = [];
+  products!: Order | null;
   totalPrice: number = 0;
-  countProducts: number =0;
+  countProducts: number = 0;
 
   constructor(private cartService: OrderService) {}
 

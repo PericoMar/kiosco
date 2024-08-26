@@ -1,83 +1,129 @@
 // src/app/services/order.service.ts
 import { Injectable } from '@angular/core';
-import { Menu, Product } from '../interfaces/pedido';
+import { Menu, Order, OrderItem, Product } from '../interfaces/pedido';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  private consumptionOption!: string;
-  private paymentMethod!: string;
-  private cartProducts: Product[] = [];
-  private _products: BehaviorSubject<Product[][]>;
+  private consumptionOption: string = '';
+  private paymentMethod: string = '';
+  private cartProduct: Order | null = null;  // Solo un pedido a la vez
+  private _products: BehaviorSubject<Order | null>;
 
   constructor() {
-    this._products = new BehaviorSubject<Product[][]>([]);
+    this._products = new BehaviorSubject<Order | null>(null);
   }
 
-  get products(): Observable<Product[][]> {
+  get products(): Observable<Order | null> {
     return this._products.asObservable();
   }
 
   get totalPrice(): number {
-    let total:number = 0;
-    this.cartProducts.forEach(element => {
-      total += element.reduce((sum,product) => sum + product.price, 0);
-    });
-    return total;
+    if (!this.cartProduct) return 0;
+
+    return this.cartProduct.items.reduce((total, item) => {
+      return total + item.quantity * (item.details as Product | Menu).price;
+    }, 0);
   }
 
   get countTotalProducts(): number {
-    return this.cartProducts.reduce((sum,product) => sum + product.length, 0);
+    if (!this.cartProduct) return 0;
+
+    return this.cartProduct.items.reduce((count, item) => {
+      return count + item.quantity;
+    }, 0);
   }
 
-  addProduct(product: Product | Menu): void {
-    let indexProduct = this.findProduct(product);
-    if (indexProduct >= 0) {
-      this.cartProducts[indexProduct].push(product);
-      this._products.next(this.cartProducts)
-    } else {
-      this.cartProducts.push([product]);
-      this._products.next(this.cartProducts);
+  addProduct(product: Product | Menu, quantity : number = 0): void {
+    if (!this.cartProduct) {
+      this.cartProduct = {
+        id: Date.now(),
+        items: [],
+        total: 0,
+        date: new Date(),
+        consumptionOption: this.consumptionOption,
+        paymentMethod: this.paymentMethod,
+      };
     }
+
+    // Buscar si el producto o menú ya está en el pedido
+    const existingItemIndex = this.cartProduct.items.findIndex(item =>
+      item.details.id === product.id && item.type === (product.hasOwnProperty('products') ? 'menu' : 'product')
+    );
+
+    if (existingItemIndex >= 0) {
+      // Si el producto/menú ya existe, incrementa la cantidad
+      this.cartProduct.items[existingItemIndex].quantity += quantity;
+    } else {
+      // Si no existe, añade un nuevo OrderItem
+      const newItem: OrderItem = {
+        type: product.hasOwnProperty('products') ? 'menu' : 'product',
+        quantity: quantity,
+        details: product
+      };
+      this.cartProduct.items.push(newItem);
+    }
+
+    // Recalcula el total del pedido
+    this.cartProduct.total = this.totalPrice;
+
+    // Actualiza el observable con el nuevo estado del carrito
+    this._products.next(this.cartProduct);
   }
 
-  subtractProduct(product: Product): void {
-    let indexProduct = this.findProduct(product);
-    if (this.cartProducts[indexProduct].length > 1) {
-      this.cartProducts[indexProduct].pop();
-    } else {
-      this.cartProducts.splice(indexProduct, 1);
+  subtractProduct(product: Product | Menu): void {
+    if (!this.cartProduct) return;
+
+    const existingItemIndex = this.cartProduct.items.findIndex(item =>
+      item.details.id === product.id && item.type === (product.hasOwnProperty('products') ? 'menu' : 'product')
+    );
+
+    if (existingItemIndex >= 0) {
+      if (this.cartProduct.items[existingItemIndex].quantity > 1) {
+        this.cartProduct.items[existingItemIndex].quantity--;
+      } else {
+        this.cartProduct.items.splice(existingItemIndex, 1);
+      }
+
+      // Recalcula el total del pedido
+      this.cartProduct.total = this.totalPrice;
+
+      // Actualiza el observable con el nuevo estado del carrito
+      this._products.next(this.cartProduct);
     }
-    this._products.next(this.cartProducts);
   }
 
   private findProduct(product: Product | Menu): number {
-    for (let i = 0; i < this.cartProducts.length; i++) {
-      const subArray = this.cartProducts[i];
-      const foundProduct = subArray.find((obj) => obj.id === product.id);
-      if (foundProduct) {
-        return i; //El return sirve como break
-      }
-    }
-    return -1;
+    if (!this.cartProduct) return -1;
+
+    return this.cartProduct.items.findIndex(item =>
+      item.details.id === product.id && item.type === (product.hasOwnProperty('products') ? 'menu' : 'product')
+    );
   }
-  
 
   setConsumptionOption(option: string) {
     this.consumptionOption = option;
+    if (this.cartProduct) {
+      this.cartProduct.consumptionOption = option;
+      this._products.next(this.cartProduct);
+    }
   }
 
   getConsumptionOption(): string {
     return this.consumptionOption;
   }
 
-  setPaymentMethod(option:string): void{
+  setPaymentMethod(option: string): void {
     this.paymentMethod = option;
+    if (this.cartProduct) {
+      this.cartProduct.paymentMethod = option;
+      this._products.next(this.cartProduct);
+    }
   }
 
-  getPaymentMethod(): string{
+  getPaymentMethod(): string {
     return this.paymentMethod;
   }
 }

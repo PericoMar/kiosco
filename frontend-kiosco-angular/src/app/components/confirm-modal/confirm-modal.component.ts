@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Menu, Product } from '../../interfaces/pedido';
 
 @Component({
   selector: 'app-confirm-modal',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CartComponent } from '../cart/cart.component';
 import { OrderService } from '../../services/order.service';
-import { Product } from '../../interfaces/pedido';
+import { Menu, Order, Product } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrl: './order-summary.component.css',
 })
 export class OrderSummaryComponent {
-  products: Product[][] = [];
+  products!: Order | null;
   totalPrice: number = 0;
 
   constructor(private cartService: OrderService, private router: Router) {}
@@ -25,11 +25,11 @@ export class OrderSummaryComponent {
     });
   }
 
-  subtractProduct(product: Product): void{
+  subtractProduct(product: Product | Menu): void{
     this.cartService.subtractProduct(product);
   }
 
-  addSameProduct(product: Product): void{
+  addSameProduct(product: Product | Menu): void{
     this.cartService.addProduct(product);
   }
   

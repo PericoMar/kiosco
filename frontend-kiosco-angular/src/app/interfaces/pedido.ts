@@ -40,4 +40,7 @@ export interface Order {
     id: number;
     items: OrderItem[];
     total: number;
+    date: Date;
+    consumptionOption: string;
+    paymentMethod: string;
 }
