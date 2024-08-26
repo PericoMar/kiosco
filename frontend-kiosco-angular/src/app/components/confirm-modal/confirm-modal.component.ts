@@ -1,17 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-confirm-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './confirm-modal.component.html',
   styleUrl: './confirm-modal.component.css'
 })
 export class ConfirmModalComponent {
   @Input() data: any;
-  @Output() confirmAction = new EventEmitter<void>();
+  @Output() confirmAction = new EventEmitter<number>();
   @Output() cancelAction = new EventEmitter<void>();
+  quantity: number = 1;
 
   isVisible = false;
 
@@ -28,6 +30,16 @@ export class ConfirmModalComponent {
     }, 0);
   }
 
+  increaseQuantity(): void {
+    this.quantity++;
+  }
+
+  decreaseQuantity(): void {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
   close(): void {
     const modalContainer = document.querySelector('.modal-container') as HTMLElement;
     const modalOverlay = document.querySelector('.modal-overlay') as HTMLElement;
@@ -42,7 +54,7 @@ export class ConfirmModalComponent {
   }
 
   confirm(): void {
-    this.confirmAction.emit();
+    this.confirmAction.emit(this.quantity);
     this.close();
   }
 }

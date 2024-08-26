@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild} from '@angular/core';
-import { Product } from '../../interfaces/product';
+import { Menu, Product } from '../../interfaces/pedido';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { OrderService } from '../../services/order.service';
 
@@ -11,15 +11,12 @@ import { OrderService } from '../../services/order.service';
   styleUrl: './product.component.css'
 })
 export class ProductComponent {
-  @Input() product!: Product;
+  @Input() product!: (Product | Menu);
 
   constructor(private orderService: OrderService,
 
   ) { }
 
-  addThisProductToCart(product: Product): void{
-    this.orderService.addProduct(product);
-  }
 
   @ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 
@@ -27,8 +24,8 @@ export class ProductComponent {
     this.confirmModal.open(product);
   }
 
-  onConfirm(product: Product): void {
-    this.addThisProductToCart(product)
+  onConfirm(product: Product | Menu): void {
+    this.orderService.addProduct(product);
     console.log('Confirmado');
   }
 

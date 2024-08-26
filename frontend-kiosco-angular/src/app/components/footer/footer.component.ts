@@ -8,16 +8,18 @@ import { Component } from '@angular/core';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
+  reducedMovilityHeight: string = '900px';
+  normalHeight: string = '1920px';
 
   setScreenHeight(){
     // Cambiar la altura del body y ponerle un margin top al body:
     const body = document.getElementsByTagName('body')[0];
-    if(body.style.height === '800px'){
-      body.style.height = '1920px';
+    if(body.style.height === this.reducedMovilityHeight){
+      body.style.height = this.normalHeight;
       body.style.marginTop = '0px';
       return;
     }
-    body.style.height = '900px';
+    body.style.height = this.reducedMovilityHeight;
     body.style.marginTop = '1020px';
   }
 }

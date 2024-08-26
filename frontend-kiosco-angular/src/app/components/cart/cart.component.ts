@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../../interfaces/product';
+import { Product } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order.service';
 import { OrderSummaryComponent } from '../order-summary/order-summary.component';

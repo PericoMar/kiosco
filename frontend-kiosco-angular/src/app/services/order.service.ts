@@ -1,6 +1,6 @@
 // src/app/services/order.service.ts
 import { Injectable } from '@angular/core';
-import { Product } from '../interfaces/product';
+import { Menu, Product } from '../interfaces/pedido';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class OrderService {
   private consumptionOption!: string;
   private paymentMethod!: string;
-  private cartProducts: Product[][] = [];
+  private cartProducts: Product[] = [];
   private _products: BehaviorSubject<Product[][]>;
 
   constructor() {
@@ -32,7 +32,7 @@ export class OrderService {
     return this.cartProducts.reduce((sum,product) => sum + product.length, 0);
   }
 
-  addProduct(product: Product): void {
+  addProduct(product: Product | Menu): void {
     let indexProduct = this.findProduct(product);
     if (indexProduct >= 0) {
       this.cartProducts[indexProduct].push(product);
@@ -53,7 +53,7 @@ export class OrderService {
     this._products.next(this.cartProducts);
   }
 
-  private findProduct(product: Product): number {
+  private findProduct(product: Product | Menu): number {
     for (let i = 0; i < this.cartProducts.length; i++) {
       const subArray = this.cartProducts[i];
       const foundProduct = subArray.find((obj) => obj.id === product.id);
@@ -77,7 +77,7 @@ export class OrderService {
     this.paymentMethod = option;
   }
 
-  getPaymentMethod(option:string): string{
+  getPaymentMethod(): string{
     return this.paymentMethod;
   }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CartComponent } from '../cart/cart.component';
 import { OrderService } from '../../services/order.service';
-import { Product } from '../../interfaces/product';
+import { Product } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 

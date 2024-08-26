@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FamilyService } from '../../services/family.service';
-import { Product } from '../../interfaces/product';
+import { Menu, Product } from '../../interfaces/pedido';
 import { ProductService } from '../../services/product.service';
 import { ProductComponent } from '../product/product.component';
 
@@ -14,7 +14,7 @@ import { ProductComponent } from '../product/product.component';
 })
 export class FamilySelectedPageComponent implements OnInit {
   family: any;
-  products!: Product[];
+  products!: (Product | Menu)[];
 
   constructor(
     private route: ActivatedRoute,

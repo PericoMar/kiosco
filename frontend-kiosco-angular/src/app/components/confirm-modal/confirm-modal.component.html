@@ -14,6 +14,12 @@
       <h3>{{ data.description }}</h3>
     </div>
   </div>
+  <!-- Añadir boton de cantidad un Input grande con dos botones izquierda y derecha de mas y menos que el de menops este disabled cuando sea 1 -->
+  <div class="modal-quantity">
+    <button class="quantity-button" (click)="decreaseQuantity()" [disabled]="quantity === 1">-</button>
+    <input type="number" [(ngModel)]="quantity" name="quantity"/>
+    <button class="quantity-button" (click)="increaseQuantity()">+</button>
+  </div>
   <div class="modal-actions">
     <button class="cancel-button" (click)="close()">Cancelar</button>
     <button class="confirm-button" (click)="confirm()">
