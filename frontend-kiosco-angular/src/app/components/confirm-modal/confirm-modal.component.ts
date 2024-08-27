@@ -62,12 +62,7 @@ export class ConfirmModalComponent {
   }
 
   thereAreQuestionsLeft(): boolean {
-    if (this.product.customizationQuestions && this.product.customizationQuestions.length > 0) {
-      console.log(this.currentCustomizationIndex < this.product.customizationQuestions.length);
-      return this.currentCustomizationIndex < this.product.customizationQuestions.length;
-    }
-    console.log('No hay preguntas de personalización');
-    return false;
+    return this.product.customizationQuestions != undefined && this.currentCustomizationIndex < this.product.customizationQuestions.length
   }
 
   selectOption(option : CustomizationOption): void {
@@ -83,6 +78,7 @@ export class ConfirmModalComponent {
 
   nextCustomization(): void {
     this.currentCustomizationIndex++;
+    this.isVisible = true;
   }
 
   increaseQuantity(): void {

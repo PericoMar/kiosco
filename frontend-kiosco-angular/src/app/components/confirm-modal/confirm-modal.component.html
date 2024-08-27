@@ -1,7 +1,7 @@
-<div class="modal-overlay" *ngIf="isVisible" >
-
+<div class="modal-overlay" *ngIf="isVisible">
+  <div class="modal-container" *ngIf="isVisible">
   @if(thereAreQuestionsLeft()){
-    <div class="modal-container" *ngIf="isVisible">
+    
       <div class="modal-header" >
         <h1>{{product.name}}</h1>
         <button class="close-button" (click)="close()">×</button>
@@ -42,9 +42,7 @@
           Siguiente pregunta
         </button>
       </div>
-    </div>
   } @else {
-    <div class="modal-container" *ngIf="isVisible" >
       <div class="modal-header" >
         <h1>¿Añadir {{product.name}} al carrito?</h1>
         <button class="close-button" (click)="close()">×</button>
@@ -83,7 +81,6 @@
           Añadir
         </button>
       </div>
-    </div>
   }
-  
+  </div>
 </div>
