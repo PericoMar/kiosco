@@ -1,41 +1,89 @@
-<div class="modal-overlay" *ngIf="isVisible" (click)="close()"></div>
-<div class="modal-container" *ngIf="isVisible">
-  <div class="modal-header">
-    <h1>¿Añadir {{data.name}} al carrito?</h1>
-    <button class="close-button" (click)="close()">×</button>
-  </div>
-  <div class="modal-content">
-    <div class="modal-image">
-      <img [src]="data.img" alt="Imagen de {{ data.name }}" />
+<div class="modal-overlay" *ngIf="isVisible" >
+
+  @if(thereAreQuestionsLeft()){
+    <div class="modal-container" *ngIf="isVisible">
+      <div class="modal-header" >
+        <h1>{{product.name}}</h1>
+        <button class="close-button" (click)="close()">×</button>
+      </div>
+      <div class="modal-content">
+        <h2>{{ product.customizationQuestions?.[currentCustomizationIndex]?.name }}</h2>
+        @for (option of product.customizationQuestions?.[currentCustomizationIndex]?.options; track option.id) {
+          <!-- Check box con la imagen (si tiene) y el nombre de la opcion -->
+          <div class="customization-option">
+            <input type="checkbox" id="{{option.id}}" name="{{option.id}}" (change)="selectOption(option)" />
+            <label for="{{option.id}}">
+              <img *ngIf="option.img" [src]="option.img" alt="Imagen de {{ option.value }}" />
+              <span>{{ option.value }}</span>
+            </label>
+          </div>
+        }
+      </div>
+
+      <div class="modal-actions">
+        <button class="cancel-button" (click)="close()" >Cancelar</button>
+        @if(currentCustomizationIndex > 0){
+          <button class="cancel-button" (click)="previousCustomization()">Anterior</button>
+        }
+        
+        <button class="confirm-button" (click)="nextCustomization()">
+            <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="50"
+            height="50"
+            fill="currentColor"
+            class="bi bi-cart2"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
+            />
+          </svg>
+          Siguiente pregunta
+        </button>
+      </div>
     </div>
-    <div *ngIf="data" class="modal-product-data">
-      <h1><strong>{{ data.name }}</strong></h1>
-      <h2><strong>{{ data.price }}€</strong></h2>
-      <h3>{{ data.description }}</h3>
+  } @else {
+    <div class="modal-container" *ngIf="isVisible" >
+      <div class="modal-header" >
+        <h1>¿Añadir {{product.name}} al carrito?</h1>
+        <button class="close-button" (click)="close()">×</button>
+      </div>
+      <div class="modal-content">
+        <div class="modal-image">
+          <img [src]="product.img" alt="Imagen de {{ product.name }}" />
+        </div>
+        <div *ngIf="product" class="modal-product-data">
+          <h1><strong>{{ product.name }}</strong></h1>
+          <h2><strong>{{ product.price }}€</strong></h2>
+          <h3>{{ product.description }}</h3>
+        </div>
+      </div>
+      <!-- Añadir boton de cantidad un Input grande con dos botones izquierda y derecha de mas y menos que el de menops este disabled cuando sea 1 -->
+      <div class="modal-quantity">
+        <button class="quantity-button" (click)="decreaseQuantity()" [disabled]="quantity === 1">-</button>
+        <input type="number" [(ngModel)]="quantity" name="quantity"/>
+        <button class="quantity-button" (click)="increaseQuantity()">+</button>
+      </div>
+      <div class="modal-actions">
+        <button class="cancel-button" (click)="close()">Cancelar</button>
+        <button class="confirm-button" (click)="confirm()">
+            <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="50"
+            height="50"
+            fill="currentColor"
+            class="bi bi-cart2"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
+            />
+          </svg>
+          Añadir
+        </button>
+      </div>
     </div>
-  </div>
-  <!-- Añadir boton de cantidad un Input grande con dos botones izquierda y derecha de mas y menos que el de menops este disabled cuando sea 1 -->
-  <div class="modal-quantity">
-    <button class="quantity-button" (click)="decreaseQuantity()" [disabled]="quantity === 1">-</button>
-    <input type="number" [(ngModel)]="quantity" name="quantity"/>
-    <button class="quantity-button" (click)="increaseQuantity()">+</button>
-  </div>
-  <div class="modal-actions">
-    <button class="cancel-button" (click)="close()">Cancelar</button>
-    <button class="confirm-button" (click)="confirm()">
-        <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="50"
-        height="50"
-        fill="currentColor"
-        class="bi bi-cart2"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-        />
-      </svg>
-      Añadir
-    </button>
-  </div>
+  }
+  
 </div>
