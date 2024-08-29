@@ -18,11 +18,6 @@ a.family-button {
     font-weight: 200;
 }
 
-a.family-button:hover {
-    transform: scale(1.1); /* Escala al pasar el ratón */
-}
-
-
 a.family-button h2, 
 a.family-button img {
     font-weight: var(--family-name-font-weight);

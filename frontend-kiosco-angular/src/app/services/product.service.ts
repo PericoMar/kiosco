@@ -205,7 +205,7 @@ export class ProductService {
         id: "8",
         name: "Brownie",
         price: 150,
-        img : "assets/brownie.png",
+        img : "assets/camera.png",
         familyId: "4",
         description: "Brownie de chocolate",
         customizations: [],
