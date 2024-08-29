@@ -1,246 +1,237 @@
+/* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.checkout-container {
-    width: 90%;
-    max-width: 800px;
     background-color: #fff;
+    color: #333;
+  }
+  
+  /* Contenedor principal */
+  .checkout-container {
+    max-width: 800px;
+    margin: 20px auto;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.checkout-title {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Título principal */
+  .checkout-title {
     font-size: 24px;
+    font-weight: bold;
+    color: #333;
     margin-bottom: 20px;
     text-align: center;
-}
-
-.products-list {
+  }
+  
+  /* Lista de productos */
+  .products-list {
+    max-height: 400px; /* Aumentada la altura para más visibilidad */
+    overflow-y: auto;
     margin-bottom: 20px;
-}
-
-.product-item {
+  }
+  
+  .product-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.product-img {
-    width: 80px;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .product-item:last-child {
+    border-bottom: none;
+  }
+  
+  .product-img {
+    width: 80px; /* Aumentado el tamaño de la imagen */
     height: 80px;
     object-fit: cover;
     border-radius: 8px;
-}
-
-.product-details {
+    margin-right: 15px;
+  }
+  
+  .product-details {
     flex-grow: 1;
-    margin-left: 20px;
-}
-
-.product-name {
-    font-size: 18px;
+  }
+  
+  .product-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
     margin: 0;
-}
-
-.product-description {
+  }
+  
+  .product-description {
     font-size: 14px;
     color: #666;
-}
-
-.product-price {
-    font-size: 18px;
+  }
+  
+  .product-quantity {
+    font-size: 16px;
     font-weight: bold;
-}
-
-.total-breakdown {
+    color: #ffcc00;
+    background-color: #fffbea;
+    padding: 5px 10px;
+    border-radius: 8px;
+    margin-right: 15px;
+    border: 2px solid #ffcc00;
+  }
+  
+  .product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Desglose del total */
+  .total-breakdown {
     margin-bottom: 20px;
-}
-
-.total-line {
+  }
+  
+  .total-line {
     display: flex;
     justify-content: space-between;
-    padding: 5px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .total-line-final {
     font-size: 18px;
-}
-
-.total-line-final {
     font-weight: bold;
-    border-top: 2px solid #ddd;
-    margin-top: 10px;
-    padding-top: 10px;
-}
-
-.delivery-options {
+    color: #ffcc00;
+  }
+  
+  /* Opciones de entrega y pago */
+  .delivery-options, .payment-options {
     margin-bottom: 20px;
-}
-
-.delivery-title {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.delivery-choice {
-    margin-bottom: 10px;
-}
-
-.checkout-btn-container {
+  }
+  
+  .delivery-title, .payment-title {
     text-align: center;
-}
-
-.checkout-btn {
-    padding: 15px 30px;
-    background-color: #ffcc00;
-    color: #333;
     font-size: 18px;
     font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .choice-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  /* Estilos para los divs de opciones de entrega y pago */
+.delivery-choice, .payment-choice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px; /* Tamaño de los divs de opciones */
+    height: 150px; /* Tamaño de los divs de opciones */
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s, transform 0.3s;
+    position: relative; /* Para posicionar el indicador de selección */
+    text-align: center; /* Centra el texto dentro del div */
+  }
+  
+  
+  input[type="radio"] {
+    display: none; /* Oculta los radio buttons */
+  }
+  
+  
+  /* Opcional: Añadir un efecto de escala para hacer el div más atractivo */
+  input[type="radio"]:checked + label {
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño del div cuando está seleccionado */
+  }
+  
+  
+  input[type="radio"]:checked + label svg {
+    fill: #ffcc00;
+  }
+  
+  .custom-radio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .custom-radio svg {
+    width: 40px;
+    height: 40px;
+    fill: #333;
+    transition: fill 0.3s;
+  }
+  
+  /* Botón de finalizar compra */
+  .checkout-btn-container {
+    text-align: center;
+  }
+  
+  .checkout-btn {
+    background-color: #333;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.checkout-btn:hover {
-    background-color: #e6b800;
-}
-
-
-
-
-/* Estilo del contenedor */
-.delivery-choice {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-/* Ocultar los radio buttons originales */
-.delivery-choice input[type="radio"] {
-    display: none;
-}
-
-/* Estilo del label */
-.custom-radio {
-    position: relative;
-    padding-left: 30px;
-    cursor: pointer;
-    user-select: none;
-    font-size: 16px;
-}
-
-/* Estilo del "checkmark" */
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #ccc;
-    border-radius: 50%;
-}
-
-/* Cuando el input está checked, cambia el color del checkmark */
-.delivery-choice input[type="radio"]:checked + .custom-radio .checkmark {
-    background-color: #4CAF50;
-}
-
-/* Estilo del "checkmark" cuando está seleccionado */
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-
-.delivery-choice input[type="radio"]:checked + .custom-radio .checkmark:after {
-    display: block;
-}
-
-.delivery-choice .checkmark:after {
-    top: 5px;
-    left: 5px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: white;
-}
-
-
-.payment-choice {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    transition: background-color 0.3s, transform 0.3s;
   }
   
-  /* Ocultar los radio buttons originales */
-  .payment-choice input[type="radio"] {
-    display: none;
+  .checkout-btn:hover {
+    background-color: #000;
+    transform: translateY(-2px);
   }
   
-  /* Estilo del label */
-  .custom-radio {
-    position: relative;
-    padding-left: 40px; /* Incrementa el padding para dejar espacio al icono */
-    cursor: pointer;
-    user-select: none;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
+  /* Responsiveness */
+  @media (max-width: 600px) {
+    .checkout-container {
+      padding: 15px;
+    }
+  
+    .product-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .product-img {
+      margin-bottom: 10px;
+    }
+  
+    .product-quantity {
+      margin-bottom: 10px;
+    }
+  
+    .total-line {
+      font-size: 14px;
+    }
+  
+    .total-line-final {
+      font-size: 16px;
+    }
+  
+    .choice-container {
+      flex-direction: column;
+    }
+  
+    .delivery-choice, .payment-choice {
+      width: 100%;
+      height: auto;
+    }
+  
+    .checkout-btn {
+      width: 100%;
+      padding: 15px;
+    }
   }
   
-  /* Icono dentro del label */
-  .custom-radio i {
-    margin-right: 10px;
-    font-size: 20px;
-    color: #555;
-  }
-  
-  /* Estilo del "checkmark" */
-  .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #ccc;
-    border-radius: 50%;
-  }
-  
-  /* Cuando el input está checked, cambia el color del checkmark */
-  .payment-choice input[type="radio"]:checked + .custom-radio .checkmark {
-    background-color: #4CAF50;
-  }
-  
-  /* Estilo del "checkmark" cuando está seleccionado */
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  
-  .payment-choice input[type="radio"]:checked + .custom-radio .checkmark:after {
-    display: block;
-  }
-  
-  .payment-choice .checkmark:after {
-    top: 5px;
-    left: 5px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: white;
-  }
-  
-
-  svg{
-    padding-right: 10px;
-  }

@@ -25,3 +25,8 @@
 footer{
     width: 100%;
 }
+
+.app-cart{
+    display: flex;
+    justify-content: center;
+}
