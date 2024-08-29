@@ -3,40 +3,50 @@
     <h1 class="title-cart-header">Pedido</h1>
     <button class="continue-shopping" (click)="toggleCart()">X</button>
   </div>
+  @if(this.products == null || this.products.items == undefined || this.products.items.length <= 0){
 
-  <div class="cart-items">
-    <div class="cart-item" *ngFor="let product of products?.items">
-      <div *ngIf="product.quantity > 0">
-        <div class="item-wrapper">
-          <span class="item-count">{{ product.quantity }}x</span>
-          <div class="item-info">
-            <img [src]="product.details.img" [alt]="product.details.name" />
-            <div class="item-details">
-              <h2>{{ product.details.name }}</h2>
-              <p>
-                {{ product.details.description }}
-              </p>
+    <div class="flex-center">
+      <h2> No hay productos en el carrito :(</h2> 
+    </div>
+
+  } @else { 
+
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let product of products.items">
+        <div *ngIf="product.quantity > 0">
+          <div class="item-wrapper">
+            <span class="item-count">{{ product.quantity }}x</span>
+            <div class="item-info">
+              <img [src]="product.details.img" [alt]="product.details.name" />
+              <div class="item-details">
+                <h2>{{ product.details.name }}</h2>
+                <p>
+                  {{ product.details.description }}
+                </p>
+              </div>
             </div>
+            <div class="item-price">{{ product.details.price }} €</div>
+            <button
+              class="less-item"
+              id="lessItem"
+              (click)="subtractProduct(product.details)"
+            >
+              -
+            </button>
+            <button
+              class="more-item"
+              id="moreItem"
+              (click)="addSameProduct(product.details)"
+            >
+              +
+            </button>
           </div>
-          <div class="item-price">{{ product.details.price }} €</div>
-          <button
-            class="less-item"
-            id="lessItem"
-            (click)="subtractProduct(product.details)"
-          >
-            -
-          </button>
-          <button
-            class="more-item"
-            id="moreItem"
-            (click)="addSameProduct(product.details)"
-          >
-            +
-          </button>
         </div>
       </div>
     </div>
-  </div>
+
+  }
+  
 
   <div class="cart-footer">
     <div class="total-price">Total: {{ this.totalPrice }} €</div>

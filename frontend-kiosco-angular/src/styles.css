@@ -3,6 +3,11 @@
     /* Main page */
     --main-page-with: 1080px;
     
+    /* Product */
+    --product-name-font-weight: 400;
+
+    /* Family */
+    --family-name-font-weight: 400;
 
     /* Family page */
     --family-page-height: 1260px;
@@ -40,5 +45,12 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.flex-start{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5%;
 }
 

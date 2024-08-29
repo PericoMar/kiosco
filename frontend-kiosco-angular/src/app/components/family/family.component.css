@@ -25,6 +25,7 @@ a.family-button:hover {
 
 a.family-button h2, 
 a.family-button img {
+    font-weight: var(--family-name-font-weight);
     margin: 0; /* Asegura que no haya margen en los elementos internos */
 }
 
@@ -48,4 +49,9 @@ a.selected{
     border : 2px solid #ccc;
     border-left: none;
     transform: scale(1.05);
+    font-weight: bold;
+}
+
+a.selected h2{
+    font-weight: 600;
 }

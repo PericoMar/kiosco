@@ -1,7 +1,8 @@
 import { Component, Input, ViewChild} from '@angular/core';
 import { Menu, Product } from '../../interfaces/pedido';
-import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { OrderService } from '../../services/order.service';
+import { AppConfig } from '../../../config/app-config';
 
 @Component({
   selector: 'app-product',
@@ -13,22 +14,19 @@ import { OrderService } from '../../services/order.service';
 export class ProductComponent {
   @Input() product!: (Product | Menu);
 
+  noPhotoUrl = AppConfig.NO_PHOTO_URL;
+
   isMenu! : boolean;
 
   constructor(private orderService: OrderService,
 
   ) { 
     const item: Product | Menu = this.product; 
-    this.isMenu = this.isMenuTypeGuard(item);
   }
 
 
   @ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 
-  // Type guard para determinar si es un Menu
-  isMenuTypeGuard(item: Product | Menu): item is Menu {
-    return (item as Menu).products !== undefined;
-  }
 
   openConfirmModal(product: any): void {
     this.confirmModal.open(product);

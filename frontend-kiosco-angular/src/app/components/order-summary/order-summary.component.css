@@ -33,7 +33,7 @@ body {
   align-items: center;
   border-bottom: 2px solid #ddd; /* Aumenta el borde */
   padding: 20px 40px; /* Aumenta el padding */
-  margin-bottom: 30px; /* Aumenta el margen inferior */
+  /* margin-bottom: 30px;  */
 }
 
 .title-cart-header {

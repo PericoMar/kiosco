@@ -55,14 +55,46 @@
         <button class="close-button" (click)="close()">×</button>
       </div>
       <div class="modal-content">
-        <div class="modal-image">
-          <img [src]="product.img" alt="Imagen de {{ product.name }}" />
-        </div>
-        <div *ngIf="product" class="modal-product-data">
-          <h1><strong>{{ product.name }}</strong></h1>
-          <h2><strong>{{ product.price }}€</strong></h2>
-          <h3>{{ product.description }}</h3>
-        </div>
+        @if(product.customizations.length > 0){
+          <div class="product-with-customizations">
+            <div class="product-data">
+              <div class="modal-image">
+                <img [src]="product.img" alt="Imagen de {{ product.name }}" />
+              </div>
+              <div *ngIf="product" class="modal-product-data text-center">
+                <h1><strong>{{ product.name }}</strong></h1>
+                <h2><strong>{{ product.price }}€</strong></h2>
+                <h3>{{ product.description }}</h3>
+              </div>
+            </div>
+            <div class="customizations">
+              <h4>Personalizaciones</h4>
+              <div class="customizations-container">
+                @for(customization of product.customizations; track customization.name){
+                  <div class="customization">
+                    <h5 class="customization-name">{{ customization.name }}</h5>
+                    @for(responses of customization.responses; track responses.id){
+                      <div class="flex-start">
+                        <img src="{{responses.img ? responses.img : noPhotoUrl}}" alt="{{responses.img}}">
+                        <p class="customization-value">{{ responses.value }}</p>
+                      </div>
+                    }
+                    <hr>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        }@else {
+          <div class="modal-image">
+            <img [src]="product.img" alt="Imagen de {{ product.name }}" />
+          </div>
+          <div *ngIf="product" class="modal-product-data text-center">
+            <h1><strong>{{ product.name }}</strong></h1>
+            <h2><strong>{{ product.price }}€</strong></h2>
+            <h3>{{ product.description }}</h3>
+          </div>
+        }
       </div>
       <!-- Añadir boton de cantidad un Input grande con dos botones izquierda y derecha de mas y menos que el de menops este disabled cuando sea 1 -->
       <div class="modal-quantity">

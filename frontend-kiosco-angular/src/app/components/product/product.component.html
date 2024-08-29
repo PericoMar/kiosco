@@ -1,11 +1,14 @@
 <article class="product" (click)="openConfirmModal(product);">
     <main class="product-info">
-        <img [src]="product.img" [alt]="product.name">
+        <img src="{{product.img ? product.img : noPhotoUrl}}" [alt]="product.name">
         <div class="overflow-hidden">
             <h1 class="product-name text-center">{{ product.name }}</h1>
         </div>
         <!-- <p>{{ product.description }}</p> -->
-        <p>{{ product.price }} €</p>
+        <footer>
+            <p>{{ product.price }} €</p>
+            <hr>
+        </footer>
     </main>
 </article>
 
