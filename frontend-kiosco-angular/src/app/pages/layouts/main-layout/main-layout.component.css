@@ -1,9 +1,7 @@
 .main-page{
     height: 100%;
-    /* display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column; */
+    width: var(--main-page-with);
+    margin: 0px auto;
 }
 
 .product-selection{

@@ -1,13 +1,14 @@
 // Representa una personalización para un producto (e.g. salsa, punto de la carne)
 export interface CustomizationResponse {
     name?: string; // Nombre de la pregunta de personalización
-    value: string; // Valor seleccionado por el cliente
-    price?: number; // Opcional, puede no tener precio
+    responses : CustomizationOption[]; // Opciones seleccionadas por el cliente
 }
 
 // Representa una pregunta de personalización para un producto (e.g., salsa, punto de la carne)
 export interface CustomizationQuestion {
     name: string; // e.g., "Nivel de cocción", "Tipo de salsa"
+    questionType: string; // e.g., single: radio buttons, multiple: checkboxes
+    maxChoices?: number; // Opcional, puede no tener máximo de opciones
     options: CustomizationOption[]; // Opciones disponibles para esta pregunta
 }
 
@@ -27,8 +28,8 @@ export interface Product {
     img?: string;
     familyId: string;
     description: string;
-    customizations: CustomizationResponse[];  // Opcional, puede no tener personalizaciones
-    customizationQuestions?: CustomizationQuestion[];  // Opcional, puede no tener preguntas de personalización
+    customizations: CustomizationResponse[];  
+    customizationQuestions?: CustomizationQuestion[];  
 }
 
 // Representa un menú que puede tener varios productos
@@ -40,8 +41,8 @@ export interface Menu {
     familyId: string;
     description: string;
     products: Product[];  // Productos que componen el menú
-    customizations?: CustomizationResponse[];  // Opcional, puede no tener personalizaciones
-    customizationQuestions?: CustomizationQuestion[];  // Opcional, puede no tener preguntas de personalización
+    customizations: CustomizationResponse[];  
+    customizationQuestions?: CustomizationQuestion[]; 
 }
 
 // Representa un ítem de pedido que puede ser un producto o un menú

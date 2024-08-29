@@ -2,45 +2,52 @@
   <div class="modal-container" *ngIf="isVisible">
   @if(thereAreQuestionsLeft()){
     
-      <div class="modal-header" >
+      <div class="modal-header-questions" >
         <h1>{{product.name}}</h1>
         <button class="close-button" (click)="close()">×</button>
       </div>
-      <div class="modal-content">
+      <div class="modal-content-questions">
         <h2>{{ product.customizationQuestions?.[currentCustomizationIndex]?.name }}</h2>
-        @for (option of product.customizationQuestions?.[currentCustomizationIndex]?.options; track option.id) {
-          <!-- Check box con la imagen (si tiene) y el nombre de la opcion -->
-          <div class="customization-option">
-            <input type="checkbox" id="{{option.id}}" name="{{option.id}}" (change)="selectOption(option)" />
-            <label for="{{option.id}}">
-              <img *ngIf="option.img" [src]="option.img" alt="Imagen de {{ option.value }}" />
-              <span>{{ option.value }}</span>
-            </label>
-          </div>
-        }
+        <div class="options-container">
+          @for (option of product.customizationQuestions?.[currentCustomizationIndex]?.options; track option.id) {
+            <!-- Check box con la imagen (si tiene) y el nombre de la opcion -->
+            <div class="customization-option">
+              <div class="option-img-container">
+                @if(option.img){
+                  <img [src]="option.img" alt="Imagen de {{ option.value }}" class="option-img"/>
+                }@else {
+                  <img [src]="noPhotoUrl" alt="Imagen de {{ option.value }}" class="option-img"/>
+                }
+              </div>
+              <div class="flex-center">
+                <input 
+                  [type]="product.customizationQuestions?.[currentCustomizationIndex]?.questionType === 'single' ? 'radio' : 'checkbox'"
+                  id="{{option.id}}"
+                  name="{{product.customizationQuestions?.[currentCustomizationIndex]?.name}}"
+                  (change)="selectOption(option)" 
+                />
+                <label for="{{option.id}}">
+                  <span>{{ option.value }}</span>
+                </label>
+              </div>
+            </div>
+          }
+        </div>
       </div>
 
       <div class="modal-actions">
-        <button class="cancel-button" (click)="close()" >Cancelar</button>
+        
         @if(currentCustomizationIndex > 0){
           <button class="cancel-button" (click)="previousCustomization()">Anterior</button>
+        } @else {
+          <button class="cancel-button" (click)="close()" >Cancelar</button>
         }
-        
-        <button class="confirm-button" (click)="nextCustomization()">
-            <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="50"
-            height="50"
-            fill="currentColor"
-            class="bi bi-cart2"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-            />
-          </svg>
-          Siguiente pregunta
-        </button>
+          <button class="confirm-button" (click)="nextCustomization()">
+            Siguiente
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+            </svg>
+          </button>
       </div>
   } @else {
       <div class="modal-header" >

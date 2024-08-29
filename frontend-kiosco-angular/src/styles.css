@@ -1,10 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
+    --main-page-with: 1080px;
     --side-bar-width: 30%;
-    --secondary-color: #ffcc00;
+    --secondary-color: rgb(235, 235, 254);
+    --secondary-color-dark: rgb(208, 208, 252);
+    --confirm-modal-width: 800px;
     --max-confirm-modal-width: 1000px;
     --max-confirm-modal-height: 1200px;
-    --min-confirm-modal-width: 800px;
+    --min-confirm-modal-width: 500px;
     --min-confirm-modal-height: 1200px;
 }
 
@@ -17,5 +20,11 @@ body{
 
 .text-center{
     text-align: center;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 

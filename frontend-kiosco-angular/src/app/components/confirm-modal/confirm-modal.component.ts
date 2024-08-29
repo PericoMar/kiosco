@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CustomizationOption, CustomizationQuestion, Menu, Product } from '../../interfaces/pedido';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { AppConfig } from '../../../config/app-config';
 
 @Component({
   selector: 'app-confirm-modal',
@@ -24,31 +25,35 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ]
 })
 export class ConfirmModalComponent {
-  // @Input() product!: Product | Menu;
-  //   export interface Product {
-  //     id: string;
-  //     name: string;
-  //     img?: string;
-  //     price: number;
-  //     description: string;
-  //     familyId: string;
-  //     customizations?: CustomizationResponse[];  // Opcional, puede no tener personalizaciones
-  //     customizationQuestions?: CustomizationQuestion[];  // Opcional, puede no tener preguntas de personalización
-  // }
-  // Tener un producto con datos de prueba:
-  // Ejemplo de datos de prueba para un producto
+
+  noPhotoUrl = AppConfig.NO_PHOTO_URL;
+
+  // Producto o menú a confirmar
   product!: Product | Menu
   
-
+  //Gestion de eventos del modal (sin librerias)
   @Output() confirmAction = new EventEmitter<number>();
   @Output() cancelAction = new EventEmitter<void>();
+
+  // Cantidades
   quantity: number = 1;
 
-  currentCustomizationIndex: number = 0;
+  // Índice de la pregunta de personalización actual
+  currentCustomizationIndex!: number;
 
+  // Control de tipos de pregunta e inputs.
+  currentQuestionType!: string;
+  questionTypes = {
+    single: 'radio',
+    multiple: 'checkbox'
+  }
+
+  // Control de la visibilidad del modal
   isVisible = false;
 
   open(data: any): void {
+    this.currentCustomizationIndex = 0;
+
     this.product = data;
     this.isVisible = true;
     setTimeout(() => {
@@ -65,10 +70,42 @@ export class ConfirmModalComponent {
     return this.product.customizationQuestions != undefined && this.currentCustomizationIndex < this.product.customizationQuestions.length
   }
 
-  selectOption(option : CustomizationOption): void {
-    if(this.product.customizations) {
-      this.product.customizations[this.currentCustomizationIndex] = {name: this.product.customizationQuestions?.[this.currentCustomizationIndex]?.name, value: option.value, price: option.price};
+  selectOption(option: CustomizationOption): void {
+    const currentQuestion = this.product.customizationQuestions?.[this.currentCustomizationIndex];
+    const questionName = currentQuestion?.name;
+
+    if (!questionName || !currentQuestion) {
+        return; // Si no hay nombre de pregunta o pregunta actual, salir de la función
     }
+
+    // Buscar si ya existe una respuesta para esta pregunta
+    let existingCustomization = this.product.customizations.find(c => c.name === questionName);
+
+    if (existingCustomization) {
+        // Verificar si la opción ya ha sido seleccionada (para evitar duplicados)
+        const optionIndex = existingCustomization.responses.findIndex(r => r.id === option.id);
+
+        if (optionIndex !== -1) {
+            // Si ya existe la opción, la eliminamos (manejo de deselección)
+            existingCustomization.responses.splice(optionIndex, 1);
+        } else {
+            // Verificar si se ha alcanzado el número máximo de selecciones
+            if (currentQuestion.maxChoices && existingCustomization.responses.length >= currentQuestion.maxChoices) {
+                // Mostrar un mensaje o realizar alguna acción indicando que no se pueden seleccionar más opciones
+                console.warn(`No se pueden seleccionar más de ${currentQuestion.maxChoices} opciones para ${questionName}.`);
+                return;
+            }
+            // Si no se ha alcanzado el límite, agregamos la opción
+            existingCustomization.responses.push(option);
+        }
+    } else {
+        // Si no existe una respuesta para esta pregunta, la creamos
+        this.product.customizations.push({
+            name: questionName,
+            responses: [option]
+        });
+    }
+
     console.log(this.product.customizations);
   }
 

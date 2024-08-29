@@ -12,6 +12,9 @@
   
   .modal-container {
     position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.7);
@@ -23,7 +26,7 @@
     min-height: var(--min-confirm-modal-height);
     max-width: var(--max-confirm-modal-width);
     max-height: var(--max-confirm-modal-height);
-    width: 100%;
+    width: var(--confirm-modal-width);
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
@@ -59,6 +62,7 @@
 
   .modal-product-data h1{
     font-size: 2.5rem;
+    color: #333;
     margin: 0;
   }
 
@@ -86,11 +90,136 @@
   
   .modal-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-top: 16px;
     gap: 5%;
   }
   
+/* ESTILOS PARA LAS PREGUNTAS */
+.modal-header-questions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header-questions h1{
+  font-size: 2.7rem;
+  margin:0;
+}
+
+.modal-content-questions {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 0 0 15px 15px;
+  height: 900px;
+}
+
+.modal-content-questions h2 {
+  margin-top: 0;
+  font-size: 40px;
+  text-align: center;
+}
+
+.options-container {
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual tamaño */
+  gap: 15px; /* Espacio entre los elementos */
+  height: 100%;
+  max-height: 700px; /* Ajusta la altura máxima según sea necesario */
+  overflow-y: auto; /* Permite el scroll vertical si es necesario */
+  overflow-x: hidden; /* Oculta el scroll horizontal si no se necesita */
+  padding: 20px 10px;
+}
+
+.customization-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.customization-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.option-img-container{
+  height: 100%;
+}
+
+.customization-option img.option-img {
+  height: 250px !important;
+  width: 250px !important;
+  object-fit: cover;
+}
+
+.customization-option input[type="radio"] {
+  appearance: none;
+  border: 4px solid var(--secondary-color-dark);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+}
+
+.customization-option input[type="radio"]:checked::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 38px;
+  height: 38px;
+  background-color: var(--secondary-color-dark);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.customization-option input[type="checkbox"] {
+  appearance: none;
+  border: 4px solid var(--secondary-color-dark);
+  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  background-color: #fff;
+}
+
+.customization-option input[type="checkbox"]:checked::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 38px;
+  height: 38px;
+  background-color: var(--secondary-color-dark);
+  transform: translate(-50%, -50%);
+}
+
+.customization-option label {
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  color: #555;
+  cursor: pointer;
+}
+
+
+
+
   /* Input de cantidad */
 
   .modal-quantity {
@@ -154,7 +283,7 @@
 
   .cancel-button, .confirm-button {
     margin-left: 8px;
-    padding: 24px 54px;
+    padding: 24px 42px;
     border: none;
     cursor: pointer;
     border-radius: 4px;
@@ -164,12 +293,12 @@
   
   .cancel-button {
     background: #f5f5f5;
-    width: 35%;
+    width: 30%;
   }
   
   .confirm-button {
     background: var(--secondary-color);
-    width: 60%;
+    width: 55%;
     color: black;
     display:flex;
     justify-content: center;

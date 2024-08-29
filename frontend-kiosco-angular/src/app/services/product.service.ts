@@ -23,7 +23,7 @@ export class ProductService {
       },
       {
         id: 'p1',
-        name: 'Hamburguesa Especial',
+        name: 'Hamburguesa especial',
         img: '../../../assets/burguer.png',
         price: 12.99,
         description: 'Una deliciosa hamburguesa con ingredientes frescos y personalizables.',
@@ -32,14 +32,16 @@ export class ProductService {
         customizationQuestions: [
           {
             name: '¿Qué tipo de pan prefieres?',
+            questionType: 'single',
             options: [
-              { id: 'pan-avena', value: 'Pan de avena', price: 0 },
-              { id: 'pan-integral', value: 'Pan integral', price: 0.5 },
-              { id: 'pan-brioche', value: 'Pan brioche', price: 1.0 }
+              { id: 'pan-avena', value: 'Pan de avena', price: 0, img: '../../../assets/pan.png' },
+              { id: 'pan-integral', value: 'Pan integral', price: 0.5, img: '../../../assets/pan.png' },
+              { id: 'pan-brioche', value: 'Pan brioche', price: 1.0, img: '../../../assets/pan.png' }
             ]
           },
           {
             name: '¿Qué nivel de cocción deseas?',
+            questionType: 'single',
             options: [
               { id: 'poco-hecho', value: 'Poco hecho', price: 0 },
               { id: 'en-su-punto', value: 'En su punto', price: 0 },
@@ -48,6 +50,8 @@ export class ProductService {
           },
           {
             name: 'Añade algún extra:',
+            questionType: 'multiple',
+            maxChoices: 2,
             options: [
               { id: 'bacon', value: 'Bacon', price: 1.5 },
               { id: 'aguacate', value: 'Aguacate', price: 1.0 },
@@ -55,7 +59,6 @@ export class ProductService {
             ]
           }
         ],
-        customizationsQuestions: [],
       },
       {
         id: "2",
@@ -126,6 +129,7 @@ export class ProductService {
         familyId: "1",
         description: "Muzzarella, pimientos, cebolla, aceitunas y champiñones",
         customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "15",
@@ -165,6 +169,7 @@ export class ProductService {
         familyId: "2",
         description: "Fanta 1.5L",
         customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "5",
@@ -174,6 +179,7 @@ export class ProductService {
         familyId: "3",
         description: "Hamburguesa con queso",
         customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "6",
