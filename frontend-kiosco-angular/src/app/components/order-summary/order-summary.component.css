@@ -12,11 +12,11 @@ body {
   bottom: -100%; /* Posición inicial fuera de la pantalla */
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
-  height: 90vh; /* Ajusta la altura para que ocupe el 90% de la pantalla */
+  width: 95%; /* Aumenta el ancho */
+  height: 95vh; /* Ajusta la altura para que ocupe el 95% de la pantalla */
   background-color: white;
-  border-radius: 8px 8px 0 0;
-  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px 16px 0 0; /* Aumenta el borde redondeado */
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.15); /* Aumenta la sombra */
   transition: bottom 0.3s ease-in-out;
   z-index: 999;
   overflow-y: auto; /* Permite scroll dentro del modal */
@@ -30,24 +30,24 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ddd;
-  padding: 10px 20px;
-  margin-bottom: 20px;
+  border-bottom: 2px solid #ddd; /* Aumenta el borde */
+  padding: 20px 40px; /* Aumenta el padding */
+  margin-bottom: 30px; /* Aumenta el margen inferior */
 }
 
 .title-cart-header {
-  font-size: 24px;
+  font-size: 32px; /* Aumenta el tamaño de la fuente */
 }
 
 .continue-shopping {
-  font-size: 18px;
+  font-size: 24px; /* Aumenta el tamaño de la fuente */
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
 .cart-items {
-  max-height: 65%; /* Ajusta según la altura del modal */
+  max-height: 70%; /* Ajusta según la altura del modal */
   overflow-y: auto;
 }
 
@@ -55,8 +55,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  border-bottom: 1px solid #eee;
+  padding: 30px 60px; /* Aumenta el padding */
+  border-bottom: 2px solid #eee; /* Aumenta el borde */
+}
+.cart-item > div {
+  width: 100%;
 }
 
 .item-wrapper {
@@ -66,30 +69,31 @@ body {
 }
 
 .item-count {
-  padding: 2px;
+  padding: 5px;
   position: relative;
   background-color: #ffcc00;
   color: #333;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 45px; /* Aumenta el tamaño del contador */
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 18px; /* Aumenta el tamaño de la fuente */
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: 20px; /* Aumenta el margen */
 }
 
 .less-item,
 .more-item {
+  margin: 15px; /* Aumenta el margen */
   background-color: #ffcc00;
   border: none;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 40px; /* Aumenta el tamaño de los botones */
+  height: 40px;
   color: #333;
-  font-size: 18px;
+  font-size: 22px; /* Aumenta el tamaño de la fuente */
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -98,62 +102,96 @@ body {
 }
 
 .item-info {
-  padding-inline: 10%;
+  padding-inline: 15%; /* Aumenta el padding */
   display: flex;
   align-items: center;
   flex: 1;
 }
 
 .item-info img {
-  width: 80px;
-  height: 80px;
+  width: 100px; /* Aumenta el tamaño de la imagen */
+  height: 100px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-right: 20px;
+  border-radius: 12px; /* Aumenta el borde redondeado */
+  margin-right: 30px; /* Aumenta el margen */
 }
 
 .item-details h2 {
-  font-size: 20px;
+  font-size: 28px; /* Aumenta el tamaño de la fuente */
   margin: 0;
 }
 
 .item-details p {
-  margin: 5px 0 0 0;
+  margin: 10px 0 0 0; /* Aumenta el margen */
+  font-size: 20px; /* Aumenta el tamaño de la fuente */
 }
 
 .item-price {
-  padding-inline: 10%;
-  font-size: 18px;
+  padding-inline: 15%; /* Aumenta el padding */
+  font-size: 22px; /* Aumenta el tamaño de la fuente */
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: 20px; /* Aumenta el margen */
 }
 
 .cart-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 20px;
-  border-top: 1px solid #ddd;
+  padding: 40px; /* Aumenta el padding */
+  border-top: 2px solid #ddd; /* Aumenta el borde */
 }
 
 .total-price {
-  padding-right:40px ;
-  font-size: 20px;
+  padding-right: 50px; /* Aumenta el padding */
+  font-size: 28px; /* Aumenta el tamaño de la fuente */
   font-weight: bold;
 }
 
 .checkout-btn {
-  padding: 10px 20px;
+  padding: 15px 30px; /* Aumenta el padding */
   background-color: #ffcc00;
   color: #333;
-  font-size: 18px;
+  font-size: 22px; /* Aumenta el tamaño de la fuente */
   font-weight: bold;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px; /* Aumenta el borde redondeado */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .checkout-btn:hover {
   background-color: #e6b800;
+}
+
+
+/* Estilos generales para el scroll */
+.cart-container::-webkit-scrollbar {
+  width: 8px; /* Ancho del scrollbar */
+}
+
+.cart-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color de fondo de la pista del scrollbar */
+  border-radius: 10px; /* Borde redondeado */
+}
+
+.cart-container::-webkit-scrollbar-thumb {
+  background: #ccc; /* Color del scrollbar */
+  border-radius: 10px; /* Borde redondeado del scrollbar */
+  border: 2px solid #f1f1f1; /* Espacio alrededor del scrollbar */
+}
+
+.cart-container::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3; /* Color del scrollbar al pasar el mouse */
+}
+
+/* Estilo para Firefox */
+.cart-container {
+  scrollbar-width: thin; /* Scrollbar fino */
+  scrollbar-color: #ccc #f1f1f1; /* Color del scrollbar y de la pista */
+}
+
+/* Opcional: Estilo específico para otros navegadores que no soportan `-webkit-scrollbar` */
+.cart-container {
+  overflow-y: scroll;
+  scrollbar-width: thin;
 }

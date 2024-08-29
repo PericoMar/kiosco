@@ -20,6 +20,21 @@ export class OrderService {
     return this._products.asObservable();
   }
 
+  getOrder(): Order{
+    if (this.cartProduct){
+      return this.cartProduct;
+    }else{
+      return {
+        id: Date.now(),
+        items: [],
+        total: 0,
+        date: new Date(),
+        consumptionOption: this.consumptionOption,
+        paymentMethod: this.paymentMethod,
+      }
+    }
+  }
+
   get totalPrice(): number {
     if (!this.cartProduct) return 0;
 
@@ -36,7 +51,7 @@ export class OrderService {
     }, 0);
   }
 
-  addProduct(product: Product | Menu, quantity : number = 0): void {
+  addProduct(product: Product | Menu): void {
     if (!this.cartProduct) {
       this.cartProduct = {
         id: Date.now(),
@@ -55,12 +70,12 @@ export class OrderService {
 
     if (existingItemIndex >= 0) {
       // Si el producto/menú ya existe, incrementa la cantidad
-      this.cartProduct.items[existingItemIndex].quantity += quantity;
+      this.cartProduct.items[existingItemIndex].quantity += 1;
     } else {
       // Si no existe, añade un nuevo OrderItem
       const newItem: OrderItem = {
         type: product.hasOwnProperty('products') ? 'menu' : 'product',
-        quantity: quantity,
+        quantity: 1,
         details: product
       };
       this.cartProduct.items.push(newItem);
