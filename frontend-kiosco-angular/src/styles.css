@@ -1,9 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
+    /* Main page */
     --main-page-with: 1080px;
-    --side-bar-width: 30%;
+    
+
+    /* Family page */
+    --family-page-height: 1260px;
+
+
+    /* Side bar */
+    --side-bar-width: 40%;
+
+
+    /* Colors */
     --secondary-color: rgb(235, 235, 254);
     --secondary-color-dark: rgb(208, 208, 252);
+
+
+    /* Modal */
     --confirm-modal-width: 800px;
     --max-confirm-modal-width: 1000px;
     --max-confirm-modal-height: 1200px;

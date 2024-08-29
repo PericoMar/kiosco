@@ -3,7 +3,7 @@
     <!-- <a routerLink="/families" class="back">Volver</a> -->
     <h1 class="text-center">{{ family.name }}</h1>
 </header>
-<section class="products">
+<section class="products" id="family-page-products">
     @for(product of products; track product.id){
         <app-product [product]="product"></app-product>
     }

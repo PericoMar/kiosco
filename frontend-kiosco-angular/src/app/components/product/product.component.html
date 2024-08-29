@@ -9,4 +9,9 @@
     </main>
 </article>
 
-<app-confirm-modal #confirmModal (confirmAction)="onConfirm()" (cancelAction)="onCancel()"></app-confirm-modal>
+@if(isMenu){
+    <app-confirm-modal #confirmModal (confirmAction)="onConfirm($event)" (cancelAction)="onCancel()"></app-confirm-modal>
+} @else {
+    <app-confirm-modal #confirmModal (confirmAction)="onConfirm($event)" (cancelAction)="onCancel()"></app-confirm-modal>
+}
+

@@ -51,7 +51,7 @@ export class OrderService {
     }, 0);
   }
 
-  addProduct(product: Product | Menu): void {
+  addProduct(product: Product | Menu , quantity : number = 1): void {
     if (!this.cartProduct) {
       this.cartProduct = {
         id: Date.now(),
@@ -70,12 +70,12 @@ export class OrderService {
 
     if (existingItemIndex >= 0) {
       // Si el producto/menú ya existe, incrementa la cantidad
-      this.cartProduct.items[existingItemIndex].quantity += 1;
+      this.cartProduct.items[existingItemIndex].quantity += quantity;
     } else {
       // Si no existe, añade un nuevo OrderItem
       const newItem: OrderItem = {
         type: product.hasOwnProperty('products') ? 'menu' : 'product',
-        quantity: 1,
+        quantity: quantity,
         details: product
       };
       this.cartProduct.items.push(newItem);

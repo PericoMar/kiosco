@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild} from '@angular/core';
 import { Menu, Product } from '../../interfaces/pedido';
-import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 import { OrderService } from '../../services/order.service';
 
 @Component({
@@ -13,19 +13,29 @@ import { OrderService } from '../../services/order.service';
 export class ProductComponent {
   @Input() product!: (Product | Menu);
 
+  isMenu! : boolean;
+
   constructor(private orderService: OrderService,
 
-  ) { }
+  ) { 
+    const item: Product | Menu = this.product; 
+    this.isMenu = this.isMenuTypeGuard(item);
+  }
 
 
   @ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
+
+  // Type guard para determinar si es un Menu
+  isMenuTypeGuard(item: Product | Menu): item is Menu {
+    return (item as Menu).products !== undefined;
+  }
 
   openConfirmModal(product: any): void {
     this.confirmModal.open(product);
   }
 
-  onConfirm(): void {
-    this.orderService.addProduct(this.product as Product | Menu);
+  onConfirm(quantity: number): void {
+    this.orderService.addProduct(this.product as Product | Menu, quantity);
     console.log('Confirmado');
   }
 
