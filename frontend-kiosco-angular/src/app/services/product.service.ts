@@ -18,7 +18,44 @@ export class ProductService {
         img : "../../../assets/pizza.png",
         familyId: "1",
         description: "Muzzarella, tomate y aceitunas",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
+      },
+      {
+        id: 'p1',
+        name: 'Hamburguesa Especial',
+        img: '../../../assets/burguer.png',
+        price: 12.99,
+        description: 'Una deliciosa hamburguesa con ingredientes frescos y personalizables.',
+        familyId: '1',
+        customizations: [],
+        customizationQuestions: [
+          {
+            name: '¿Qué tipo de pan prefieres?',
+            options: [
+              { id: 'pan-avena', value: 'Pan de avena', price: 0 },
+              { id: 'pan-integral', value: 'Pan integral', price: 0.5 },
+              { id: 'pan-brioche', value: 'Pan brioche', price: 1.0 }
+            ]
+          },
+          {
+            name: '¿Qué nivel de cocción deseas?',
+            options: [
+              { id: 'poco-hecho', value: 'Poco hecho', price: 0 },
+              { id: 'en-su-punto', value: 'En su punto', price: 0 },
+              { id: 'bien-hecho', value: 'Bien hecho', price: 0.5 }
+            ]
+          },
+          {
+            name: 'Añade algún extra:',
+            options: [
+              { id: 'bacon', value: 'Bacon', price: 1.5 },
+              { id: 'aguacate', value: 'Aguacate', price: 1.0 },
+              { id: 'champinones', value: 'Champiñones', price: 0.7 }
+            ]
+          }
+        ],
+        customizationsQuestions: [],
       },
       {
         id: "2",
@@ -27,7 +64,8 @@ export class ProductService {
         img : "../../../assets/pizza.png",
         familyId: "1",
         description: "Fugazzeta con cebolla y queso",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       //Insertar al menos 8 productos mas de la familia 1 para poder ver el scroll
       {
@@ -37,7 +75,8 @@ export class ProductService {
         img: "../../../assets/pizza.png",
         familyId: "1",
         description: "Muzzarella, tomate y ajo",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "10",
@@ -46,7 +85,8 @@ export class ProductService {
         img: "../../../assets/pizza.png",
         familyId: "1",
         description: "Muzzarella y calabresa",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "11",
@@ -55,7 +95,8 @@ export class ProductService {
         img: "../../../assets/pizza.png",
         familyId: "1",
         description: "Muzzarella, provolone, roquefort y parmesano",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "12",
@@ -64,7 +105,8 @@ export class ProductService {
         img: "../../../assets/pizza.png",
         familyId: "1",
         description: "Muzzarella, jamón y ananá",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "13",
@@ -73,7 +115,8 @@ export class ProductService {
         img: "../../../assets/pizza.png",
         familyId: "1",
         description: "Muzzarella y pepperoni",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "14",
@@ -82,7 +125,7 @@ export class ProductService {
         img: "../../../assets/pizza.png",
         familyId: "1",
         description: "Muzzarella, pimientos, cebolla, aceitunas y champiñones",
-        amount: 0
+        customizations: [],
       },
       {
         id: "15",
@@ -91,7 +134,8 @@ export class ProductService {
         img: "../../../assets/pizza.png",
         familyId: "1",
         description: "Muzzarella, tomate y albahaca",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "16",
@@ -100,7 +144,8 @@ export class ProductService {
         img: "../../../assets/pizza.png",
         familyId: "1",
         description: "Muzzarella, carne, cebolla y salsa barbacoa",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "3",
@@ -109,7 +154,8 @@ export class ProductService {
         img : "../../../assets/coca.png",
         familyId: "2",
         description: "Coca Cola 1.5L",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "4",
@@ -118,7 +164,7 @@ export class ProductService {
         img : "../../../assets/fanta.png",
         familyId: "2",
         description: "Fanta 1.5L",
-        amount: 0
+        customizations: [],
       },
       {
         id: "5",
@@ -127,7 +173,7 @@ export class ProductService {
         img : "../../../assets/hamburguesa.png",
         familyId: "3",
         description: "Hamburguesa con queso",
-        amount: 0
+        customizations: [],
       },
       {
         id: "6",
@@ -136,7 +182,8 @@ export class ProductService {
         img : "../../../assets/papas.png",
         familyId: "3",
         description: "Papas fritas",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "7",
@@ -145,7 +192,8 @@ export class ProductService {
         img : "../../../assets/helado.png",
         familyId: "4",
         description: "Helado de chocolate",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       },
       {
         id: "8",
@@ -154,7 +202,8 @@ export class ProductService {
         img : "../../../assets/brownie.png",
         familyId: "4",
         description: "Brownie de chocolate",
-        amount: 0
+        customizations: [],
+        customizationsQuestions: [],
       }
     ].filter(product => product.familyId === id);
   }

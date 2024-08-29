@@ -19,6 +19,8 @@
     padding: 44px;
     border-radius: 8px;
     z-index: 2;
+    min-width: var(--min-confirm-modal-width);
+    min-height: var(--min-confirm-modal-height);
     max-width: var(--max-confirm-modal-width);
     max-height: var(--max-confirm-modal-height);
     width: 100%;
