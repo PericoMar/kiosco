@@ -3,6 +3,7 @@ import { MainLayoutComponent } from './pages/layouts/main-layout/main-layout.com
 import { OptionsPageComponent } from './pages/options-page/options-page.component';
 import { FamilySelectedPageComponent } from './components/family-selected-page/family-selected-page.component';
 import { PaymentComponent } from './pages/payment/payment.component';
+import { ConfirmPageComponent } from './pages/confirm-page/confirm-page.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,10 @@ export const routes: Routes = [
   {
     path: 'payment',
     component: PaymentComponent,
+  },
+  {
+    path: 'confirm-page',
+    component: ConfirmPageComponent,
   },
   { path: '**', redirectTo: '' },
 ];

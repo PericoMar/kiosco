@@ -1,0 +1,81 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Contenedor principal */
+.confirmation-container {
+    text-align: center;
+    padding: 60px; /* Aumentado el padding */
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 800px; /* Aumentado el ancho máximo */
+    width: 100%;
+}
+
+/* Título de confirmación */
+.confirmation-title {
+    font-size: 48px; /* Aumentado el tamaño de la fuente */
+    font-weight: bold;
+    color: #28a745;
+    margin-top: 30px; /* Aumentado el margen superior */
+}
+
+/* Número de pedido */
+.order-number {
+    font-size: 32px; /* Aumentado el tamaño de la fuente */
+    margin: 30px 0; /* Aumentado el margen superior e inferior */
+}
+
+/* Mensajes adicionales */
+.thank-you-message,
+.order-summary {
+    font-size: 24px; /* Aumentado el tamaño de la fuente */
+    margin-bottom: 30px; /* Aumentado el margen inferior */
+    color: #666;
+}
+
+/* Botón de retorno */
+.return-btn {
+    font-size: 28px; /* Aumentado el tamaño de la fuente */
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    padding: 20px 40px; /* Aumentado el padding */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.return-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Animación bounce */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px); /* Aumentado para un rebote más notorio */
+    }
+    60% {
+        transform: translateY(-15px); /* Aumentado para un rebote más notorio */
+    }
+}
+
+/* Imagen animada de confirmación */
+.bi-check-circle {
+    fill: #28a745;
+    animation: bounce 2s infinite;
+    margin-top: 30px; /* Aumentado para mayor separación */
+    width: 120px; /* Aumentado el tamaño del icono */
+    height: 120px; /* Aumentado el tamaño del icono */
+}

@@ -13,6 +13,14 @@
           <div class="product-details">
             <h2 class="product-name">{{ product.details.name }}</h2>
             <p class="product-description">{{ product.details.description }}</p>
+            <!-- <div *ngIf="product.details.extraDetails?.length > 0" class="product-extra-details">
+              <h3>Detalles adicionales:</h3>
+              <ul>
+                <li *ngFor="let detail of product.details.extraDetails">
+                  {{ detail }}
+                </li>
+              </ul>
+            </div> -->
           </div>
           <span class="product-quantity">Cantidad: {{ product.quantity }}</span>
           <div class="product-price">{{ product.details.price }} €</div>
@@ -33,7 +41,7 @@
         </div>
         <div class="total-line total-line-final">
           <span class="total-label">Total:</span>
-          <span class="total-value">{{products.total + this.getTaxs()}} €</span>
+          <span class="total-value">{{this.totalPriceOrder}} €</span>
           <!-- Cambiar el total, por el real -->
         </div>
       </div>
