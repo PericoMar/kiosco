@@ -25,7 +25,10 @@
                 </p>
               </div>
             </div>
-            <div class="item-price">{{ product.details.price }} €</div>
+            <div class="price-wrapper">
+              <div class="total-item-price">{{ product.details.price * product.quantity }} €</div>
+              <div class="item-price">{{ product.details.price }}€ /ud</div>
+            </div>
             <button
               class="less-item"
               id="lessItem"

@@ -153,6 +153,12 @@
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
+.disabled-option{
+  opacity: 0.5;
+  pointer-events: none;
+  background-color: #f5f5f5;
+}
+
 .option-img-container{
   height: 100%;
 }
@@ -365,6 +371,12 @@
     justify-content: center;
     align-items: center;
     gap: 30px;
+  }
+
+  .disabled-button{
+    background-color: var(--secondary-color-light);
+    color: #949494;
+    cursor: not-allowed;
   }
   
   /* Clases de animación */

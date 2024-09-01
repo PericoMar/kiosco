@@ -11,7 +11,13 @@
         <div class="options-container">
           @for (option of product.customizationQuestions?.[currentCustomizationIndex]?.options; track option.id) {
             <!-- Check box con la imagen (si tiene) y el nombre de la opcion -->
-            <div class="customization-option">
+            <div 
+            class="customization-option" 
+            [ngClass]="{'disabled-option' : 
+            !isOptionSelected(currentCustomizationIndex, option.id) && 
+            this.product.customizationQuestions?.[currentCustomizationIndex]?.maxChoices &&
+            maxChoicesReached(currentCustomizationIndex)}"
+            >
               <div class="option-img-container">
                 @if(option.img){
                   <img [src]="option.img" alt="Imagen de {{ option.value }}" class="option-img"/>
@@ -23,7 +29,11 @@
                 <input 
                   [type]="product.customizationQuestions?.[currentCustomizationIndex]?.questionType === 'single' ? 'radio' : 'checkbox'"
                   id="{{option.id}}"
+                  [checked]="isOptionSelected(currentCustomizationIndex, option.id)"
                   name="{{product.customizationQuestions?.[currentCustomizationIndex]?.name}}"
+                  [disabled]="!isOptionSelected(currentCustomizationIndex, option.id) && 
+                  this.product.customizationQuestions?.[currentCustomizationIndex]?.maxChoices &&
+                  maxChoicesReached(currentCustomizationIndex)"
                   (change)="selectOption(option)" 
                 />
                 <label for="{{option.id}}">
@@ -42,7 +52,11 @@
         } @else {
           <button class="cancel-button" (click)="close()" >Cancelar</button>
         }
-          <button class="confirm-button" (click)="nextCustomization()">
+          <button class="confirm-button" 
+          (click)="nextCustomization()"
+          [ngClass]="{'disabled-button' : !minChoicesReached(currentCustomizationIndex)}"
+          [disabled]="!minChoicesReached(currentCustomizationIndex)"
+          >
             Siguiente
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
@@ -103,7 +117,7 @@
         <button class="quantity-button" (click)="increaseQuantity()">+</button>
       </div>
       <div class="modal-actions">
-        <button class="cancel-button" (click)="close()">Cancelar</button>
+        <button class="cancel-button" (click)="previousCustomization()">Anterior</button>
         <button class="confirm-button" (click)="confirm()">
             <svg
             xmlns="http://www.w3.org/2000/svg"

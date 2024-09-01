@@ -127,11 +127,23 @@ body {
   font-size: 20px; /* Aumenta el tamaño de la fuente */
 }
 
-.item-price {
-  padding-inline: 15%; /* Aumenta el padding */
+.price-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  align-items: center;
+  width: 20%;
+  padding-inline: 5%; /* Aumenta el padding */
+}
+
+.total-item-price {
   font-size: 22px; /* Aumenta el tamaño de la fuente */
   font-weight: bold;
-  margin-right: 20px; /* Aumenta el margen */
+}
+
+.item-price{
+  font-size: 16px; /* Aumenta el tamaño de la fuente */
+  color: #777;
 }
 
 .cart-footer {
