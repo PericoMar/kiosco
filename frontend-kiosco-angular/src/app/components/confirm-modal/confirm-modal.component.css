@@ -39,6 +39,8 @@
 
   .modal-header h1{
     font-size: 2.7rem;
+    font-weight: 500;
+    width: 90%;
     margin:0;
   }
 
@@ -66,6 +68,7 @@
     font-size: 2.5rem;
     color: #333;
     margin: 0;
+    font-weight: 500;
   }
 
   .modal-product-data h2{
@@ -102,11 +105,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
 
 .modal-header-questions h1{
   font-size: 2.7rem;
+  font-weight: 500;
   margin:0;
+  width: 90%;
 }
 
 .modal-content-questions {
@@ -164,8 +170,8 @@
 }
 
 .customization-option img.option-img {
-  height: 250px !important;
-  width: 250px !important;
+  height: 200px !important;
+  width: 200px !important;
   object-fit: cover;
 }
 
@@ -225,6 +231,18 @@
   cursor: pointer;
 }
 
+.price-container{
+  min-height: 10%;
+}
+
+.price{
+  font-size: 20px;
+  color: #333;
+  margin: 0;
+}
+
+
+
 
 /* ESTILOS PARA PRODUCTO CON CUSTOMIZACIÓN */
 
@@ -237,6 +255,19 @@
     
   }
 
+  .total-price{
+    font-size: 30px;
+    font-weight: 500;
+    color: #535151;
+    margin: 0;
+  }
+
+  .description{
+    font-size: 12px;
+    margin: 0;
+
+  }
+
   .product-with-customizations h4{
    margin-top:0;   
    font-size: 30px;
@@ -245,6 +276,13 @@
   .product-with-customizations .product-data{
     width: 50%;
   }
+
+  .product-data h1{
+    font-size: 2.5rem;
+    color: #333;
+    margin: 0;
+  }
+
 
   .product-with-customizations .customizations{
     width: 40%;
@@ -284,6 +322,10 @@
     border: none;
     height: 1px;
     background-color: var(--secondary-color-dark);
+  }
+
+  .response-info{
+    width: 80%;
   }
 
 
@@ -347,6 +389,26 @@
   }
 
   /* ------ */
+  .next-question{
+    width: 50%;
+  }
+  
+  .alert-message{
+    margin-left: 8px;
+    color: rgb(255, 119, 119);
+    font-size: 20px;
+    min-width: 30px;
+    transition: opacity 0.3s ease-in-out; 
+  }
+
+  .alert-message {
+    opacity: 1;
+  }
+
+  .alert-message.hidden {
+      opacity: 0; /* Oculta el mensaje suavemente */
+  }
+
 
   .cancel-button, .confirm-button {
     margin-left: 8px;
@@ -365,7 +427,7 @@
   
   .confirm-button {
     background: var(--secondary-color);
-    width: 55%;
+    width: 100%;
     color: black;
     display:flex;
     justify-content: center;

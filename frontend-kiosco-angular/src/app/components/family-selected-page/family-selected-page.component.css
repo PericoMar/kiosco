@@ -15,27 +15,3 @@ h1{
 }
 
 
-/* Personalización de la barra de desplazamiento para navegadores WebKit (Chrome, Safari) */
-.products::-webkit-scrollbar {
-    width: 10px; /* Ancho de la barra de desplazamiento */
-  }
-  
-  .products::-webkit-scrollbar-track {
-    background: transparent; /* Fondo de la pista de desplazamiento */
-  }
-  
-  .products::-webkit-scrollbar-thumb {
-    background-color: rgba(111, 104, 104, 0.4); /* Color de la barra de desplazamiento */
-    border-radius: 20px; /* Redondeo de la barra de desplazamiento */
-    border: 2px solid transparent; /* Espaciado para hacer la barra más delgada */
-    background-clip: content-box; /* Clipping para el borde */
-  }
-  
-  .products::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.4); /* Color más oscuro al pasar el cursor */
-  }
-  
-  /* Ocultar las flechas de la barra de desplazamiento */
-  .products::-webkit-scrollbar-button {
-    display: none;
-  }

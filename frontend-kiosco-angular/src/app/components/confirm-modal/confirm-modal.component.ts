@@ -147,6 +147,19 @@ export class ConfirmModalComponent {
     return currentQuestion?.minChoices! == 0 || customizationResponse?.responses.length! >= currentQuestion?.minChoices!;
   }
 
+  getTotalPrice(): number {
+    let totalPrice = this.product.price;
+
+    this.product.customizations.forEach(customization => {
+      customization.responses.forEach(response => {
+        totalPrice += response.price || 0;
+      });
+    });
+
+    //Devolverlo con dos decimales aproximados
+    return Math.round(totalPrice * 100) / 100;
+  }
+
   previousCustomization(): void {
     this.currentCustomizationIndex--;
   }

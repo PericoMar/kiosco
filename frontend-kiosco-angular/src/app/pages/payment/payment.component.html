@@ -49,7 +49,7 @@
       <!-- Selección de entrega -->
       <div class="delivery-options">
         <h2 class="delivery-title">Modo de Entrega</h2>
-        <div class="choice-container">
+        <div class="choice-container" (click)="setDeliveryMethod('llevar')">
           <div class="delivery-choice">
             <input
               type="radio"
@@ -76,7 +76,7 @@
               Para llevar
             </label>
           </div>
-          <div class="delivery-choice">
+          <div class="delivery-choice" (click)="setDeliveryMethod('comer_aqui')">
             <input
               type="radio"
               id="comer_aqui"

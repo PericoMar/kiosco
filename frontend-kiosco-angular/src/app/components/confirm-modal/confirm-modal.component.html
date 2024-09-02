@@ -17,6 +17,7 @@
             !isOptionSelected(currentCustomizationIndex, option.id) && 
             this.product.customizationQuestions?.[currentCustomizationIndex]?.maxChoices &&
             maxChoicesReached(currentCustomizationIndex)}"
+            (click)="selectOption(option)"
             >
               <div class="option-img-container">
                 @if(option.img){
@@ -34,11 +35,14 @@
                   [disabled]="!isOptionSelected(currentCustomizationIndex, option.id) && 
                   this.product.customizationQuestions?.[currentCustomizationIndex]?.maxChoices &&
                   maxChoicesReached(currentCustomizationIndex)"
-                  (change)="selectOption(option)" 
+                  (change)="selectOption(option)"
                 />
                 <label for="{{option.id}}">
                   <span>{{ option.value }}</span>
                 </label>
+              </div>
+              <div class="price-container">
+                <span class="price">{{ option.price ? '+'+option.price+'€' : '' }}</span>
               </div>
             </div>
           }
@@ -46,11 +50,16 @@
       </div>
 
       <div class="modal-actions">
-        
         @if(currentCustomizationIndex > 0){
           <button class="cancel-button" (click)="previousCustomization()">Anterior</button>
         } @else {
           <button class="cancel-button" (click)="close()" >Cancelar</button>
+        }
+        <div class="flex-column-baseline next-question">
+          @if(!minChoicesReached(currentCustomizationIndex)){
+            <span class="alert-message">Selecciona al menos {{ product.customizationQuestions?.[currentCustomizationIndex]?.minChoices! > 1 ?  product.customizationQuestions?.[currentCustomizationIndex]?.minChoices+' opciones' : 'una opción'}}</span>
+        } @else {
+            <span class="alert-message hidden"></span> <!-- Mantén el espacio pero oculta el mensaje -->
         }
           <button class="confirm-button" 
           (click)="nextCustomization()"
@@ -62,6 +71,7 @@
               <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
             </svg>
           </button>
+        </div>
       </div>
   } @else {
       <div class="modal-header" >
@@ -71,14 +81,14 @@
       <div class="modal-content">
         @if(product.customizations.length > 0){
           <div class="product-with-customizations">
-            <div class="product-data">
+            <div class="product-data text-center">
+              <h1><strong>{{ product.name }}</strong></h1>
               <div class="modal-image">
                 <img [src]="product.img" alt="Imagen de {{ product.name }}" />
               </div>
-              <div *ngIf="product" class="modal-product-data text-center">
-                <h1><strong>{{ product.name }}</strong></h1>
-                <h2><strong>{{ product.price }}€</strong></h2>
-                <h3>{{ product.description }}</h3>
+              <div *ngIf="product" class="modal-product-data">
+                <h2 class="total-price">{{ getTotalPrice() }}€</h2>
+                <h3 class="description">{{ product.description }}</h3>
               </div>
             </div>
             <div class="customizations">
@@ -88,9 +98,12 @@
                   <div class="customization">
                     <h5 class="customization-name">{{ customization.name }}</h5>
                     @for(responses of customization.responses; track responses.id){
-                      <div class="flex-start">
-                        <img src="{{responses.img ? responses.img : noPhotoUrl}}" alt="{{responses.img}}">
-                        <p class="customization-value">{{ responses.value }}</p>
+                      <div class="space-between">
+                        <div class="flex-start response-info">
+                          <img src="{{responses.img ? responses.img : noPhotoUrl}}" alt="{{responses.img}}">
+                          <p class="customization-value">{{ responses.value }}</p>
+                        </div>
+                        <span>{{ responses.price ? '+'+responses.price+'€' : ''}}</span>
                       </div>
                     }
                     <hr>
@@ -105,8 +118,8 @@
           </div>
           <div *ngIf="product" class="modal-product-data text-center">
             <h1><strong>{{ product.name }}</strong></h1>
-            <h2><strong>{{ product.price }}€</strong></h2>
-            <h3>{{ product.description }}</h3>
+            <h2 class="total-price">{{ product.price }}€</h2>
+            <h3 class="description">{{ product.description }}</h3>
           </div>
         }
       </div>

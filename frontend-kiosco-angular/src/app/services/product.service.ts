@@ -38,7 +38,9 @@ export class ProductService {
             options: [
               { id: 'pan-avena', value: 'Pan de avena', price: 0, img: 'assets/pan.png' },
               { id: 'pan-integral', value: 'Pan integral', price: 0.5, img: 'assets/pan.png' },
-              { id: 'pan-brioche', value: 'Pan brioche', price: 1.0, img: 'assets/pan.png' }
+              { id: 'pan-brioche', value: 'Pan brioche', price: 1.0, img: 'assets/pan.png' },
+              { id: 'pan-cereales', value: 'Pan cereales', price: 1.5, img: 'assets/pan.png' },
+              { id: 'pan-tostado', value: 'Pan tostado', price: 0, img: 'assets/pan.png' },
             ]
           },
           {
@@ -56,7 +58,7 @@ export class ProductService {
             id: 'extra',
             name: 'Añade algún extra:',
             questionType: 'multiple',
-            minChoices: 0,
+            minChoices: 2,
             maxChoices: 2,
             options: [
               { id: 'bacon', value: 'Bacon', price: 1.5 },
