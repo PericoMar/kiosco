@@ -87,7 +87,7 @@
                 <img [src]="product.img" alt="Imagen de {{ product.name }}" />
               </div>
               <div *ngIf="product" class="modal-product-data">
-                <h2 class="total-price">{{ getTotalPrice() }}€</h2>
+                <h2 class="total-price">{{ getTotalPrice(product) }}€</h2>
                 <h3 class="description">{{ product.description }}</h3>
               </div>
             </div>

@@ -58,7 +58,7 @@ export class ProductService {
             id: 'extra',
             name: 'Añade algún extra:',
             questionType: 'multiple',
-            minChoices: 2,
+            minChoices: 0,
             maxChoices: 2,
             options: [
               { id: 'bacon', value: 'Bacon', price: 1.5 },
@@ -220,5 +220,18 @@ export class ProductService {
         customizationsQuestions: [],
       }
     ].filter(product => product.familyId === id);
+  }
+
+  getTotalPrice(product : Product | Menu): number {
+    let totalPrice = product.price;
+
+    product.customizations.forEach(customization => {
+      customization.responses.forEach(response => {
+        totalPrice += response.price || 0;
+      });
+    });
+
+    //Devolverlo con dos decimales aproximados
+    return Math.round(totalPrice * 100) / 100;
   }
 }

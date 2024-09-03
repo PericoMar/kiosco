@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CustomizationOption, CustomizationQuestion, Menu, Product } from '../../interfaces/pedido';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AppConfig } from '../../../config/app-config';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-confirm-modal',
@@ -26,13 +27,17 @@ import { AppConfig } from '../../../config/app-config';
 })
 export class ConfirmModalComponent {
 
+  constructor(
+    private productService: ProductService
+  ) { }
+
   noPhotoUrl = AppConfig.NO_PHOTO_URL;
 
   // Producto o menú a confirmar
   product!: Product | Menu
   
   //Gestion de eventos del modal (sin librerias)
-  @Output() confirmAction = new EventEmitter<number>();
+  @Output() confirmAction = new EventEmitter<{ product: Product | Menu, quantity: number }>();
   @Output() cancelAction = new EventEmitter<void>();
 
   // Cantidades
@@ -55,6 +60,8 @@ export class ConfirmModalComponent {
     this.currentCustomizationIndex = 0;
 
     this.product = data;
+    this.product.customizations = [];
+
     this.isVisible = true;
     setTimeout(() => {
       const modalContainer = document.querySelector('.modal-container') as HTMLElement;
@@ -147,17 +154,8 @@ export class ConfirmModalComponent {
     return currentQuestion?.minChoices! == 0 || customizationResponse?.responses.length! >= currentQuestion?.minChoices!;
   }
 
-  getTotalPrice(): number {
-    let totalPrice = this.product.price;
-
-    this.product.customizations.forEach(customization => {
-      customization.responses.forEach(response => {
-        totalPrice += response.price || 0;
-      });
-    });
-
-    //Devolverlo con dos decimales aproximados
-    return Math.round(totalPrice * 100) / 100;
+  getTotalPrice(product : Product | Menu): number {
+    return this.productService.getTotalPrice(product);
   }
 
   previousCustomization(): void {
@@ -181,7 +179,6 @@ export class ConfirmModalComponent {
 
   close(): void {
     console.log('close');
-    this.product.customizations = [];
     const modalContainer = document.querySelector('.modal-container') as HTMLElement;
     const modalOverlay = document.querySelector('.modal-overlay') as HTMLElement;
     if (modalContainer && modalOverlay) {
@@ -195,7 +192,14 @@ export class ConfirmModalComponent {
   }
 
   confirm(): void {
-    this.confirmAction.emit(this.quantity);
+
+    console.log(this.product);
+    const productDetails = {
+      product: this.product,
+      quantity: this.quantity
+    };
+
+    this.confirmAction.emit(productDetails);
     this.close();
   }
   

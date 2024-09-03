@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Menu, Order, OrderItem, Product } from '../interfaces/pedido';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ProductService } from './product.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class OrderService {
   private consumptionOption: string = '';
   private paymentMethod: string = '';
-  private cartProduct: Order | null = null;  // Solo un pedido a la vez
+  private cartProduct: Order | null = null
   private _products: BehaviorSubject<Order | null>;
 
-  constructor() {
+  constructor(
+    private productService: ProductService,
+  ) {
     this._products = new BehaviorSubject<Order | null>(null);
   }
 
@@ -39,7 +42,7 @@ export class OrderService {
     if (!this.cartProduct) return 0;
 
     return this.cartProduct.items.reduce((total, item) => {
-      return total + item.quantity * (item.details as Product | Menu).price;
+      return total + item.quantity * this.productService.getTotalPrice((item.details as Product | Menu));
     }, 0);
   }
 
@@ -51,34 +54,46 @@ export class OrderService {
     }, 0);
   }
 
-  addProduct(product: Product | Menu , quantity : number = 1): void {
+  addProduct(product: Product | Menu, quantity: number = 1): void {
+    console.log("Antes", this._products);
+
     if (!this.cartProduct) {
-      this.cartProduct = {
-        id: Date.now(),
-        items: [],
-        total: 0,
-        date: new Date(),
-        consumptionOption: this.consumptionOption,
-        paymentMethod: this.paymentMethod,
-      };
+        this.cartProduct = {
+            id: Date.now(),
+            items: [],
+            total: 0,
+            date: new Date(),
+            consumptionOption: this.consumptionOption,
+            paymentMethod: this.paymentMethod,
+        };
     }
 
+    // Crear una copia del producto para evitar que las personalizaciones se sobrescriban
+    const clonedProduct = JSON.parse(JSON.stringify(product));
+
     // Buscar si el producto o menú ya está en el pedido
-    const existingItemIndex = this.cartProduct.items.findIndex(item =>
-      item.details.id === product.id && item.type === (product.hasOwnProperty('products') ? 'menu' : 'product')
-    );
+    const existingItemIndex = this.cartProduct.items.findIndex(item => {
+        console.log(item.details);
+        console.log(clonedProduct);
+        return (
+            item.details.id === clonedProduct.id &&
+            item.type === (clonedProduct.hasOwnProperty('products') ? 'menu' : 'product') &&
+            JSON.stringify(item.details.customizations) === JSON.stringify(clonedProduct.customizations)
+        );
+    });
 
     if (existingItemIndex >= 0) {
-      // Si el producto/menú ya existe, incrementa la cantidad
-      this.cartProduct.items[existingItemIndex].quantity += quantity;
+        // Si el producto/menú ya existe, incrementa la cantidad
+        console.log("Ya existe");
+        this.cartProduct.items[existingItemIndex].quantity += quantity;
     } else {
-      // Si no existe, añade un nuevo OrderItem
-      const newItem: OrderItem = {
-        type: product.hasOwnProperty('products') ? 'menu' : 'product',
-        quantity: quantity,
-        details: product
-      };
-      this.cartProduct.items.push(newItem);
+        // Si no existe, añade un nuevo OrderItem
+        const newItem: OrderItem = {
+            type: clonedProduct.hasOwnProperty('products') ? 'menu' : 'product',
+            quantity: quantity,
+            details: clonedProduct,
+        };
+        this.cartProduct.items.push(newItem);
     }
 
     // Recalcula el total del pedido
@@ -86,7 +101,10 @@ export class OrderService {
 
     // Actualiza el observable con el nuevo estado del carrito
     this._products.next(this.cartProduct);
-  }
+
+    console.log("Después", this.cartProduct);
+}
+
 
   subtractProduct(product: Product | Menu): void {
     if (!this.cartProduct) return;

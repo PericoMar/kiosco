@@ -86,7 +86,8 @@ body {
 }
 
 .less-item,
-.more-item {
+.more-item,
+.dropdown {
   margin: 15px; /* Aumenta el margen */
   background-color: #ffcc00;
   border: none;
@@ -103,7 +104,7 @@ body {
 }
 
 .item-info {
-  padding-inline: 15%; /* Aumenta el padding */
+  padding-inline: 2%; /* Aumenta el padding */
   display: flex;
   align-items: center;
   flex: 1;
@@ -133,7 +134,7 @@ body {
   justify-content: baseline;
   align-items: center;
   width: 20%;
-  padding-inline: 5%; /* Aumenta el padding */
+  padding-inline: 2%; /* Aumenta el padding */
 }
 
 .total-item-price {
@@ -144,6 +145,50 @@ body {
 .item-price{
   font-size: 16px; /* Aumenta el tamaño de la fuente */
   color: #777;
+}
+
+/* CUSTOMIZACIONES DE LOS PRODUCTOS */
+ .customizations{
+  padding:20px 0px;
+  width: 40%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+ .customizations .customization{
+  margin-bottom: 20px;
+}
+
+ .customizations .customization-name{
+  font-size: 20px;
+  color: rgb(58, 57, 57);
+  margin: 0;
+}
+
+ .customizations .customization-value{
+  font-size: 20px;
+  color: rgb(58, 57, 57);
+  margin: 0;
+}
+
+ .customizations img{
+  width: 40px;
+  height: 40px;
+}
+
+.customizations .customization hr{
+  width: 100%;
+  opacity: 0.5;
+  border: none;
+  height: 1px;
+  background-color: var(--secondary-color-dark);
+}
+
+.response-info{
+  width: 80%;
 }
 
 .cart-footer {

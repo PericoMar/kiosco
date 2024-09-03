@@ -32,8 +32,9 @@ export class ProductComponent {
     this.confirmModal.open(product);
   }
 
-  onConfirm(quantity: number): void {
-    this.orderService.addProduct(this.product as Product | Menu, quantity);
+  onConfirm(productDetails: { product: Product | Menu, quantity: number }): void {
+    console.log(productDetails);
+    this.orderService.addProduct(productDetails.product , productDetails.quantity);
     console.log('Confirmado');
   }
 

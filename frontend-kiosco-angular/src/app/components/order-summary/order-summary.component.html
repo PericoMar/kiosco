@@ -25,9 +25,16 @@
                 </p>
               </div>
             </div>
+            @if(product.details.customizations.length > 0){
+              <button class="dropdown">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-caret-up" viewBox="0 0 16 16">
+                  <path d="M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659"/>
+                </svg>
+              </button>
+            }
             <div class="price-wrapper">
-              <div class="total-item-price">{{ product.details.price * product.quantity }} €</div>
-              <div class="item-price">{{ product.details.price }}€ /ud</div>
+              <div class="total-item-price">{{ productService.getTotalPrice(product.details) * product.quantity }} €</div>
+              <div class="item-price">{{ productService.getTotalPrice(product.details) }}€ /ud</div>
             </div>
             <button
               class="less-item"
@@ -44,6 +51,32 @@
               +
             </button>
           </div>
+          @if(product.details.customizations.length > 0){
+            <div class="flex-center">
+              <div class="customizations">
+                <div class="customizations-container">
+                  <div class="customization" *ngFor="let customization of product.details.customizations">
+                    <h5 class="customization-name">{{ customization.name }}</h5>
+                    <div class="customization-responses">
+                      <div class="response-info space-between" *ngFor="let response of customization.responses">
+                        <img [src]="response.img ? response.img : noPhotoUrl" [alt]="response.img" />
+                        <p class="customization-value">{{ response.value }}</p>
+                        <span>{{ response.price ? '+'+response.price+'€' : ''}}</span>
+                        <button>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                          </svg>
+                          Modificar
+                        </button>
+                      </div>
+                    </div>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
         </div>
       </div>
     </div>

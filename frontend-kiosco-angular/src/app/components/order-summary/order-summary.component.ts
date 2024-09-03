@@ -4,6 +4,8 @@ import { OrderService } from '../../services/order.service';
 import { Menu, Order, Product } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ProductService } from '../../services/product.service';
+import { AppConfig } from '../../../config/app-config';
 
 @Component({
   selector: 'app-order-summary',
@@ -13,16 +15,23 @@ import { Router } from '@angular/router';
   styleUrl: './order-summary.component.css',
 })
 export class OrderSummaryComponent {
+  noPhotoUrl = AppConfig.NO_PHOTO_URL;
+
   products!: Order;
   totalPrice: number = 0;
 
-  constructor(private cartService: OrderService, private router: Router) {}
+  constructor(
+    private cartService: OrderService,
+    private router: Router,
+    public productService: ProductService
+  ) {}
 
   ngOnInit() {
     console.log(this.products == null || this.products.items == undefined || this.products.items.length <= 0);
     this.cartService.products.subscribe((products) => {
       if(products != null) this.products = products;
       this.totalPrice = this.cartService.totalPrice;
+      console.log(this.products);
     });
   }
 
