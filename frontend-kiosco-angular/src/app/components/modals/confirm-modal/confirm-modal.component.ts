@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CustomizationOption, CustomizationQuestion, Menu, Product } from '../../interfaces/pedido';
+import { CustomizationOption, CustomizationQuestion, Menu, Product } from '../../../interfaces/pedido';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AppConfig } from '../../../config/app-config';
-import { ProductService } from '../../services/product.service';
+import { AppConfig } from '../../../../config/app-config';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-confirm-modal',

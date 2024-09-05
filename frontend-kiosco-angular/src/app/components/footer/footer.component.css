@@ -5,6 +5,16 @@ footer{
     display: flex;
     justify-content: center;
     align-items:center;
+    margin-bottom: 40px; 
+}
+
+.not-appears{
+    opacity: 0;
+    height: 50px;
+}
+
+.not-appears button{
+    display: none;
 }
 
 .reduced-movility-button{

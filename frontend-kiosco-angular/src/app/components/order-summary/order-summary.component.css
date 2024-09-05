@@ -19,7 +19,7 @@ body {
   border-radius: 16px 16px 0 0; /* Aumenta el borde redondeado */
   box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.15); /* Aumenta la sombra */
   transition: bottom 0.3s ease-in-out;
-  z-index: 999;
+  z-index: 2;
   overflow-y: auto; /* Permite scroll dentro del modal */
 }
 
@@ -56,7 +56,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 60px; /* Aumenta el padding */
+  padding: 30px 30px; /* Aumenta el padding */
   border-bottom: 2px solid #eee; /* Aumenta el borde */
 }
 .cart-item > div {
@@ -72,7 +72,8 @@ body {
 .item-count {
   padding: 5px;
   position: relative;
-  background-color: #ffcc00;
+  /* Cambiar la opacidad del fondo */
+  background-color: var(--secondary-color-trasparent);
   color: #333;
   border-radius: 50%;
   width: 45px; /* Aumenta el tamaño del contador */
@@ -85,12 +86,19 @@ body {
   margin-right: 20px; /* Aumenta el margen */
 }
 
+button{
+  border: 2px solid color-mix(in lab, var(--secondary-color-dark), white 20%);
+}
+
+button:hover{
+  border: 2px solid color-mix(in lab, var(--secondary-color-dark), white 40%);
+}
+
 .less-item,
 .more-item,
 .dropdown {
   margin: 15px; /* Aumenta el margen */
-  background-color: #ffcc00;
-  border: none;
+  background-color: var(--secondary-color);
   border-radius: 50%;
   width: 40px; /* Aumenta el tamaño de los botones */
   height: 40px;
@@ -101,6 +109,31 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.dropdown {
+  margin: 15px; /* Aumenta el margen */
+  background-color: var(--secondary-color);
+  border-radius: 12px;
+  padding: 5px 10px;
+  width: 120px; /* Aumenta el tamaño de los botones */
+  height: 40px;
+  color: #333;
+  font-size: 16px; /* Aumenta el tamaño de la fuente */
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdown svg {
+  padding: 3px;
+  transition: transform 0.3s ease; /* Añade una transición suave */
+}
+
+.dropdown.open svg {
+  transform: rotate(180deg); /* Rotación de 180 grados para cambiar la dirección */
 }
 
 .item-info {
@@ -125,7 +158,14 @@ body {
 
 .item-details p {
   margin: 10px 0 0 0; /* Aumenta el margen */
-  font-size: 20px; /* Aumenta el tamaño de la fuente */
+  font-size: 16px; /* Aumenta el tamaño de la fuente */
+  max-height: 80px;
+  overflow: hidden; /* Oculta el contenido que se desborda */
+  text-overflow: ellipsis; /* Añade los tres puntos suspensivos */
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3; /* Limita el texto a 3 líneas */
+  -webkit-box-orient: vertical;
 }
 
 .price-wrapper{
@@ -149,8 +189,9 @@ body {
 
 /* CUSTOMIZACIONES DE LOS PRODUCTOS */
  .customizations{
+  margin-left: 125px;
   padding:20px 0px;
-  width: 40%;
+  width: 50%;
   overflow-y: auto;
   overflow-x: hidden;
   display:flex;
@@ -168,10 +209,22 @@ body {
   margin: 0;
 }
 
+.modify-customization-button{
+  background-color: var(--secondary-color);
+  color: #333;
+  font-size: 16px; /* Aumenta el tamaño de la fuente */
+  font-weight: bold;
+  border-radius: 12px; /* Aumenta el borde redondeado */
+  cursor: pointer;
+  padding: 5px 10px; /* Aumenta el padding */
+  transition: background-color 0.3s ease;
+}
+
  .customizations .customization-value{
   font-size: 20px;
   color: rgb(58, 57, 57);
   margin: 0;
+  width: 40%;
 }
 
  .customizations img{
@@ -188,7 +241,7 @@ body {
 }
 
 .response-info{
-  width: 80%;
+  width: 100%;
 }
 
 .cart-footer {
@@ -207,18 +260,17 @@ body {
 
 .checkout-btn {
   padding: 15px 30px; /* Aumenta el padding */
-  background-color: #ffcc00;
+  background-color: var(--secondary-color);;
   color: #333;
   font-size: 22px; /* Aumenta el tamaño de la fuente */
   font-weight: bold;
-  border: none;
   border-radius: 12px; /* Aumenta el borde redondeado */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .checkout-btn:hover {
-  background-color: #e6b800;
+  background-color: var(--secondary-color-dark);
 }
 
 

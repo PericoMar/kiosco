@@ -1,8 +1,8 @@
 import { Component, Input, ViewChild} from '@angular/core';
 import { Menu, Product } from '../../interfaces/pedido';
-import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { OrderService } from '../../services/order.service';
 import { AppConfig } from '../../../config/app-config';
+import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-product',

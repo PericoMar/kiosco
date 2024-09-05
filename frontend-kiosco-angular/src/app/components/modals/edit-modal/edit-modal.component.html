@@ -1,0 +1,77 @@
+
+<div class="modal-overlay" *ngIf="isVisible">
+    <div class="modal-container" *ngIf="isVisible">
+        <div class="modal-header-questions" >
+            <h1>{{product.name}}</h1>
+            <button class="close-button" (click)="close()">×</button>
+        </div>
+        <div class="modal-content-questions">
+            <h2>{{ product.customizationQuestions?.[currentCustomizationIndex]?.name }}</h2>
+            <div class="options-container">
+            @for (option of product.customizationQuestions?.[currentCustomizationIndex]?.options; track option.id) {
+                <!-- Check box con la imagen (si tiene) y el nombre de la opcion -->
+                <div 
+                class="customization-option" 
+                [ngClass]="{'disabled-option' : 
+                !isOptionSelected(currentCustomizationIndex, option.id) && 
+                this.product.customizationQuestions?.[currentCustomizationIndex]?.maxChoices &&
+                maxChoicesReached(currentCustomizationIndex)}"
+                (click)="selectOption(option)"
+                >
+                <div class="option-img-container">
+                    @if(option.img){
+                    <img [src]="option.img" alt="Imagen de {{ option.value }}" class="option-img"/>
+                    }@else {
+                    <img [src]="noPhotoUrl" alt="Imagen de {{ option.value }}" class="option-img"/>
+                    }
+                </div>
+                <div class="flex-center">
+                    <input 
+                    [type]="product.customizationQuestions?.[currentCustomizationIndex]?.questionType === 'single' ? 'radio' : 'checkbox'"
+                    id="{{option.id}}"
+                    [checked]="isOptionSelected(currentCustomizationIndex, option.id)"
+                    name="{{product.customizationQuestions?.[currentCustomizationIndex]?.name}}"
+                    [disabled]="!isOptionSelected(currentCustomizationIndex, option.id) && 
+                    this.product.customizationQuestions?.[currentCustomizationIndex]?.maxChoices &&
+                    maxChoicesReached(currentCustomizationIndex)"
+                    (change)="selectOption(option)"
+                    />
+                    <label for="{{option.id}}">
+                    <span>{{ option.value }}</span>
+                    </label>
+                </div>
+                <div class="price-container">
+                    <span class="price">{{ option.price ? '+'+option.price+'€' : '' }}</span>
+                </div>
+                </div>
+            }
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            @if(currentCustomizationIndex > 0){
+            <button class="cancel-button" (click)="previousCustomization()">Anterior</button>
+            } @else {
+            <button class="cancel-button" (click)="cancel()" >Cancelar</button>
+            }
+            <div class="flex-column-baseline next-question">
+            @if(!minChoicesReached(currentCustomizationIndex)){
+                <span class="alert-message">Selecciona al menos {{ product.customizationQuestions?.[currentCustomizationIndex]?.minChoices! > 1 ?  product.customizationQuestions?.[currentCustomizationIndex]?.minChoices+' opciones' : 'una opción'}}</span>
+            } @else {
+                <span class="alert-message hidden"></span> <!-- Mantén el espacio pero oculta el mensaje -->
+            }
+            <button class="confirm-button" 
+            (click)="editCustomization()"
+            [ngClass]="{'disabled-button' : !minChoicesReached(currentCustomizationIndex)}"
+            [disabled]="!minChoicesReached(currentCustomizationIndex)"
+            >
+                Confirmar
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                    <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                  </svg>
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

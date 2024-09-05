@@ -3,11 +3,13 @@ import { Order } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order.service';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { FamilyService } from '../../services/family.service';
 
 @Component({
   selector: 'app-payment',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css',
 })
@@ -18,7 +20,14 @@ export class PaymentComponent {
   deliveryMode: String = this.cartService.getConsumptionOption();
   paymentMethod: String = this.cartService.getPaymentMethod();
 
-  constructor(private cartService: OrderService) {}
+  firstFamilyId: any = '';
+
+  constructor(
+    private cartService: OrderService,
+    private familyService: FamilyService
+  ) {
+    this.firstFamilyId = this.familyService.getFirstFamilyId();
+  }
 
   getOrderProducts(): Order {
     return this.cartService.getOrder();
