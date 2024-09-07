@@ -17,6 +17,7 @@ export class ConfirmPageComponent {
 
   ngOnInit(){
     setTimeout(()=>{
+      //Resetear el pedido (Aqui o en bd)
       this.router.navigate(['/']);
     }, 5000);
   }

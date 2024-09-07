@@ -3,6 +3,7 @@ import { Order } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment',
@@ -18,7 +19,7 @@ export class PaymentComponent {
   deliveryMode: String = this.cartService.getConsumptionOption();
   paymentMethod: String = this.cartService.getPaymentMethod();
 
-  constructor(private cartService: OrderService) {}
+  constructor(private cartService: OrderService, private router:Router) {}
 
   getOrderProducts(): Order {
     return this.cartService.getOrder();
@@ -38,6 +39,10 @@ export class PaymentComponent {
 
   getTotalPriceOrder():void{
     this.totalPriceOrder = Math.round((this.getTaxs() + this.products.total) * 100) / 100;
+  }
+
+  checkoutOrder():void{
+    this.router.navigate(['/confirm-page']);
   }
 
   ngOnInit() {

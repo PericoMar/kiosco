@@ -1,3 +1,4 @@
+/* Estilos generales */
 body {
   display: flex;
   justify-content: center;
@@ -5,20 +6,21 @@ body {
   margin: 0;
   height: 100vh;
   overflow: hidden;
+  font-family: 'Arial', sans-serif;
 }
 
+/* Contenedor principal del carrito */
 .cart-container {
   position: fixed;
   bottom: -100%; /* Posición inicial fuera de la pantalla */
   left: 50%;
   transform: translateX(-50%);
-  /* width: 1000px;  */
-  width: 95%;
-  height: 95vh; /* Ajusta la altura para que ocupe el 95% de la pantalla */
+  width: 90%; /* Ajusta según tus necesidades */ 
+  height: 85vh; /* Ajusta la altura para que ocupe el 85% de la pantalla */
   background-color: white;
-  border-radius: 16px 16px 0 0; /* Aumenta el borde redondeado */
-  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.15); /* Aumenta la sombra */
-  transition: bottom 0.3s ease-in-out;
+  border-radius: 16px 16px 0 0; /* Borde redondeado superior */
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2); /* Sombra del contenedor */
+  transition: bottom 0.4s ease-in-out;
   z-index: 999;
   overflow-y: auto; /* Permite scroll dentro del modal */
 }
@@ -27,74 +29,73 @@ body {
   bottom: 0; /* Mueve el modal hacia arriba cuando se activa */
 }
 
+/* Encabezado del carrito */
 .cart-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #ddd; /* Aumenta el borde */
-  padding: 20px 40px; /* Aumenta el padding */
-  /* margin-bottom: 30px;  */
+  border-bottom: 2px solid #ddd; /* Borde inferior */
+  padding: 25px 40px; /* Espacio alrededor del encabezado */
 }
 
 .title-cart-header {
-  font-size: 32px; /* Aumenta el tamaño de la fuente */
+  font-size: 36px; /* Tamaño del texto del título */
 }
 
 .continue-shopping {
-  font-size: 24px; /* Aumenta el tamaño de la fuente */
+  font-size: 30px; /* Tamaño del botón de cerrar */
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
+/* Lista de items en el carrito */
 .cart-items {
-  max-height: 70%; /* Ajusta según la altura del modal */
+  width: 100%;
+  max-height: 65vh; /* Ajusta la altura máxima para el scroll */
   overflow-y: auto;
 }
 
 .cart-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 30px 60px; /* Aumenta el padding */
-  border-bottom: 2px solid #eee; /* Aumenta el borde */
-}
-.cart-item > div {
-  width: 100%;
+  padding: 30px 50px; /* Espaciado alrededor de cada item */
+  border-bottom: 2px solid #eee; /* Borde inferior */
 }
 
 .item-wrapper {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
 }
 
 .item-count {
-  padding: 5px;
-  position: relative;
+  padding: 10px;
   background-color: #ffcc00;
   color: #333;
   border-radius: 50%;
-  width: 45px; /* Aumenta el tamaño del contador */
-  height: 45px;
+  width: 50px; /* Tamaño del contador */
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px; /* Aumenta el tamaño de la fuente */
+  font-size: 20px; /* Tamaño del texto del contador */
   font-weight: bold;
-  margin-right: 20px; /* Aumenta el margen */
+  margin-right: 25px; /* Margen derecho */
 }
 
 .less-item,
 .more-item {
-  margin: 15px; /* Aumenta el margen */
+  margin: 10px; /* Espaciado alrededor de los botones */
   background-color: #ffcc00;
   border: none;
   border-radius: 50%;
-  width: 40px; /* Aumenta el tamaño de los botones */
-  height: 40px;
+  width: 45px; /* Tamaño de los botones */
+  height: 45px;
   color: #333;
-  font-size: 22px; /* Aumenta el tamaño de la fuente */
+  font-size: 24px; /* Tamaño del texto de los botones */
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -103,96 +104,90 @@ body {
 }
 
 .item-info {
-  padding-inline: 15%; /* Aumenta el padding */
+  padding-inline: 10%; /* Espaciado interno */
   display: flex;
   align-items: center;
   flex: 1;
 }
 
 .item-info img {
-  width: 100px; /* Aumenta el tamaño de la imagen */
-  height: 100px;
+  width: 110px; /* Tamaño de la imagen */
+  height: 110px;
   object-fit: cover;
-  border-radius: 12px; /* Aumenta el borde redondeado */
-  margin-right: 30px; /* Aumenta el margen */
+  border-radius: 12px; /* Borde redondeado de la imagen */
+  margin-right: 35px; /* Margen derecho */
 }
 
 .item-details h2 {
-  font-size: 28px; /* Aumenta el tamaño de la fuente */
+  font-size: 28px; /* Tamaño del texto del nombre del producto */
   margin: 0;
 }
 
 .item-details p {
-  margin: 10px 0 0 0; /* Aumenta el margen */
-  font-size: 20px; /* Aumenta el tamaño de la fuente */
+  margin: 12px 0 0 0; /* Espaciado alrededor del párrafo */
+  font-size: 20px; /* Tamaño del texto de la descripción */
 }
 
 .item-price {
-  padding-inline: 15%; /* Aumenta el padding */
-  font-size: 22px; /* Aumenta el tamaño de la fuente */
+  padding-inline: 10%; /* Espaciado interno */
+  font-size: 24px; /* Tamaño del texto del precio */
   font-weight: bold;
-  margin-right: 20px; /* Aumenta el margen */
+  margin-right: 20px; /* Margen derecho */
 }
 
+/* Pie del carrito */
 .cart-footer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  padding: 40px; /* Aumenta el padding */
-  border-top: 2px solid #ddd; /* Aumenta el borde */
+  padding: 35px 50px; /* Espaciado interno */
+  border-top: 2px solid #ddd; /* Borde superior */
 }
 
 .total-price {
-  padding-right: 50px; /* Aumenta el padding */
-  font-size: 28px; /* Aumenta el tamaño de la fuente */
+  padding-right: 50px; /* Espaciado a la derecha */
+  font-size: 30px; /* Tamaño del texto del precio total */
   font-weight: bold;
 }
 
 .checkout-btn {
-  padding: 15px 30px; /* Aumenta el padding */
+  padding: 15px 40px; /* Espaciado interno */
   background-color: #ffcc00;
   color: #333;
-  font-size: 22px; /* Aumenta el tamaño de la fuente */
+  font-size: 24px; /* Tamaño del texto del botón */
   font-weight: bold;
   border: none;
-  border-radius: 12px; /* Aumenta el borde redondeado */
+  border-radius: 12px; /* Borde redondeado */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .checkout-btn:hover {
-  background-color: #e6b800;
+  background-color: #e6b800; /* Color al pasar el mouse */
 }
 
-
-/* Estilos generales para el scroll */
+/* Estilos para el scroll */
 .cart-container::-webkit-scrollbar {
   width: 8px; /* Ancho del scrollbar */
 }
 
 .cart-container::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color de fondo de la pista del scrollbar */
-  border-radius: 10px; /* Borde redondeado */
+  background: #f1f1f1; /* Color de fondo del scrollbar */
+  border-radius: 10px; /* Bordes redondeados */
 }
 
 .cart-container::-webkit-scrollbar-thumb {
   background: #ccc; /* Color del scrollbar */
-  border-radius: 10px; /* Borde redondeado del scrollbar */
-  border: 2px solid #f1f1f1; /* Espacio alrededor del scrollbar */
+  border-radius: 10px; /* Bordes redondeados del scrollbar */
+  border: 2px solid #f1f1f1; /* Espaciado interno */
 }
 
 .cart-container::-webkit-scrollbar-thumb:hover {
-  background: #b3b3b3; /* Color del scrollbar al pasar el mouse */
+  background: #b3b3b3; /* Color al pasar el mouse */
 }
 
-/* Estilo para Firefox */
 .cart-container {
   scrollbar-width: thin; /* Scrollbar fino */
   scrollbar-color: #ccc #f1f1f1; /* Color del scrollbar y de la pista */
 }
 
-/* Opcional: Estilo específico para otros navegadores que no soportan `-webkit-scrollbar` */
-.cart-container {
-  overflow-y: scroll;
-  scrollbar-width: thin;
-}
