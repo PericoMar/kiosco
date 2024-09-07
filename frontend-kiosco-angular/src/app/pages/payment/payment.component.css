@@ -2,19 +2,18 @@
 body {
   display: flex;
   justify-content: center;
-  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #fff;
   color: #333;
-  font-size: 20px; /* Aumentado el tamaño de la fuente */
+  font-size: 20px; 
 }
 
 /* Contenedor principal */
 .checkout-container {
   width: 1024px; 
   margin: 40px auto;
-  padding: 60px;
+  padding: 80px;
   background-color: #fff;
   border-radius: 16px; /* Borde más redondeado */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumentada la sombra */
@@ -56,7 +55,7 @@ body {
 }
 
 .product-details {
-  flex-grow: 1;
+  width: 50%;
 }
 
 .product-name {
@@ -74,12 +73,12 @@ body {
 .product-quantity {
   font-size: 20px; /* Aumentado el tamaño de la fuente */
   font-weight: bold;
-  color: var(--secondary-color);
-  background-color: #fffbea;
+  color: rgb(68, 67, 67);
+  background-color: var(--secondary-color);
   padding: 10px 20px; /* Aumentado el padding */
   border-radius: 16px; /* Borde más redondeado */
   margin-right: 25px; /* Aumentado el margen derecho */
-  border: 2px solid var(--secondary-color);
+  border: 2px solid var(--secondary-color-dark);
 }
 
 .product-price {
@@ -103,7 +102,7 @@ body {
 .total-line-final {
   font-size: 28px; /* Aumentado el tamaño de la fuente */
   font-weight: bold;
-  color: var(--secondary-color);
+  color: rgb(44, 44, 44);
 }
 
 /* Opciones de entrega y pago */
@@ -152,7 +151,7 @@ input[type="radio"]:checked + label {
 }
 
 input[type="radio"]:checked + label svg {
-  fill: #ffcc00;
+  fill: var(--secondary-color-darker);
 }
 
 .custom-radio {
@@ -173,7 +172,13 @@ input[type="radio"]:checked + label svg {
 
 /* Botón de finalizar compra */
 .checkout-btn-container {
+  margin: auto;
   text-align: center;
+}
+
+.checkout-btn-container button{
+  margin: 0 20px;
+  border: var(--button-border);
 }
 
 .checkout-btn {

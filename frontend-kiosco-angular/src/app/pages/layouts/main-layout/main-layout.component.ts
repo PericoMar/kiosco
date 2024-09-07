@@ -13,5 +13,5 @@ import { OrderSummaryComponent } from '../../../components/order-summary/order-s
   styleUrl: './main-layout.component.css'
 })
 export class MainLayoutComponent {
-  
+    addedReducedMovility: boolean = false;
 }

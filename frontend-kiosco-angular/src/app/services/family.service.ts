@@ -36,4 +36,8 @@ export class FamilyService {
   getFamilyById(id: string) : Family {
     return this.getFamilies().find(family => family.id === id) as Family;
   }
+
+  getFirstFamilyId() : string {
+    return this.getFamilies()[0].id;
+  }
 }

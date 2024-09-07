@@ -1,8 +1,8 @@
 import { Component, Input, ViewChild} from '@angular/core';
 import { Menu, Product } from '../../interfaces/pedido';
-import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { OrderService } from '../../services/order.service';
 import { AppConfig } from '../../../config/app-config';
+import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-product',
@@ -32,8 +32,9 @@ export class ProductComponent {
     this.confirmModal.open(product);
   }
 
-  onConfirm(quantity: number): void {
-    this.orderService.addProduct(this.product as Product | Menu, quantity);
+  onConfirm(productDetails: { product: Product | Menu, quantity: number }): void {
+    console.log(productDetails);
+    this.orderService.addProduct(productDetails.product , productDetails.quantity);
     console.log('Confirmado');
   }
 

@@ -31,17 +31,23 @@ export class ProductService {
         customizations: [],
         customizationQuestions: [
           {
+            id: 'pan',
             name: '¿Qué tipo de pan prefieres?',
             questionType: 'single',
+            minChoices: 1,
             options: [
               { id: 'pan-avena', value: 'Pan de avena', price: 0, img: 'assets/pan.png' },
               { id: 'pan-integral', value: 'Pan integral', price: 0.5, img: 'assets/pan.png' },
-              { id: 'pan-brioche', value: 'Pan brioche', price: 1.0, img: 'assets/pan.png' }
+              { id: 'pan-brioche', value: 'Pan brioche', price: 1.0, img: 'assets/pan.png' },
+              { id: 'pan-cereales', value: 'Pan cereales', price: 1.5, img: 'assets/pan.png' },
+              { id: 'pan-tostado', value: 'Pan tostado', price: 0, img: 'assets/pan.png' },
             ]
           },
           {
+            id: 'carne',
             name: '¿Qué nivel de cocción deseas?',
             questionType: 'single',
+            minChoices: 1,
             options: [
               { id: 'poco-hecho', value: 'Poco hecho', price: 0 },
               { id: 'en-su-punto', value: 'En su punto', price: 0 },
@@ -49,8 +55,10 @@ export class ProductService {
             ]
           },
           {
+            id: 'extra',
             name: 'Añade algún extra:',
             questionType: 'multiple',
+            minChoices: 0,
             maxChoices: 2,
             options: [
               { id: 'bacon', value: 'Bacon', price: 1.5 },
@@ -212,5 +220,18 @@ export class ProductService {
         customizationsQuestions: [],
       }
     ].filter(product => product.familyId === id);
+  }
+
+  getTotalPrice(product : Product | Menu): number {
+    let totalPrice = product.price;
+
+    product.customizations.forEach(customization => {
+      customization.responses.forEach(response => {
+        totalPrice += response.price || 0;
+      });
+    });
+
+    //Devolverlo con dos decimales aproximados
+    return Math.round(totalPrice * 100) / 100;
   }
 }
