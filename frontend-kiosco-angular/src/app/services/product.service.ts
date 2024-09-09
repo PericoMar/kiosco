@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Menu, Product } from '../interfaces/pedido';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,10 @@ import { Menu, Product } from '../interfaces/pedido';
 export class ProductService {
 
   constructor(private http : HttpClient) { }
+
+  getProducts(): Observable<(Product | Menu)[]> {
+    return this.http.get<(Product | Menu)[]>(`http://localhost:8000/articulos`);
+  }
 
   getProductsByFamilyId(id: string): (Product | Menu)[] {
     return [

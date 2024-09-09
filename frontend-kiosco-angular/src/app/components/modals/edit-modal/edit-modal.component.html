@@ -49,11 +49,9 @@
         </div>
 
         <div class="modal-actions">
-            @if(currentCustomizationIndex > 0){
-            <button class="cancel-button" (click)="previousCustomization()">Anterior</button>
-            } @else {
+
             <button class="cancel-button" (click)="cancel()" >Cancelar</button>
-            }
+
             <div class="flex-column-baseline next-question">
             @if(!minChoicesReached(currentCustomizationIndex)){
                 <span class="alert-message">Selecciona al menos {{ product.customizationQuestions?.[currentCustomizationIndex]?.minChoices! > 1 ?  product.customizationQuestions?.[currentCustomizationIndex]?.minChoices+' opciones' : 'una opción'}}</span>
