@@ -41,9 +41,9 @@ body {
 }
 
 .continue-shopping {
-  font-size: 24px; /* Aumenta el tamaño de la fuente */
+  padding: 6px;
   background-color: transparent;
-  border: none;
+  border: none !important;
   cursor: pointer;
 }
 
