@@ -1,0 +1,27 @@
+:host {
+    height: 100%;
+    width: 100%;
+}
+
+.advert-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--secondary-color);
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    z-index: 1;
+    border: 1px solid #ddd;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  }
+  
+  .fade-out {
+    transform: translateY(-100%);
+    /* opacity: 0;
+    visibility: hidden; */
+  }
+  
+  button {
+    cursor: pointer;
+  }

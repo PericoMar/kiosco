@@ -5,11 +5,12 @@ import { ConsumptionOption } from '../../interfaces/consumption-option';
 import { LanguageOption } from '../../interfaces/language-option';
 import { LanguageOptionComponent } from '../../components/language-option/language-option.component';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { AdvertComponent } from '../../components/advert/advert.component';
 
 @Component({
   selector: 'app-options-page',
   standalone: true,
-  imports: [ConsumptionOptionComponent, LanguageOptionComponent,FooterComponent],
+  imports: [ConsumptionOptionComponent, LanguageOptionComponent,FooterComponent, AdvertComponent],
   templateUrl: './options-page.component.html',
   styleUrl: './options-page.component.css'
 })
@@ -17,6 +18,15 @@ export class OptionsPageComponent {
   // constructor (private translate: TranslateService) {
   //   this.translate.setDefaultLang('es');
   // }
+
+  showAdvert: boolean = true;
+
+  constructor() {
+    this.showAdvert = true;
+  }
+  
+
+  advert : string = "¡Bienvenido a nuestro kiosco!";
 
   consumptionOptions : ConsumptionOption[] = [
     {
@@ -41,4 +51,8 @@ export class OptionsPageComponent {
       img: "../../../assets/flag-for-flag-united-kingdom.svg"
     }
   ]
+
+  quitAdvert() {
+    this.showAdvert = false;
+  }
 }

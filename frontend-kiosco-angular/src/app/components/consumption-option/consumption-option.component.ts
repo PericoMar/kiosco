@@ -3,6 +3,7 @@ import { ConsumptionOption } from '../../interfaces/consumption-option';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order.service';
+import { FamilyService } from '../../services/family.service';
 
 @Injectable({
   providedIn: "root",
@@ -18,9 +19,13 @@ import { OrderService } from '../../services/order.service';
 export class ConsumptionOptionComponent {
   @Input() consumptionOption! : ConsumptionOption;
   noPhotoOptionSrc : string = "../../../assets/image.svg";
+  firstFamilyId: string;
 
-  constructor (private cartService : OrderService){
-    
+  constructor (
+    private cartService : OrderService,
+    private familyService : FamilyService
+  ){
+    this.firstFamilyId = this.familyService.getFirstFamilyId();
   }
 
   safeConsumptionOption(consumptionOption: string){

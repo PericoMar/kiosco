@@ -23,6 +23,11 @@ export class OrderService {
     return this._products.asObservable();
   }
 
+  clearOrder(){
+    this.cartProduct = null;
+    this._products.next(null);
+  }
+
   getOrder(): Order{
     if (this.cartProduct){
       return this.cartProduct;
