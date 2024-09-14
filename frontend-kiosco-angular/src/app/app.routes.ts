@@ -4,6 +4,7 @@ import { OptionsPageComponent } from './pages/options-page/options-page.componen
 import { FamilySelectedPageComponent } from './components/family-selected-page/family-selected-page.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { ConfirmPageComponent } from './pages/confirm-page/confirm-page.component';
+import { InactivePageComponent } from './pages/inactive-page/inactive-page.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,10 @@ export const routes: Routes = [
   {
     path: 'confirm-page',
     component: ConfirmPageComponent,
+  },
+  {
+    path: 'inactive',
+    component: InactivePageComponent
   },
   { path: '**', redirectTo: '' },
 ];

@@ -1,4 +1,7 @@
 <section class="opts-page">
+    @if(showAdvert){
+        <app-advert [advert]="advert" class="advert" (quitAdvert)="quitAdvert()"></app-advert>
+    }
     <header class="text-center">
         <h1>¿Dónde quiere comer?</h1>
     </header>

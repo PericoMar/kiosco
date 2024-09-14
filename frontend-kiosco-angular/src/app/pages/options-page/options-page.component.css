@@ -6,6 +6,10 @@ section.opts-page{
     height: 100%;
 }
 
+.advert{
+    position: absolute;
+}
+
 h1{
     font-size: 5rem;
 }
