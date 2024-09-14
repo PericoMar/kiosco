@@ -10,7 +10,7 @@
   @if(this.products == null || this.products.items == undefined || this.products.items.length <= 0){
 
     <div class="flex-center">
-      <h2> No hay productos en el carrito :(</h2> 
+      <h2> Carrito vacio :(</h2> 
     </div>
 
   } @else { 
@@ -91,7 +91,9 @@
     </div>
 
   }
-  
+  <section class="suggestion-container">
+    <app-suggestions class="suggestions-section"></app-suggestions>
+  </section>
 
   <div class="cart-footer">
     <div class="total-price">Total: {{ this.totalPrice }} €</div>

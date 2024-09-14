@@ -3,13 +3,14 @@ import { Order } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order.service';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FamilyService } from '../../services/family.service';
+import { BackButtonComponent } from '../../components/back-button/back-button.component';
 
 @Component({
   selector: 'app-payment',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule,BackButtonComponent],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css',
 })
@@ -24,9 +25,15 @@ export class PaymentComponent {
 
   constructor(
     private cartService: OrderService,
-    private familyService: FamilyService
+    private familyService: FamilyService,
+    private router:Router,
   ) {
     this.firstFamilyId = this.familyService.getFirstFamilyId();
+  }
+
+  ngOnInit() {
+    this.products = this.getOrderProducts();
+    this.getTotalPriceOrder();
   }
 
   getOrderProducts(): Order {
@@ -49,8 +56,7 @@ export class PaymentComponent {
     this.totalPriceOrder = Math.round((this.getTaxs() + this.products.total) * 100) / 100;
   }
 
-  ngOnInit() {
-    this.products = this.getOrderProducts();
-    this.getTotalPriceOrder();
+  onCheckout(){
+    this.router.navigate(['/confirm-page']);
   }
 }

@@ -33,7 +33,6 @@ body {
   align-items: center;
   border-bottom: 2px solid #ddd; /* Aumenta el borde */
   padding: 20px 40px; /* Aumenta el padding */
-  /* margin-bottom: 30px;  */
 }
 
 .title-cart-header {
@@ -274,34 +273,54 @@ button:hover{
 }
 
 
-/* Estilos generales para el scroll */
+/* 
 .cart-container::-webkit-scrollbar {
-  width: 8px; /* Ancho del scrollbar */
+  width: 8px; 
 }
 
 .cart-container::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color de fondo de la pista del scrollbar */
-  border-radius: 10px; /* Borde redondeado */
+  background: #f1f1f1;
+  border-radius: 10px; 
 }
 
 .cart-container::-webkit-scrollbar-thumb {
-  background: #ccc; /* Color del scrollbar */
-  border-radius: 10px; /* Borde redondeado del scrollbar */
-  border: 2px solid #f1f1f1; /* Espacio alrededor del scrollbar */
+  background: #ccc; 
+  border-radius: 10px; 
+  border: 2px solid #f1f1f1; 
 }
 
 .cart-container::-webkit-scrollbar-thumb:hover {
-  background: #b3b3b3; /* Color del scrollbar al pasar el mouse */
+  background: #b3b3b3; 
 }
 
-/* Estilo para Firefox */
+
 .cart-container {
-  scrollbar-width: thin; /* Scrollbar fino */
-  scrollbar-color: #ccc #f1f1f1; /* Color del scrollbar y de la pista */
+  scrollbar-width: thin; 
+  scrollbar-color: #ccc #f1f1f1; 
 }
 
-/* Opcional: Estilo específico para otros navegadores que no soportan `-webkit-scrollbar` */
+
 .cart-container {
   overflow-y: scroll;
   scrollbar-width: thin;
+} */
+
+
+
+.suggestion-container{
+  border-bottom:2px solid #0000;
+}
+
+.suggestions-section{
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  span{
+    font-size: x-large;
+    font-weight: bold;
+    margin-inline: 1.6rem;
+    align-self: start;
+  }
 }

@@ -8,11 +8,12 @@ import { ProductService } from '../../services/product.service';
 import { AppConfig } from '../../../config/app-config';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { EditModalComponent } from '../modals/edit-modal/edit-modal.component';
+import { SuggestionsComponent } from '../suggestions/suggestions.component';
 
 @Component({
   selector: 'app-order-summary',
   standalone: true,
-  imports: [CommonModule,CartComponent, EditModalComponent],
+  imports: [CommonModule,CartComponent, EditModalComponent,SuggestionsComponent],
   templateUrl: './order-summary.component.html',
   styleUrl: './order-summary.component.css',
   animations: [
