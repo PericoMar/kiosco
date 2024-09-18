@@ -6,11 +6,23 @@ import { Router } from '@angular/router';
 })
 export class InactivityService {
   private timeout: any;
-  private readonly inactivityTime: number = 30000; // Tiempo de inactividad en milisegundos (1 minuto en este caso)
+  private readonly inactivityTime: number = 30000; // Tiempo de inactividad
+  private isActive: boolean = true; // Flag para habilitar/deshabilitar
 
   constructor(private router: Router) {
-    this.resetInactivityTimer();
     this.setupEventListeners();
+  }
+
+  // Habilitar la detección de inactividad
+  enableInactivity() {
+    this.isActive = true;
+    this.resetInactivityTimer();
+  }
+
+  // Deshabilitar la detección de inactividad
+  disableInactivity() {
+    this.isActive = false;
+    clearTimeout(this.timeout);
   }
 
   // Configurar los eventos que reinician el temporizador
@@ -23,13 +35,16 @@ export class InactivityService {
 
   // Resetear el temporizador de inactividad
   private resetInactivityTimer() {
+    if (!this.isActive) return; // Si no está habilitado, no hacer nada
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => this.logoutUser(), this.inactivityTime);
   }
 
-  // Redirigir al usuario o finalizar el pedido por inactividad
+  // Redirigir o finalizar el pedido por inactividad
   private logoutUser() {
+    if (!this.isActive) return;
     alert('Inactividad detectada. Finalizando el pedido.');
-    this.router.navigate(['/inactive']); // Redirige a la página principal o acción deseada
+    this.router.navigate(['/inactive']);
   }
 }
+

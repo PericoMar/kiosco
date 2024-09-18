@@ -15,7 +15,16 @@ import { InactivityService } from '../../../services/inactive-service/inactive.s
 })
 export class MainLayoutComponent {
 
-  constructor(private inactiveService : InactivityService) { }
+  constructor(private inactivityService : InactivityService) { }
 
     addedReducedMovility: boolean = false;
+
+    ngOnInit() {
+      this.inactivityService.enableInactivity();
+    }
+
+    ngOnDestroy() {
+      // Desactiva la detección de inactividad al salir de la página
+      this.inactivityService.disableInactivity();
+    }
 }
