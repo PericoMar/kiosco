@@ -43,7 +43,6 @@ export class InactivityService {
   // Redirigir o finalizar el pedido por inactividad
   private logoutUser() {
     if (!this.isActive) return;
-    alert('Inactividad detectada. Finalizando el pedido.');
     this.router.navigate(['/inactive']);
   }
 }
