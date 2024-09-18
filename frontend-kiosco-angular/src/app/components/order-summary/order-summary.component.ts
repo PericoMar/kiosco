@@ -9,11 +9,12 @@ import { AppConfig } from '../../../config/app-config';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { EditModalComponent } from '../modals/edit-modal/edit-modal.component';
 import { SuggestionsComponent } from '../suggestions/suggestions.component';
+import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-order-summary',
   standalone: true,
-  imports: [CommonModule,CartComponent, EditModalComponent,SuggestionsComponent],
+  imports: [CommonModule,CartComponent, EditModalComponent,SuggestionsComponent,ConfirmModalComponent],
   templateUrl: './order-summary.component.html',
   styleUrl: './order-summary.component.css',
   animations: [
@@ -39,9 +40,12 @@ export class OrderSummaryComponent {
 
   products!: Order;
   totalPrice: number = 0;
+  selectedProduct!: Product | Menu;
+  isMenu!:Boolean;
 
   isDropdownOpen: { [key: number]: boolean } = {}; 
 
+  @ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
   @ViewChild('editModal') editModal!: EditModalComponent;
 
   constructor(
@@ -89,6 +93,20 @@ export class OrderSummaryComponent {
   }
 
 
+  // Maneja el emiter del product-suggered
+  onProductSelectedFromSuggestions(product: any): void {
+    this.selectedProduct = product;  // Asignar el producto seleccionado
+    this.confirmModal.open(product);  // Abrir el modal
+  }
+
+  onConfirmSuggered(productDetails: { product: Product | Menu, quantity: number }): void {
+    this.cartService.addProduct(productDetails.product, productDetails.quantity);
+    console.log('Confirmado');
+  }
+
+  onCancelSuggered(): void {
+    console.log('Cancelado');
+  }
   onConfirm(productDetails: { product: Product | Menu, quantity: number }): void {
     console.log('Confirmado en order-summary');
     this.totalPrice = this.cartService.totalPrice;

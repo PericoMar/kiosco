@@ -12,7 +12,6 @@ body {
   bottom: -100%; /* Posición inicial fuera de la pantalla */
   left: 50%;
   transform: translateX(-50%);
-  /* width: 1000px;  */
   width: 95%;
   height: 95vh; /* Ajusta la altura para que ocupe el 95% de la pantalla */
   background-color: white;
@@ -271,41 +270,6 @@ button:hover{
 .checkout-btn:hover {
   background-color: var(--secondary-color-dark);
 }
-
-
-/* 
-.cart-container::-webkit-scrollbar {
-  width: 8px; 
-}
-
-.cart-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px; 
-}
-
-.cart-container::-webkit-scrollbar-thumb {
-  background: #ccc; 
-  border-radius: 10px; 
-  border: 2px solid #f1f1f1; 
-}
-
-.cart-container::-webkit-scrollbar-thumb:hover {
-  background: #b3b3b3; 
-}
-
-
-.cart-container {
-  scrollbar-width: thin; 
-  scrollbar-color: #ccc #f1f1f1; 
-}
-
-
-.cart-container {
-  overflow-y: scroll;
-  scrollbar-width: thin;
-} */
-
-
 
 .suggestion-container{
   border-bottom:2px solid #0000;

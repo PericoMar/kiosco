@@ -92,7 +92,7 @@
 
   }
   <section class="suggestion-container">
-    <app-suggestions class="suggestions-section"></app-suggestions>
+    <app-suggestions class="suggestions-section" (productSelected)="onProductSelectedFromSuggestions($event)"></app-suggestions>
   </section>
 
   <div class="cart-footer">
@@ -100,5 +100,11 @@
     <button class="checkout-btn" (click)="displayPaymentPage()">Finalizar Pedido</button>
   </div>
 </div>
+
+@if(isMenu){
+  <app-confirm-modal #confirmModal (confirmAction)="onConfirmSuggered($event)" (cancelAction)="onCancelSuggered()"></app-confirm-modal>
+} @else {
+  <app-confirm-modal #confirmModal (confirmAction)="onConfirmSuggered($event)" (cancelAction)="onCancelSuggered()"></app-confirm-modal>
+}
 
 <app-edit-modal #editModal (confirmAction)="onConfirm($event)" (cancelAction)="onCancel()"></app-edit-modal>
