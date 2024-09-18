@@ -41,14 +41,14 @@ jobs:
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PROUD_OCEAN_001393110 }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_MUSHROOM_0FA619010 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Usado para integraciones de GitHub (i.e. comentarios en PR)
           action: "upload"
           ###### Configuraciones del Repositorio/Construcción - Estos valores se pueden configurar para coincidir con los requisitos de tu aplicación. ######
           # Más información sobre las configuraciones del flujo de trabajo de Static Web App, visita: https://aka.ms/swaworkflowconfig
           app_location: "./frontend-kiosco-angular" # Ruta del código fuente de la aplicación
           api_location: "" # Ruta del código fuente de la API - opcional
-          output_location: "dist/frontend/browser" # Ruta de salida debe coincidir con el directorio generado por la construcción de Angular
+          output_location: "dist/frontend-kiosco-angular/browser" # Ruta de salida debe coincidir con el directorio generado por la construcción de Angular
           ###### Fin de Configuraciones del Repositorio/Construcción ######
 
   close_pull_request_job:
@@ -60,5 +60,5 @@ jobs:
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_DELIGHTFUL_COAST_052285610 }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_MUSHROOM_0FA619010 }}
           action: "close"
