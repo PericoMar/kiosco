@@ -43,6 +43,7 @@ a.family-button img{
 a.selected{
     border : 2px solid #ccc;
     border-left: none;
+    box-shadow: 2px 1px 5px 1px #ccc;
     transform: scale(1.05);
     font-weight: bold;
 }
