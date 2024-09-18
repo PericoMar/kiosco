@@ -96,7 +96,7 @@
   </section> -->
 
   <div class="cart-footer">
-    <div class="total-price">Total: {{ this.totalPrice }} €</div>
+    <div class="total-price">Total: {{ this.totalPrice | number:'1.2-2'}} €</div>
     <button class="checkout-btn" (click)="displayPaymentPage()">Finalizar Pedido</button>
   </div>
 </div>
