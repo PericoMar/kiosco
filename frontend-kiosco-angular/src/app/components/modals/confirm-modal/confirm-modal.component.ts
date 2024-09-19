@@ -57,6 +57,7 @@ export class ConfirmModalComponent {
   isVisible = false;
 
   open(data: any): void {
+    this.quantity = 1;
     this.currentCustomizationIndex = 0;
 
     this.product = data;

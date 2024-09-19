@@ -48,6 +48,7 @@ export class EditModalComponent {
   open(data: any, index: number): void {
     console.log('Data', data , 'Index', index);
     this.currentCustomizationIndex = index;
+    this.quantity = 1;
 
     this.product = data;
 
