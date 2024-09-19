@@ -1,24 +1,42 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild,
+} from '@angular/core';
 import { Menu, Product } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
-import { ProductComponent } from '../product/product.component';
 import { ProductService } from '../../services/product.service';
+import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
+import { ProductSuggestedComponent } from '../product-suggested/product-suggested.component';
 
 @Component({
   selector: 'app-suggestions',
   standalone: true,
-  imports: [CommonModule, ProductComponent],
+  imports: [CommonModule, ProductSuggestedComponent, ConfirmModalComponent],
   templateUrl: './suggestions.component.html',
   styleUrls: ['./suggestions.component.css'],
 })
 export class SuggestionsComponent implements OnInit {
 
-  constructor(private product: ProductService) {}
+  @Output() productSelected = new EventEmitter<Product | Menu>(); // Volver a emitir el evento al componente superior
 
-  products: (Product | Menu)[] = [];
+  selectedProduct!: (Product | Menu)
+  productsSugered: (Product | Menu)[] = [];
+  isMenu!: boolean;
+  isModalOpen = false;
+  orderService: any;
+
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     // Cambiar por productos con sugerencia.
-    this.products = this.product.getProductsByFamilyId('1');
+    this.productsSugered = this.productService.getProductsByFamilyId('1');
   }
+
+    // Función que maneja el evento emitido por el hijo
+    onProductSelected(product: Product | Menu): void {
+      this.productSelected.emit(product);  // Volver a emitir el producto al abuelo
+    }
 }

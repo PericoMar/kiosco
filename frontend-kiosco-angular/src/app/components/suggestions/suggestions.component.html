@@ -1,12 +1,14 @@
 <div>
-    <span>¿Te apetece algo mas?</span>
+  <span>¿Te apetece algo mas?</span>
 </div>
 <div class="suggestions-container">
   <div class="suggestion-wrapper">
     <div class="suggestions-list">
-      <div class="suggestion-item" *ngFor="let product of products">
-        <app-product [product]="product"></app-product>
+      @for(product of productsSugered; track product.id){
+      <div class="suggestion-item">
+        <app-product-suggested [product]="product" (productSelected)="onProductSelected($event)"></app-product-suggested>
       </div>
+      }
     </div>
   </div>
 </div>
