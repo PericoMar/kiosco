@@ -1,13 +1,15 @@
 :host {
     height: 100%;
     width: 100%;
+    
 }
 
 .advert-container {
+    margin-top :auto;
     position: absolute;
     top: 0;
     left: 0;
-    background-color: var(--secondary-color);
+    background-color:white;
     height: 100%;
     width: 100%;
     padding: 20px;
@@ -21,7 +23,14 @@
     /* opacity: 0;
     visibility: hidden; */
   }
-  
-  button {
-    cursor: pointer;
+
+  .center{
+    margin-top: 60%;
   }
+  
+  img {
+    width: auto;
+    height: 100%;
+  }
+
+

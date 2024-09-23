@@ -8,6 +8,6 @@ export class ShopService {
   constructor() { }
 
   getLogo(){
-    return 'assets/shop/LogoKC.png';
+    return 'assets/shop/Kairo.PNG';
   }
 }

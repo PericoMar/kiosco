@@ -10,7 +10,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class AdvertComponent {
   @Input() advert: string = ''; // Se puede usar para mostrar texto dinámico en el anuncio
   @Output() quitAdvert = new EventEmitter<void>(); // Emitir evento cuando se cierra el anuncio
+  logoUrl! :string;
 
+  constructor () {
+    this.logoUrl = 'assets/shop/LogoKC.png'; // Ruta de la imagen del logo
+  }
   // Método para cerrar el anuncio y deslizarlo hacia arriba
   closeAdvert() {
     const advertElement = document.getElementById('advert-container');
