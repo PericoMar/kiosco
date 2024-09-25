@@ -4,7 +4,8 @@
   display: flex;
   justify-content: start; 
   align-items: center;
-  width: 100%;
+  width: 100vw;
+  height: 20rem;
   overflow: hidden;
 }
 
@@ -17,31 +18,17 @@
   box-sizing: border-box;
 }
 .suggestions-list {
+  overflow-y: scroll;
   display: flex;
   gap: 20px;
   width: calc(200px * 5); /* Ajusta según el número de items visibles */
-  animation: scroll-left 10s linear infinite;
 }
 
 .suggestion-item {
-  min-width: 200px; 
-  background-color: #ffff;
-  margin-right: 20px;
-}
-
-/* Animación de desplazamiento horizontal */
-@keyframes scroll-left {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-.suggestion-item {
-  background-color: #ffff;
+  height: 17rem;
   min-width: 200px;
+  background-color: #ffff;
+  margin: 1.6rem;
 }
 
 .suggestions-list::-webkit-scrollbar {
