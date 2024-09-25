@@ -26,7 +26,8 @@ export class ProductService {
           price: 12.99,
           description: 'Una deliciosa hamburguesa con ingredientes frescos y personalizables.',
           familyId: '1',
-          customizations: [],
+          customizations: [
+          ],
           customizationQuestions: [
             {
               id: 'pan',

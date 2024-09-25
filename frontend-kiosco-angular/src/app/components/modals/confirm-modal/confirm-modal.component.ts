@@ -193,13 +193,27 @@ export class ConfirmModalComponent {
   }
 
   confirm(): void {
-
     console.log(this.product);
+    
+    // Recorre las preguntas de personalización
+    this.product.customizationQuestions?.forEach((question) => {
+      const existingCustomization = this.product.customizations.find(c => c.customizationQuestionId === question.id);
+      
+      if (!existingCustomization) {
+        // Si no hay respuestas para esta pregunta, añade la pregunta con un array vacío de respuestas
+        this.product.customizations.push({
+          customizationQuestionId: question.id,
+          name: question.name,
+          responses: [] // Respuestas vacías
+        });
+      }
+    });
+  
     const productDetails = {
       product: this.product,
       quantity: this.quantity
     };
-
+  
     this.confirmAction.emit(productDetails);
     this.close();
   }

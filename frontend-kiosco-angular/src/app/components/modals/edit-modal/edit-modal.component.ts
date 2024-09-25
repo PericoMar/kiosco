@@ -117,6 +117,7 @@ export class EditModalComponent {
     }
     console.log(this.product.customizationQuestions);
     console.log(this.product.customizations);
+    console.log(this.product);
   }
 
   isOptionSelected(currentIndex: number, optionId: string): boolean {
@@ -157,6 +158,12 @@ export class EditModalComponent {
   }
 
   editCustomization(): void {
+    // Crea un nuevo producto basado en las opciones editadas
+    const newProduct : Product | Menu = { ...this.product }; // Asumiendo que `id` es el identificador único y que deseas crear un nuevo producto
+
+    // Emitir el evento con el nuevo producto y la cantidad
+    this.confirmAction.emit({ product: newProduct, quantity: this.quantity });
+
     this.close();
   }
 
@@ -190,16 +197,5 @@ export class EditModalComponent {
     }, 300); // Esperar a que termine la animación
   }
 
-  confirm(): void {
-
-    console.log(this.product);
-    const productDetails = {
-      product: this.product,
-      quantity: this.quantity
-    };
-
-    this.confirmAction.emit(productDetails);
-    this.close();
-  }
 
 }

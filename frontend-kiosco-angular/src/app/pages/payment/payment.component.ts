@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { FamilyService } from '../../services/family.service';
 import { BackButtonComponent } from '../../components/back-button/back-button.component';
+import { PrinterService } from '../../services/printer/printer.service';
 
 @Component({
   selector: 'app-payment',
@@ -27,6 +28,7 @@ export class PaymentComponent {
     private cartService: OrderService,
     private familyService: FamilyService,
     private router:Router,
+    private printerService: PrinterService,
   ) {
     this.firstFamilyId = this.familyService.getFirstFamilyId();
   }
@@ -57,6 +59,7 @@ export class PaymentComponent {
   }
 
   onCheckout(){
+    this.printerService.printTicket(this.products);
     this.router.navigate(['/confirm-page']);
   }
 }

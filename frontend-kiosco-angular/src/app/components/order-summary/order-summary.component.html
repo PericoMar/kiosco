@@ -38,7 +38,7 @@
               </button>
             }
             <div class="price-wrapper">
-              <div class="total-item-price">{{ productService.getTotalPrice(product.details) * product.quantity }} €</div>
+              <div class="total-item-price">{{ productService.getTotalPrice(product.details) * product.quantity | number:'1.2-2'}} €</div>
               <div class="item-price">{{ productService.getTotalPrice(product.details) }}€ /ud</div>
             </div>
             <button
@@ -107,4 +107,4 @@
   <app-confirm-modal #confirmModal (confirmAction)="onConfirmSuggered($event)" (cancelAction)="onCancelSuggered()"></app-confirm-modal>
 }
 
-<app-edit-modal #editModal (confirmAction)="onConfirm($event)" (cancelAction)="onCancel()"></app-edit-modal>
+<app-edit-modal #editModal (confirmAction)="onConfirmEdit($event)" (cancelAction)="onCancel()"></app-edit-modal>

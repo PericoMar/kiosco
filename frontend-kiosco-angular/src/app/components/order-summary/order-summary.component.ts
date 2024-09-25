@@ -47,6 +47,7 @@ export class OrderSummaryComponent {
 
   @ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
   @ViewChild('editModal') editModal!: EditModalComponent;
+  editingProduct!: Product | Menu;
 
   constructor(
     private cartService: OrderService,
@@ -85,13 +86,23 @@ export class OrderSummaryComponent {
   toggleDropdown(index: number): void {
     this.isDropdownOpen[index] = !this.isDropdownOpen[index];
   }
-  
 
   openEditModal(product : Product | Menu, index : number): void {
+    const editingProduct = {...product};
+    this.editingProduct = editingProduct
     console.log(product);
-    this.editModal.open(product, index);
+    this.editModal.open(editingProduct, index);
   }
 
+
+  onConfirmEdit(productDetails: { product: Product | Menu, quantity: number }): void {
+    console.log(this.cartService.products);
+    this.cartService.subtractProduct(this.editingProduct);
+    console.log(this.cartService.products);
+    this.cartService.addProduct(productDetails.product, productDetails.quantity);
+    console.log(this.cartService.products);
+    console.log('Confirmado');
+  }
 
   // Maneja el emiter del product-suggered
   onProductSelectedFromSuggestions(product: any): void {
@@ -107,6 +118,7 @@ export class OrderSummaryComponent {
   onCancelSuggered(): void {
     console.log('Cancelado');
   }
+
   onConfirm(productDetails: { product: Product | Menu, quantity: number }): void {
     console.log('Confirmado en order-summary');
     this.totalPrice = this.cartService.totalPrice;

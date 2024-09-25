@@ -34,8 +34,9 @@
                     [disabled]="!isOptionSelected(currentCustomizationIndex, option.id) && 
                     this.product.customizationQuestions?.[currentCustomizationIndex]?.maxChoices &&
                     maxChoicesReached(currentCustomizationIndex)"
-                    (change)="selectOption(option)"
+                    
                     />
+                    <!-- (change)="selectOption(option)" -->
                     <label for="{{option.id}}">
                     <span>{{ option.value }}</span>
                     </label>

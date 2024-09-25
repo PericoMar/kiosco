@@ -9,13 +9,13 @@ import { Component } from '@angular/core';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
-  notAppears: boolean = true;
+  notAppears: boolean = false;
 
-  reducedMovilityHeight: string = '900px';
-  normalHeight: string = '1920px';
+  reducedMovilityHeight: string = '60vh';
+  normalHeight: string = '100vh';
 
-  reducedMovilityFamilyPageHeight: string = '600px';
-  normalFamilyPageHeight: string = '1260px';
+  reducedMovilityFamilyPageHeight: string = '32vh';
+  normalFamilyPageHeight: string = '65vh';
 
   familyPageProducts!: HTMLElement | null;
 
@@ -36,6 +36,6 @@ export class FooterComponent {
     }
     body.style.height = this.reducedMovilityHeight;
     if(this.familyPageProducts) this.familyPageProducts.style.height = this.reducedMovilityFamilyPageHeight
-    body.style.marginTop = '1020px';
+    body.style.marginTop = '40vh';
   }
 }
