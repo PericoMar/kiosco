@@ -59,7 +59,14 @@ export class PaymentComponent {
   }
 
   onCheckout(){
-    this.printerService.printTicket(this.products);
+    this.printerService.printTicket(this.products).subscribe({
+      next : (response) => {
+        console.log(response);
+      },
+      error : (error) => {
+        console.error(error);
+      }
+    });
     this.router.navigate(['/confirm-page']);
   }
 }
