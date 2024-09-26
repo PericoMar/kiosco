@@ -1,14 +1,15 @@
-<article class="product" (click)="selectProduct();">
+<article class="product horizontal-card" (click)="selectProduct()">
     <main class="product-info">
-        <img src="{{product.img ? product.img : noPhotoUrl}}" [alt]="product.name">
-        <div class="overflow-hidden">
-            <h1 class="product-name text-center">{{ product.name }}</h1>
-        </div>
-        <!-- <p>{{ product.description }}</p> -->
+      <div class="product-img-container">
+        <img src="{{ product.img ? product.img : noPhotoUrl }}" [alt]="product.name" class="product-img">
+      </div>
+      <div class="product-details">
+        <h1 class="product-name">{{ product.name }}</h1>
         <footer>
-            <p>{{ product.price }} €</p>
-            <hr>
+          <p class="product-price">+{{ product.price }} €</p>
+          <hr>
         </footer>
+      </div>
     </main>
-</article>
-
+  </article>
+  

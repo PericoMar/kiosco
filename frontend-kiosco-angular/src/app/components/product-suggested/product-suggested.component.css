@@ -1,57 +1,53 @@
-.product{
-    border-radius: 8px;
-    border: 2px solid #ccc;
-    height: 380px;
-    padding: 15px;
-    cursor: pointer;
+/* Para estructurar la tarjeta en formato horizontal */
+.horizontal-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
-.product img{
-    width: 100%;
-    height: 40%;
-    object-fit: contain;
-}
-
-.product-info{
-    height: inherit;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.product-name{
-    font-size: 1.3rem;
-    font-weight: var(--product-name-font-weight);
-    margin: 0;
-}
-
-.product-info footer{
-  width: 80%;
+.product-info {
+  overflow-x: hidden;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center ;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
-.product-info hr{
-  height: 3px;
-  background-color: var(--secondary-color);
-  border: none;
-  width: 100% ;
+/* Imagen del producto */
+.product-img-container {
+  flex: 0 0 5rem; /* La imagen ocupará un espacio fijo de 120px */
+  margin-right: 15px; /* Separación entre la imagen y el contenido */
 }
 
-@keyframes slide-up {
-    from {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  .product {
-    animation: slide-up 1s ease-out;
-  }
+.product-img {
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; 
+}
+
+/* Contenedor de los detalles del producto */
+.product-details {
+  flex: 1; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
+/* Estilo para el nombre del producto */
+.product-name {
+  font-size: 1.2em;
+  margin: 0;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+/* Estilo del precio */
+.product-price {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: rgb(128, 191, 117);
+  margin: 10px 0 5px 0;
+}

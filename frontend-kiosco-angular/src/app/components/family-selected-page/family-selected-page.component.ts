@@ -32,6 +32,5 @@ export class FamilySelectedPageComponent implements OnInit {
   private updateFamilyData(id: string): void {
     this.family = this.familyService.getFamilyById(id);
     this.products = this.productService.getProductsByFamilyId(id);
-    console.log(this.products);
   }
 }

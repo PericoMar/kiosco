@@ -2,109 +2,186 @@
   <div class="cart-header">
     <h1 class="title-cart-header">Pedido</h1>
     <button class="continue-shopping" (click)="toggleCart()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        fill="currentColor"
+        class="bi bi-x-lg"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+        />
       </svg>
     </button>
   </div>
-  @if(this.products == null || this.products.items == undefined || this.products.items.length <= 0){
+  @if(this.products == null || this.products.items == undefined ||
+  this.products.items.length <= 0){
 
-    <div class="flex-center">
-      <h2>Carrito vacio 😥</h2> 
-    </div>
+  <div class="flex-center">
+    <h2>Carrito vacio 😥</h2>
+  </div>
 
-  } @else { 
+  } @else {
 
-    <div class="cart-items">
-      <div class="cart-item" *ngFor="let product of products.items; let i = index">
-        <div *ngIf="product.quantity > 0">
-          <div class="item-wrapper">
-            <span class="item-count">{{ product.quantity }}x</span>
-            <div class="item-info">
-              <img [src]="product.details.img" [alt]="product.details.name" />
-              <div class="item-details">
-                <h2>{{ product.details.name }}</h2>
-                <p>
-                  {{ product.details.description }}
-                </p>
-              </div>
+  <div class="cart-items">
+    <div
+      class="cart-item"
+      *ngFor="let product of products.items; let i = index"
+    >
+      <div *ngIf="product.quantity > 0">
+        <div class="item-wrapper">
+          <span class="item-count">{{ product.quantity }}x</span>
+          <div class="item-info">
+            <img [src]="product.details.img" [alt]="product.details.name" />
+            <div class="item-details">
+              <h2>{{ product.details.name }}</h2>
+              <p>
+                {{ product.details.description }}
+              </p>
             </div>
-            @if(product.details.customizations.length > 0){
-              <button class="dropdown" (click)="toggleDropdown(i)" [ngClass]="{'open': isDropdownOpen[i]}">
-                Detalles
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
-                  <path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"/>
-                </svg>
-              </button>
-            }
-            <div class="price-wrapper">
-              <div class="total-item-price">{{ productService.getTotalPrice(product.details) * product.quantity | number:'1.2-2'}} €</div>
-              <div class="item-price">{{ productService.getTotalPrice(product.details) }}€ /ud</div>
-            </div>
-            <button
-              class="less-item"
-              id="lessItem"
-              (click)="subtractProduct(product.details)"
-            >
-              -
-            </button>
-            <button
-              class="more-item"
-              id="moreItem"
-              (click)="addSameProduct(product.details)"
-            >
-              +
-            </button>
           </div>
-          @if(product.details.customizations.length > 0 && isDropdownOpen[i]){
-            <!-- <div class="flex-center"> -->
-              <div class="customizations" @dropdownAnimation>
-                <div class="customizations-container">
-                  @for(customization of product.details.customizations ; track $index){
-                  <div class="customization">
-                    <div class="space-between">
-                      <h5 class="customization-name">{{ customization.name }}</h5>
-                      <button (click)="openEditModal(product.details, $index)" class="modify-customization-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                        </svg>
-                        Modificar
-                      </button>
-                    </div>
-                    <div class="customization-responses">
-                      <div class="response-info space-between" *ngFor="let response of customization.responses">
-                        <img [src]="response.img ? response.img : noPhotoUrl" [alt]="response.img" />
-                        <p class="customization-value">{{ response.value }}</p>
-                        <span>{{ response.price ? '+'+response.price+'€' : 'Gratis'}}</span>
-                      </div>
-                    </div>
-                    <hr>
-                  </div>
-                  }
+          @if(product.details.customizations.length > 0){
+          <button
+            class="dropdown"
+            (click)="toggleDropdown(i)"
+            [ngClass]="{ open: isDropdownOpen[i] }"
+          >
+            Detalles
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              fill="currentColor"
+              class="bi bi-caret-down"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"
+              />
+            </svg>
+          </button>
+          }
+          <div class="price-wrapper">
+            <div class="total-item-price">
+              {{
+                productService.getTotalPrice(product.details) * product.quantity
+                  | number : "1.2-2"
+              }}
+              €
+            </div>
+            <div class="item-price">
+              {{ productService.getTotalPrice(product.details) }}€ /ud
+            </div>
+          </div>
+          <button
+            class="less-item"
+            id="lessItem"
+            (click)="subtractProduct(product.details)"
+          >
+            -
+          </button>
+          <button
+            class="more-item"
+            id="moreItem"
+            (click)="addSameProduct(product.details)"
+          >
+            +
+          </button>
+        </div>
+        @if(product.details.customizations.length > 0 && isDropdownOpen[i]){
+        <!-- <div class="flex-center"> -->
+        <div class="customizations" @dropdownAnimation>
+          <div class="customizations-container">
+            @for(customization of product.details.customizations ; track
+            $index){
+            <div class="customization">
+              <div class="space-between">
+                <h5 class="customization-name">{{ customization.name }}</h5>
+                <button
+                  (click)="openEditModal(product.details, $index)"
+                  class="modify-customization-button"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-pencil-square"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+                    />
+                  </svg>
+                  Modificar
+                </button>
+              </div>
+              <div class="customization-responses">
+                <div
+                  class="response-info space-between"
+                  *ngFor="let response of customization.responses"
+                >
+                  <img
+                    [src]="response.img ? response.img : noPhotoUrl"
+                    [alt]="response.img"
+                  />
+                  <p class="customization-value">{{ response.value }}</p>
+                  <span>{{
+                    response.price ? "+" + response.price + "€" : "Gratis"
+                  }}</span>
                 </div>
               </div>
-            <!-- </div> -->
-          }
+              <hr />
+            </div>
+            }
+          </div>
         </div>
+        <!-- </div> -->
+        }
       </div>
     </div>
+  </div>
 
   }
   <section class="suggestion-container">
-    <app-suggestions class="suggestions-section" (productSelected)="onProductSelectedFromSuggestions($event)"></app-suggestions>
+    <app-suggestions
+      class="suggestions-section"
+      (productSelected)="onProductSelectedFromSuggestions($event)"
+    ></app-suggestions>
   </section>
 
   <div class="cart-footer">
-    <div class="total-price">Total: {{ this.totalPrice | number:'1.2-2'}} €</div>
-    <button class="checkout-btn" (click)="displayPaymentPage()">Finalizar Pedido</button>
+    <div class="total-price">
+      Total: {{ this.totalPrice | number : "1.2-2" }} €
+    </div>
+    <button class="checkout-btn" (click)="displayPaymentPage()">
+      Finalizar Pedido
+    </button>
   </div>
 </div>
 
 @if(isMenu){
-  <app-confirm-modal #confirmModal (confirmAction)="onConfirmSuggered($event)" (cancelAction)="onCancelSuggered()"></app-confirm-modal>
+<app-confirm-modal
+  #confirmModal
+  (confirmAction)="onConfirmSuggered($event)"
+  (cancelAction)="onCancelSuggered()"
+></app-confirm-modal>
 } @else {
-  <app-confirm-modal #confirmModal (confirmAction)="onConfirmSuggered($event)" (cancelAction)="onCancelSuggered()"></app-confirm-modal>
+<app-confirm-modal
+  #confirmModal
+  (confirmAction)="onConfirmSuggered($event)"
+  (cancelAction)="onCancelSuggered()"
+></app-confirm-modal>
 }
 
-<app-edit-modal #editModal (confirmAction)="onConfirmEdit($event)" (cancelAction)="onCancel()"></app-edit-modal>
+<app-edit-modal
+  #editModal
+  (confirmAction)="onConfirmEdit($event)"
+  (cancelAction)="onCancel()"
+></app-edit-modal>

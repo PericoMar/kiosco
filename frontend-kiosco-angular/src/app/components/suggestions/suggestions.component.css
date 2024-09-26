@@ -1,11 +1,9 @@
 .suggestions-container {
   background-color: var(--secondary-color);
-  margin: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: start; 
   align-items: center;
-  width: 100vw;
-  height: 20rem;
   overflow: hidden;
 }
 
@@ -20,15 +18,11 @@
 .suggestions-list {
   overflow-y: scroll;
   display: flex;
-  gap: 20px;
-  width: calc(200px * 5); /* Ajusta según el número de items visibles */
 }
 
 .suggestion-item {
-  height: 17rem;
-  min-width: 200px;
-  background-color: #ffff;
-  margin: 1.6rem;
+  min-width: 18rem;
+  margin: 1.2rem;
 }
 
 .suggestions-list::-webkit-scrollbar {
@@ -36,7 +30,8 @@
 }
 
 span {
-  font-size: 1.4rem;
-  margin-block: 1.6rem;
+  font-weight: bold;
+  font-size: 1.6rem;
+  margin-top: 15px;
   margin-left: 1.6rem; 
 }

@@ -78,8 +78,8 @@ export class OrderService {
 
     // Buscar si el producto o menú ya está en el pedido
     const existingItemIndex = this.cartProduct.items.findIndex(item => {
-        console.log(item.details);
-        console.log(clonedProduct);
+        console.log("original:",item.details);
+        console.log("clonado",clonedProduct);
         return (
             item.details.id === clonedProduct.id &&
             item.type === (clonedProduct.hasOwnProperty('products') ? 'menu' : 'product') &&
@@ -92,6 +92,7 @@ export class OrderService {
         console.log("Ya existe");
         this.cartProduct.items[existingItemIndex].quantity += quantity;
     } else {
+      console.log("No existe nuevo producto:",product)
         // Si no existe, añade un nuevo OrderItem
         const newItem: OrderItem = {
             type: clonedProduct.hasOwnProperty('products') ? 'menu' : 'product',

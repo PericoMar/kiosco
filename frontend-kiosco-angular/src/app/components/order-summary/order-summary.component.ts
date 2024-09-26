@@ -56,11 +56,10 @@ export class OrderSummaryComponent {
   ) {}
 
   ngOnInit() {
-    console.log(this.products == null || this.products.items == undefined || this.products.items.length <= 0);
     this.cartService.products.subscribe((products) => {
       if(products != null) this.products = products;
       this.totalPrice = this.cartService.totalPrice;
-      console.log(this.products);
+
     });
   }
 
@@ -90,7 +89,7 @@ export class OrderSummaryComponent {
   openEditModal(product : Product | Menu, index : number): void {
     const editingProduct = {...product};
     this.editingProduct = editingProduct
-    console.log(product);
+
     this.editModal.open(editingProduct, index);
   }
 
@@ -112,7 +111,6 @@ export class OrderSummaryComponent {
 
   onConfirmSuggered(productDetails: { product: Product | Menu, quantity: number }): void {
     this.cartService.addProduct(productDetails.product, productDetails.quantity);
-    console.log('Confirmado');
   }
 
   onCancelSuggered(): void {
@@ -120,7 +118,6 @@ export class OrderSummaryComponent {
   }
 
   onConfirm(productDetails: { product: Product | Menu, quantity: number }): void {
-    console.log('Confirmado en order-summary');
     this.totalPrice = this.cartService.totalPrice;
   }
 

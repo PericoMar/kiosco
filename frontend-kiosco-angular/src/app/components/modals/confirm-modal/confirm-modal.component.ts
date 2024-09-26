@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CustomizationOption, CustomizationQuestion, Menu, Product } from '../../../interfaces/pedido';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -25,7 +25,7 @@ import { ProductService } from '../../../services/product.service';
     ])
   ]
 })
-export class ConfirmModalComponent {
+export class ConfirmModalComponent{
 
   constructor(
     private productService: ProductService
@@ -44,7 +44,7 @@ export class ConfirmModalComponent {
   quantity: number = 1;
 
   // Índice de la pregunta de personalización actual
-  currentCustomizationIndex!: number;
+  currentCustomizationIndex: number = 0;
 
   // Control de tipos de pregunta e inputs.
   currentQuestionType!: string;
@@ -52,14 +52,13 @@ export class ConfirmModalComponent {
     single: 'radio',
     multiple: 'checkbox'
   }
-
   // Control de la visibilidad del modal
   isVisible = false;
 
   open(data: any): void {
+    console.log(this.currentCustomizationIndex)
     this.quantity = 1;
-    this.currentCustomizationIndex = 0;
-
+    this.currentCustomizationIndex = 0
     this.product = data;
     this.product.customizations = [];
 
@@ -90,7 +89,6 @@ export class ConfirmModalComponent {
     // Buscar si ya existe una respuesta para esta pregunta
     let existingCustomization = this.product.customizations.find(c => c.customizationQuestionId === questionId);
 
-    console.log(existingCustomization);
 
     if (existingCustomization) {
       if(currentQuestion.questionType === 'single'){
@@ -122,8 +120,6 @@ export class ConfirmModalComponent {
           responses: [option]
         });
     }
-    console.log(this.product.customizationQuestions);
-    console.log(this.product.customizations);
   }
 
   isOptionSelected(currentIndex: number, optionId: string): boolean {
@@ -179,7 +175,6 @@ export class ConfirmModalComponent {
   }
 
   close(): void {
-    console.log('close');
     const modalContainer = document.querySelector('.modal-container') as HTMLElement;
     const modalOverlay = document.querySelector('.modal-overlay') as HTMLElement;
     if (modalContainer && modalOverlay) {
@@ -193,7 +188,6 @@ export class ConfirmModalComponent {
   }
 
   confirm(): void {
-    console.log(this.product);
     
     // Recorre las preguntas de personalización
     this.product.customizationQuestions?.forEach((question) => {
