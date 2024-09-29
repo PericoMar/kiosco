@@ -13,7 +13,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 95%;
-  height: 95vh; /* Ajusta la altura para que ocupe el 95% de la pantalla */
+  height: var(--order-summary-max-height); /* Ajusta la altura para que ocupe el 95% de la pantalla */
   background-color: white;
   border-radius: 16px 16px 0 0; /* Aumenta el borde redondeado */
   box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.15); /* Aumenta la sombra */
@@ -241,6 +241,7 @@ button:hover{
 .response-info{
   width: 100%;
 }
+
 
 .cart-footer {
   display: flex;

@@ -2,6 +2,8 @@
 :root{
     /* Main page */
     --main-page-with: 100%;
+    --main-page-height: 100vh;
+    --main-page-margin-top: 0px;
     
     /* Product */
     --product-name-font-weight: 400;
@@ -39,17 +41,21 @@
     --button-border: 2px solid color-mix(in lab, var(--secondary-color-dark), white 20%);
 
     /* Modal */
+    --modal-transform-position-y: -50%;
     --confirm-modal-width: 800px;
     --max-confirm-modal-width: 1000px;
     --max-confirm-modal-height: 1200px;
     --min-confirm-modal-width: 500px;
     --min-confirm-modal-height: 1200px;
+
+    /* Order summary*/
+    --order-summary-max-height: 95vh;
 }
 
 body{
     font-family: "Poppins", sans-serif;
-    max-height: 100vh;
-    min-height: 100vh;
+    /* max-height: 100vh; */
+    /* min-height: 100vh; */
     width: 100vw;
     margin: 0px;
     overflow: hidden;

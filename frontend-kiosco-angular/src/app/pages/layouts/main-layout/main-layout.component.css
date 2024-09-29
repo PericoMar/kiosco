@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     /* height: 100%; */
-    height: 100vh;
+    
 }
 
 /* .main-page{
@@ -18,6 +18,8 @@
     justify-content: space-between;
     width: var(--main-page-width);
     margin: 0 auto;
+    height: var(--main-page-height);
+    margin-top: var(--main-page-margin-top);
 }
 
 /* .product-selection{
