@@ -46,7 +46,7 @@ body {
 }
 
 .cart-items {
-  max-height: 70%; /* Ajusta según la altura del modal */
+  max-height: var(--product-list-max-height); /* Ajusta según la altura del modal */
   overflow-y: auto;
 }
 
@@ -144,7 +144,7 @@ button:hover{
 .item-info img {
   width: 100px; /* Aumenta el tamaño de la imagen */
   height: 100px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 12px; /* Aumenta el borde redondeado */
   margin-right: 30px; /* Aumenta el margen */
 }

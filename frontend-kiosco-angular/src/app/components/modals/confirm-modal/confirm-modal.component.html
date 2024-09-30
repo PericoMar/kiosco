@@ -177,9 +177,11 @@
       <button class="quantity-button" (click)="increaseQuantity()">+</button>
     </div>
     <div class="modal-actions">
-      <button class="cancel-button" (click)="close()">
-        Cancelar
-      </button>
+      @if( currentCustomizationIndex > 0 ){
+        <button class="cancel-button" (click)="previousCustomization()">Anterior</button>
+      } @else {
+        <button class="cancel-button" (click)="close()">Cancelar</button>
+      }
       <button class="confirm-button" (click)="confirm()">
         <svg
           xmlns="http://www.w3.org/2000/svg"

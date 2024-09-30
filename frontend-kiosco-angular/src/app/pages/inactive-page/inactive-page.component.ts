@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FamilyService } from '../../services/family.service';
 import { OrderService } from '../../services/order.service';
+import { ScreenService } from '../../services/screen/screen.service';
 
 @Component({
   selector: 'app-inactive-page',
@@ -18,7 +19,8 @@ export class InactivePageComponent {
   constructor(
     private router: Router,
     private familyService: FamilyService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private screenService: ScreenService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class InactivePageComponent {
   cancelOrder() {
     clearInterval(this.countdownInterval);
     this.orderService.clearOrder();
+    this.screenService.setDefaultScreenHeight();
     this.router.navigate(['/']); // Redirigir a la página de inicio o donde desees
   }
 

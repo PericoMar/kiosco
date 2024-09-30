@@ -165,4 +165,10 @@ export class OrderService {
   getPaymentMethod(): string {
     return this.paymentMethod;
   }
+
+  getItemsLength(): number {
+    if (!this.cartProduct) return 0;
+
+    return this.cartProduct.items.length;
+  }
 }

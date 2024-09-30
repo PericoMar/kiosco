@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
     /* Main page */
-    --main-page-with: 100%;
+    --main-page-width: 100%;
     --main-page-height: 100vh;
     --main-page-margin-top: 0px;
     
@@ -12,7 +12,7 @@
     --family-name-font-weight: 400;
 
     /* Family page */
-    --family-page-height: 1280px;
+    --family-page-height: 65vh;
 
 
     /* Side bar */
@@ -50,14 +50,22 @@
 
     /* Order summary*/
     --order-summary-max-height: 95vh;
+    --product-list-max-height: 60%;
+
+    /* Product list */
+    --payment-product-list-heigth : 35%;
+    --order-options-flex-direction: column;
+    --order-options-gap: 0px;
 }
 
 body{
     font-family: "Poppins", sans-serif;
     /* max-height: 100vh; */
     /* min-height: 100vh; */
-    width: 100vw;
+    height: var(--main-page-height);
     margin: 0px;
+    margin-top: var(--main-page-margin-top);
+    width: 100vw;
     overflow: hidden;
 }
 

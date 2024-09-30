@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ScreenService } from '../screen/screen.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InactivityService {
   private timeout: any;
-  private readonly inactivityTime: number = 3000000; // Tiempo de inactividad
+  private readonly inactivityTime: number = 30000; // Tiempo de inactividad
   private isActive: boolean = true; // Flag para habilitar/deshabilitar
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private screenService: ScreenService
+  ) {
     this.setupEventListeners();
   }
 

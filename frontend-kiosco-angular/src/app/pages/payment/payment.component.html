@@ -17,7 +17,7 @@
           <!-- Detalles adicionales (comentado) -->
         </div>
         <span class="product-quantity">Cantidad: {{ product.quantity }}</span>
-        <div class="product-price">{{ product.details.price }} €</div>
+        <div class="product-price">{{ productService.getTotalPrice(product.details) | number : "1.2-2" }} €</div>
       </div>
     </div>
 
@@ -25,138 +25,140 @@
     <div class="total-breakdown">
       <div class="total-line">
         <span class="total-label">Subtotal:</span>
-        <span class="total-value">{{ products.total }} €</span>
+        <span class="total-value">{{ products.total | number : "1.2-2" }} €</span>
       </div>
       <div class="total-line">
         <span class="total-label">Impuestos:</span>
-        <span class="total-value">{{ getTaxs() }} €</span>
+        <span class="total-value">{{ getTaxs() | number : "1.2-2" }} €</span>
       </div>
       <div class="total-line total-line-final">
         <span class="total-label">Total:</span>
-        <span class="total-value">{{ totalPriceOrder }} €</span>
+        <span class="total-value">{{ totalPriceOrder | number : "1.2-2" }} €</span>
       </div>
     </div>
 
-    <!-- Selección de entrega -->
-    <div class="delivery-options">
-      <h2 class="delivery-title">Modo de Entrega</h2>
-      <div class="choice-container" (click)="setDeliveryMethod('llevar')">
-        <div class="delivery-choice">
-          <input
-            type="radio"
-            id="llevar"
-            name="delivery"
-            value="llevar"
-            [(ngModel)]="deliveryMode"
-            [checked]="deliveryMode === 'llevar'"
-          />
-          <label for="llevar" class="custom-radio">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              fill="currentColor"
-              class="bi bi-bag-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M8 1a3 3 0 0 0-3 3v1H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V4a3 3 0 0 0-3-3zm0 1a2 2 0 0 1 2 2v1H6V4a2 2 0 0 1 2-2z"
-              />
-            </svg>
-            Para llevar
-          </label>
-        </div>
-        <div class="delivery-choice" (click)="setDeliveryMethod('comer_aqui')">
-          <input
-            type="radio"
-            id="comer_aqui"
-            name="delivery"
-            value="comer_aqui"
-            [(ngModel)]="deliveryMode"
-            [checked]="deliveryMode === 'comer_aqui'"
-          />
-          <label for="comer_aqui" class="custom-radio">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              fill="currentColor"
-              class="bi bi-geo-alt-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M12.166 8.94C13.38 7.686 14 6.396 14 5c0-2.761-2.239-5-5-5S4 2.239 4 5c0 1.396.62 2.686 1.834 3.94 1.08 1.124 2.464 2.065 3.166 2.065.703 0 2.087-.941 3.166-2.065z"
-              />
-              <path
-                d="M7 5.75A1.75 1.75 0 1 1 8.75 4 1.75 1.75 0 0 1 7 5.75zm0-1A.75.75 0 1 0 8.75 5.75.75.75 0 0 0 7 4.75z"
-              />
-            </svg>
-            Tomar en el local
-          </label>
+    <aside class="order-options">
+      <!-- Selección de entrega -->
+      <div class="delivery-options">
+        <h2 class="delivery-title">Modo de Entrega</h2>
+        <div class="choice-container" (click)="setDeliveryMethod('llevar')">
+          <div class="delivery-choice">
+            <input
+              type="radio"
+              id="llevar"
+              name="delivery"
+              value="llevar"
+              [(ngModel)]="deliveryMode"
+              [checked]="deliveryMode === 'llevar'"
+            />
+            <label for="llevar" class="custom-radio">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="currentColor"
+                class="bi bi-bag-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 1a3 3 0 0 0-3 3v1H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V4a3 3 0 0 0-3-3zm0 1a2 2 0 0 1 2 2v1H6V4a2 2 0 0 1 2-2z"
+                />
+              </svg>
+              Para llevar
+            </label>
+          </div>
+          <div class="delivery-choice" (click)="setDeliveryMethod('comer_aqui')">
+            <input
+              type="radio"
+              id="comer_aqui"
+              name="delivery"
+              value="comer_aqui"
+              [(ngModel)]="deliveryMode"
+              [checked]="deliveryMode === 'comer_aqui'"
+            />
+            <label for="comer_aqui" class="custom-radio">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="currentColor"
+                class="bi bi-geo-alt-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M12.166 8.94C13.38 7.686 14 6.396 14 5c0-2.761-2.239-5-5-5S4 2.239 4 5c0 1.396.62 2.686 1.834 3.94 1.08 1.124 2.464 2.065 3.166 2.065.703 0 2.087-.941 3.166-2.065z"
+                />
+                <path
+                  d="M7 5.75A1.75 1.75 0 1 1 8.75 4 1.75 1.75 0 0 1 7 5.75zm0-1A.75.75 0 1 0 8.75 5.75.75.75 0 0 0 7 4.75z"
+                />
+              </svg>
+              Tomar en el local
+            </label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Método de pago -->
-    <div class="payment-options">
-      <h2 class="payment-title">Método de Pago</h2>
-      <div class="choice-container">
-        <div class="payment-choice">
-          <input
-            type="radio"
-            id="tarjeta"
-            name="payment"
-            value="tarjeta"
-            [(ngModel)]="paymentMethod"
-            [checked]="paymentMethod === 'tarjeta'"
-          />
-          <label for="tarjeta" class="custom-radio">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              fill="currentColor"
-              class="bi bi-credit-card-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1"
-              />
-            </svg>
-            Tarjeta
-          </label>
-        </div>
-        <div class="payment-choice">
-          <input
-            type="radio"
-            id="efectivo"
-            name="payment"
-            value="efectivo"
-            [(ngModel)]="paymentMethod"
-            [checked]="paymentMethod === 'efectivo'"
-          />
-          <label for="efectivo" class="custom-radio">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              fill="currentColor"
-              class="bi bi-cash-coin"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"
-              />
-              <path
-                d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.598H9.44z"
-              />
-            </svg>
-            Efectivo
-          </label>
+      <!-- Método de pago -->
+      <div class="payment-options">
+        <h2 class="payment-title">Método de Pago</h2>
+        <div class="choice-container">
+          <div class="payment-choice">
+            <input
+              type="radio"
+              id="tarjeta"
+              name="payment"
+              value="tarjeta"
+              [(ngModel)]="paymentMethod"
+              [checked]="paymentMethod === 'tarjeta'"
+            />
+            <label for="tarjeta" class="custom-radio">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="currentColor"
+                class="bi bi-credit-card-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1"
+                />
+              </svg>
+              Tarjeta
+            </label>
+          </div>
+          <div class="payment-choice">
+            <input
+              type="radio"
+              id="efectivo"
+              name="payment"
+              value="efectivo"
+              [(ngModel)]="paymentMethod"
+              [checked]="paymentMethod === 'efectivo'"
+            />
+            <label for="efectivo" class="custom-radio">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="currentColor"
+                class="bi bi-cash-coin"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"
+                />
+                <path
+                  d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.598H9.44z"
+                />
+              </svg>
+              Efectivo
+            </label>
+          </div>
         </div>
       </div>
-    </div>
+    </aside>
 
     <!-- Botón de finalizar compra -->
     <div class="flex-center">

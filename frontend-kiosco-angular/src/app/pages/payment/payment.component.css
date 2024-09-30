@@ -11,9 +11,9 @@ body {
 
 /* Contenedor principal */
 .checkout-container {
-  width: 1024px; 
-  margin: 40px auto;
-  padding: 80px;
+  width: var(--main-page-width); 
+  margin: 0;
+  padding: 5% 10%;
   background-color: #fff;
   border-radius: 16px; /* Borde más redondeado */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumentada la sombra */
@@ -30,7 +30,7 @@ body {
 
 /* Lista de productos */
 .products-list {
-  max-height: 600px; /* Aumentada la altura máxima */
+  max-height: var(--payment-product-list-heigth); /* Aumentada la altura máxima */
   overflow-y: auto;
   margin-bottom: 30px; /* Aumentado el margen inferior */
 }
@@ -38,7 +38,7 @@ body {
 .product-item {
   display: flex;
   align-items: center;
-  padding: 20px; /* Aumentado el padding */
+  padding: 20px 0px; /* Aumentado el padding */
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -103,6 +103,15 @@ body {
   font-size: 28px; /* Aumentado el tamaño de la fuente */
   font-weight: bold;
   color: rgb(44, 44, 44);
+}
+
+.order-options{
+  width: 100%;
+  display: flex;
+  flex-direction: var(--order-options-flex-direction);
+  gap: var(--order-options-gap);
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* Opciones de entrega y pago */

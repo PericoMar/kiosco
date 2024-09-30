@@ -6,6 +6,7 @@ import { LanguageOption } from '../../interfaces/language-option';
 import { LanguageOptionComponent } from '../../components/language-option/language-option.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { AdvertComponent } from '../../components/advert/advert.component';
+import { ScreenService } from '../../services/screen/screen.service';
 
 @Component({
   selector: 'app-options-page',
@@ -21,7 +22,7 @@ export class OptionsPageComponent {
 
   showAdvert: boolean = true;
 
-  constructor() {
+  constructor(public screenService: ScreenService) {      
     this.showAdvert = true;
   }
   
@@ -53,6 +54,7 @@ export class OptionsPageComponent {
   ]
 
   quitAdvert() {
+    this.screenService.setDefaultScreenHeight();
     this.showAdvert = false;
   }
 }

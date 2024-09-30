@@ -7,6 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FamilyService } from '../../services/family.service';
 import { BackButtonComponent } from '../../components/back-button/back-button.component';
 import { PrinterService } from '../../services/printer/printer.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-payment',
@@ -26,6 +27,7 @@ export class PaymentComponent {
 
   constructor(
     private cartService: OrderService,
+    public productService: ProductService,
     private familyService: FamilyService,
     private router:Router,
     private printerService: PrinterService,

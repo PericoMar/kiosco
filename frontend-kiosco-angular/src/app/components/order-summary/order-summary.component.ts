@@ -50,7 +50,7 @@ export class OrderSummaryComponent {
   editingProduct!: Product | Menu;
 
   constructor(
-    private cartService: OrderService,
+    public cartService: OrderService,
     private router: Router,
     public productService: ProductService
   ) {}
