@@ -58,6 +58,21 @@
     --order-options-gap: 0px;
 }
 
+@media screen and (min-width: 1300px) {
+  :root{
+    --main-page-width: 1080px;
+    --main-page-height: 1920px;
+    
+  }
+
+  body{
+    margin: auto !important;
+    width: 1080px !important;
+    height: 1920px !important;
+    overflow: scroll !important;
+  }
+}
+
 body{
     font-family: "Poppins", sans-serif;
     /* max-height: 100vh; */
