@@ -19,13 +19,20 @@ import { FamilyService } from '../../services/family.service';
 export class ConsumptionOptionComponent {
   @Input() consumptionOption! : ConsumptionOption;
   noPhotoOptionSrc : string = "../../../assets/image.svg";
-  firstFamilyId: string;
+  firstFamilyId!: string;
 
   constructor (
     private cartService : OrderService,
     private familyService : FamilyService
   ){
-    this.firstFamilyId = this.familyService.getFirstFamilyId();
+    this.familyService.getFamiliesObservable().subscribe({
+      next: response=> {
+        this.familyService.families = response;
+        this.firstFamilyId = this.familyService.getFirstFamilyId();
+      },
+      error: error=> console.log(error)
+    })
+    
   }
 
   safeConsumptionOption(consumptionOption: string){

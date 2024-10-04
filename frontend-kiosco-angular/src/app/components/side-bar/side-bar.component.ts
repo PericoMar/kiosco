@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FamilyService } from '../../services/family.service';
 import { Family } from '../../interfaces/family';
 import { FamilyComponent } from '../family/family.component';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ShopService } from '../../services/shop.service';
 
 @Component({
@@ -10,21 +9,22 @@ import { ShopService } from '../../services/shop.service';
   standalone: true,
   imports: [FamilyComponent],
   templateUrl: './side-bar.component.html',
-  styleUrl: './side-bar.component.css'
+  styleUrl: './side-bar.component.css',
 })
 export class SideBarComponent {
   families!: Family[];
   idFamilySelected: any = '';
   logoImg: string;
 
-  constructor (
-    private familyService : FamilyService,
-    private shopService : ShopService
+  constructor(
+    private familyService: FamilyService,
+    private shopService: ShopService
   ) {
-    this.families = this.familyService.getFamilies()
+    this.familyService.getFamiliesObservable().subscribe({
+      next: (response) => (this.families = response),
+      error: (error) => console.log(error),
+    });
 
     this.logoImg = this.shopService.getLogo();
   }
-
-  
 }

@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { Family } from '../../interfaces/family';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-family',
