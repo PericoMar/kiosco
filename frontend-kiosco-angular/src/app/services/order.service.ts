@@ -74,7 +74,7 @@ export class OrderService {
     }
 
     // Crear una copia del producto para evitar que las personalizaciones se sobrescriban
-    const clonedProduct = JSON.parse(JSON.stringify(product));
+    const clonedProduct = structuredClone(product);
 
     // Buscar si el producto o menú ya está en el pedido
     const existingItemIndex = this.cartProduct.items.findIndex(item => {

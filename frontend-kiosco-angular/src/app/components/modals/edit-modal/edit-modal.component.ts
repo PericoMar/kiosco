@@ -52,14 +52,10 @@ export class EditModalComponent {
     this.quantity = 1;
   
     // Clonamos completamente el objeto data para evitar referencias compartidas
-    this.product = JSON.parse(JSON.stringify(data));
+    this.product = structuredClone(data);
   
     // Guardar la respuesta del index con la que viene el producto (para comparar más tarde)
-    const clonedPreviousEditCustomization = JSON.parse(
-      JSON.stringify(
-        this.product.customizations[this.currentCustomizationIndex]
-      )
-    );
+    const clonedPreviousEditCustomization = structuredClone(this.product.customizations[this.currentCustomizationIndex]);
     this.previousEditCustomization = clonedPreviousEditCustomization;
   
     this.isVisible = true;
