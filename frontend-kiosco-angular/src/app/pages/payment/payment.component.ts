@@ -61,7 +61,10 @@ export class PaymentComponent {
   }
 
   onCheckout(){
-    this.printerService.printTicket(this.products).subscribe({
+    const order = {
+      ...this.products,
+    }
+    this.printerService.printTicket(order).subscribe({
       next : (response) => {
         console.log(response);
       },

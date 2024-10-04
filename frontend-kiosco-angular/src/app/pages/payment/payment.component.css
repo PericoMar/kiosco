@@ -49,7 +49,7 @@ body {
 .product-img {
   width: 120px; /* Aumentado el tamaño de la imagen */
   height: 120px; 
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 16px; /* Borde más redondeado */
   margin-right: 25px; /* Aumentado el margen derecho */
 }
