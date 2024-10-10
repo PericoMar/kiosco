@@ -12,7 +12,7 @@ export class ProductService {
         {
           id: "1",
           name: "Muzzarella",
-          price: 350,
+          price: 15.0,
           img : "assets/pizza.png",
           familyId: "1",
           description: "Muzzarella, tomate y aceitunas",
@@ -70,7 +70,7 @@ export class ProductService {
         {
           id: "2",
           name: "Fugazzeta",
-          price: 400,
+          price: 14,
           img : "../../../assets/pizza.png",
           familyId: "1",
           description: "Fugazzeta con cebolla y queso",
@@ -81,7 +81,7 @@ export class ProductService {
         {
           id: "9",
           name: "Napolitana",
-          price: 450,
+          price: 15,
           img: "assets/pizza.png",
           familyId: "1",
           description: "Muzzarella, tomate y ajo",
@@ -91,7 +91,7 @@ export class ProductService {
         {
           id: "10",
           name: "Calabresa",
-          price: 500,
+          price: 16,
           img: "assets/pizza.png",
           familyId: "1",
           description: "Muzzarella y calabresa",
@@ -101,7 +101,7 @@ export class ProductService {
         {
           id: "11",
           name: "Cuatro Quesos",
-          price: 550,
+          price: 15.5,
           img: "assets/pizza.png",
           familyId: "1",
           description: "Muzzarella, provolone, roquefort y parmesano",
@@ -111,7 +111,7 @@ export class ProductService {
         {
           id: "12",
           name: "Hawaiana",
-          price: 450,
+          price: 14.50,
           img: "assets/pizza.png",
           familyId: "1",
           description: "Muzzarella, jamón y ananá",
@@ -121,7 +121,7 @@ export class ProductService {
         {
           id: "13",
           name: "Pepperoni",
-          price: 500,
+          price: 13,
           img: "assets/pizza.png",
           familyId: "1",
           description: "Muzzarella y pepperoni",
@@ -131,7 +131,7 @@ export class ProductService {
         {
           id: "14",
           name: "Vegetariana",
-          price: 400,
+          price: 14,
           img: "assets/pizza.png",
           familyId: "1",
           description: "Muzzarella, pimientos, cebolla, aceitunas y champiñones",
@@ -141,7 +141,7 @@ export class ProductService {
         {
           id: "15",
           name: "Margherita",
-          price: 450,
+          price: 14.5,
           img: "assets/pizza.png",
           familyId: "1",
           description: "Muzzarella, tomate y albahaca",
@@ -151,7 +151,7 @@ export class ProductService {
         {
           id: "16",
           name: "Barbacoa",
-          price: 600,
+          price: 16,
           img: "assets/pizza.png",
           familyId: "1",
           description: "Muzzarella, carne, cebolla y salsa barbacoa",
@@ -161,7 +161,7 @@ export class ProductService {
         {
           id: "3",
           name: "Coca Cola",
-          price: 100,
+          price: 2.5,
           img : "assets/coca.png",
           familyId: "2",
           description: "Coca Cola 1.5L",
@@ -171,7 +171,7 @@ export class ProductService {
         {
           id: "4",
           name: "Fanta",
-          price: 100,
+          price: 2.5,
           img : "assets/fanta.png",
           familyId: "2",
           description: "Fanta 1.5L",
@@ -181,7 +181,7 @@ export class ProductService {
         {
           id: "5",
           name: "Hamburguesa",
-          price: 150,
+          price: 12,
           img : "assets/burguer.png",
           familyId: "3",
           description: "Hamburguesa con queso",
@@ -191,7 +191,7 @@ export class ProductService {
         {
           id: "6",
           name: "Papas",
-          price: 50,
+          price: 0.5,
           img : "assets/papas.png",
           familyId: "3",
           description: "Papas fritas",
@@ -201,7 +201,7 @@ export class ProductService {
         {
           id: "7",
           name: "Helado",
-          price: 200,
+          price: 4,
           img : "assets/helado.png",
           familyId: "4",
           description: "Helado de chocolate",
@@ -211,7 +211,7 @@ export class ProductService {
         {
           id: "8",
           name: "Brownie",
-          price: 150,
+          price: 3.5,
           img : "assets/brownie.png",
           familyId: "4",
           description: "Brownie de chocolate",
