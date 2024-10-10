@@ -25,13 +25,13 @@ export class ConsumptionOptionComponent {
     private cartService : OrderService,
     private familyService : FamilyService
   ){
-    this.familyService.getFamiliesObservable().subscribe({
-      next: response=> {
-        this.familyService.families = response;
-        this.firstFamilyId = this.familyService.getFirstFamilyId();
-      },
-      error: error=> console.log(error)
-    })
+    // this.familyService.getFamiliesObservable().subscribe({
+    //   next: response=> {
+    //     this.familyService.families = response;
+    //     this.firstFamilyId = this.familyService.getFirstFamilyId();
+    //   },
+    //   error: error=> console.log(error)
+    // })
     
   }
 
