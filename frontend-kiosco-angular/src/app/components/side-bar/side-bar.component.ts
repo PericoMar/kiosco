@@ -25,7 +25,7 @@ export class SideBarComponent {
     //   error: (error) => (this.families = this.familyService.families),
     // });
     this.families = this.familyService.families
-
+    console.log(this.families);
     this.logoImg = this.shopService.getLogo();
   }
 }

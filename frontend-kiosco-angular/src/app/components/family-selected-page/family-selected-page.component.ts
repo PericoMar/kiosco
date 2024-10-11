@@ -25,12 +25,14 @@ export class FamilySelectedPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
       const id = paramMap.get('id')!;
+      console.log(id);
       this.updateFamilyData(id);
     });
   }
 
   private updateFamilyData(id: string): void {
     this.family = this.familyService.getFamilyById(id);
+    console.log(this.family);
     this.products = this.productService.getProductsByFamilyId(id);
   }
 }
