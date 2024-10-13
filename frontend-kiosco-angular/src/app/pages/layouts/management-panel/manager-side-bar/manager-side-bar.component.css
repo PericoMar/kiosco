@@ -1,6 +1,7 @@
 :host{
     height: 100%;
     width: var(--manager-side-bar-width);
+    min-width: 180px;
 }
 
 .nav-bar{
@@ -13,7 +14,7 @@
     justify-content: space-between;
     align-items: flex-start;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
 }
 
@@ -22,7 +23,7 @@
     justify-content: start;
     align-items: center;
     gap: 15px;
-    padding: 5px;
+    padding: 10px;
     box-sizing: border-box;
 }
 
@@ -65,7 +66,6 @@
     padding: 5px;
     /* background-color: #333;  */
     color: #fff; /* Color del texto */
-    font-family: 'Arial', sans-serif;
     box-sizing: border-box;
 }
 
@@ -74,6 +74,13 @@
     align-items: center;
     width: 100%;
     max-width: 800px;
+    border-radius: 10px;
+    padding: 10px
+}
+
+.profile-container:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo blanco con opacidad */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
 }
 
 .profile-pic {
@@ -93,7 +100,8 @@
     font-size: 0.8rem;
     font-weight: bold;
     color: #fff; /* Nombre en blanco */
-    margin: 0;
+    margin:0px;
+    margin-bottom: 6px;
 }
 
 .role {
