@@ -1,7 +1,7 @@
 :host{
     height: 100%;
     width: var(--manager-side-bar-width);
-    min-width: 180px;
+    min-width: 195px;
 }
 
 .nav-bar{
