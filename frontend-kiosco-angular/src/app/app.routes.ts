@@ -5,6 +5,12 @@ import { FamilySelectedPageComponent } from './components/family-selected-page/f
 import { PaymentComponent } from './pages/payment/payment.component';
 import { ConfirmPageComponent } from './pages/confirm-page/confirm-page.component';
 import { InactivePageComponent } from './pages/inactive-page/inactive-page.component';
+import { ManagementPanelComponent } from './pages/layouts/management-panel/management-panel.component';
+import { ProductsManagerComponent } from './pages/layouts/management-panel/products-manager/products-manager.component';
+import { FamiliesManagerComponent } from './pages/layouts/management-panel/families-manager/families-manager.component';
+import { SalesManagerComponent } from './pages/layouts/management-panel/sales-manager/sales-manager.component';
+import { DevicesManagerComponent } from './pages/layouts/management-panel/devices-manager/devices-manager.component';
+import { OverviewComponent } from './pages/layouts/management-panel/overview/overview.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +33,17 @@ export const routes: Routes = [
   {
     path: 'inactive',
     component: InactivePageComponent
+  },
+  {
+    path: 'management-panel',
+    component: ManagementPanelComponent,
+    children: [
+      { path: '', component : OverviewComponent},
+      { path: 'products', component: ProductsManagerComponent },
+      { path: 'families', component: FamiliesManagerComponent },
+      { path: 'sales', component: SalesManagerComponent },
+      { path: 'devices', component: DevicesManagerComponent }
+    ]
   },
   { path: '**', redirectTo: '' },
 ];

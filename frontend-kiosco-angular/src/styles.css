@@ -56,10 +56,14 @@
     --payment-product-list-heigth : 35%;
     --order-options-flex-direction: column;
     --order-options-gap: 0px;
+
+
+    /* MANAGER STYLES */
+    --manager-side-bar-width: 25%;
 }
 
 @media screen and (min-width: 1300px) {
-  :root{
+  /* :root{
     --main-page-width: 1080px;
     --main-page-height: 1920px;
     
@@ -70,18 +74,21 @@
     width: 1080px !important;
     height: 1920px !important;
     overflow: scroll !important;
-  }
+  } */
 }
 
 body{
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
     font-family: "Poppins", sans-serif;
     /* max-height: 100vh; */
     /* min-height: 100vh; */
-    height: var(--main-page-height);
+    /* height: var(--main-page-height);
     margin: 0px;
     margin-top: var(--main-page-margin-top);
     width: 100vw;
-    overflow: hidden;
+    overflow: hidden; */
 }
 
 button {
