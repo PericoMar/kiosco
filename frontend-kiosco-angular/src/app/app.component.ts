@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -14,4 +14,9 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class AppComponent {
   title = 'frontend-kiosco-angular';
+
+  @HostListener('document:contextmenu', ['$event'])
+  onRightClick(event: MouseEvent): void {
+    event.preventDefault();
+  }
 }
