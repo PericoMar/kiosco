@@ -21,6 +21,7 @@ export class SideBarComponent {
     private shopService: ShopService
   ) {
     this.families = this.familyService.families;
+
     this.logoImg = this.shopService.getLogo();
   }
 }

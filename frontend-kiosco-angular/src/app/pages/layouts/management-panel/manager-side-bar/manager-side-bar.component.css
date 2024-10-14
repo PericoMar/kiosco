@@ -1,0 +1,118 @@
+:host{
+    height: 100%;
+    width: var(--manager-side-bar-width);
+    min-width: 195px;
+}
+
+.nav-bar{
+    height: 100%;
+    width: 100%;
+    background-color: rgb(26, 26, 26);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.nav-header{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.logo{
+    height: 1.5rem;
+}
+
+.nav-items{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+.nav-item{
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding:10px 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-item:hover{
+    background-color: rgb(53, 53, 53);
+}
+
+
+/* FOOTER */
+
+.nav-footer {
+    margin-top: 180px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    /* background-color: #333;  */
+    color: #fff; /* Color del texto */
+    box-sizing: border-box;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 10px;
+    padding: 10px
+}
+
+.profile-container:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo blanco con opacidad */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+.profile-pic {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid white; /* Borde blanco alrededor de la imagen */
+    object-fit: cover; /* Ajusta la imagen para que no se distorsione */
+}
+
+.info-container {
+    flex: 1;
+    margin-left: 15px;
+}
+
+.name {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #fff; /* Nombre en blanco */
+    margin:0px;
+    margin-bottom: 6px;
+}
+
+.role {
+    font-size: 0.6rem;
+    color: #ccc; /* Rol en un gris más claro */
+    margin: 0;
+}
+
+.arrow {
+    font-size: 0.8rem;
+    color: #fff; /* Flecha blanca */
+    margin-left: auto;
+}
+
