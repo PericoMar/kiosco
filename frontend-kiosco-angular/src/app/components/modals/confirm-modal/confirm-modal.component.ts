@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CustomizationOption, CustomizationQuestion, Menu, Product } from '../../../interfaces/pedido';
+import { CustomizationOption, Menu, Product } from '../../../interfaces/pedido';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AppConfig } from '../../../../config/app-config';
 import { ProductService } from '../../../services/product.service';

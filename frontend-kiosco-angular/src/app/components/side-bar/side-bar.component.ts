@@ -20,11 +20,7 @@ export class SideBarComponent {
     private familyService: FamilyService,
     private shopService: ShopService
   ) {
-    this.familyService.getFamiliesObservable().subscribe({
-      next: (response) => (this.families = response),
-      error: (error) => console.log(error),
-    });
-
+    this.families = this.familyService.families;
     this.logoImg = this.shopService.getLogo();
   }
 }

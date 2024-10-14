@@ -60,7 +60,6 @@ export class OrderService {
   }
 
   addProduct(product: Product | Menu, quantity: number = 1): void {
-    console.log("Antes", this._products);
 
     if (!this.cartProduct) {
         this.cartProduct = {
@@ -104,20 +103,14 @@ export class OrderService {
 
     // Recalcula el total del pedido
     this.cartProduct.total = this.totalPrice;
-
-    // Actualiza el observable con el nuevo estado del carrito
     this._products.next(this.cartProduct);
-
-    console.log("Después", this.cartProduct);
 }
 
 
   subtractProduct(product: Product | Menu): void {
     if (!this.cartProduct) return;
 
-    const existingItemIndex = this.cartProduct.items.findIndex(item =>
-      item.details.id === product.id && item.type === (product.hasOwnProperty('products') ? 'menu' : 'product')
-    );
+    const existingItemIndex = this.findProduct(product);
 
     if (existingItemIndex >= 0) {
       if (this.cartProduct.items[existingItemIndex].quantity > 1) {
@@ -128,8 +121,6 @@ export class OrderService {
 
       // Recalcula el total del pedido
       this.cartProduct.total = this.totalPrice;
-
-      // Actualiza el observable con el nuevo estado del carrito
       this._products.next(this.cartProduct);
     }
   }

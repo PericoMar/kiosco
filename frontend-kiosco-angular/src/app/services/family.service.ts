@@ -10,15 +10,15 @@ import { Observable } from 'rxjs';
 export class FamilyService {
   public families!: Family[];
 
-  constructor(private http: HttpClient) {}
-
+  constructor(private http: HttpClient) {
+  }
 
   getFamiliesObservable(): Observable<Family[]> {
-    return this.http.get<Family[]>(`${AppConfig.API_URL}/familias`)
+    return this.http.get<Family[]>(`${AppConfig.API_URL}/familias`);
   }
 
   getFamilyById(id: string): Family | undefined {
-    return this.families.find((family) => family.id === id);
+    return this.families.find((family) => family.id == id);
   }
 
   getFirstFamilyId(): string {

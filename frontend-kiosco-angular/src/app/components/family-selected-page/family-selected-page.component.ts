@@ -10,7 +10,7 @@ import { ProductComponent } from '../product/product.component';
   standalone: true,
   imports: [ProductComponent],
   templateUrl: './family-selected-page.component.html',
-  styleUrl: './family-selected-page.component.css'
+  styleUrl: './family-selected-page.component.css',
 })
 export class FamilySelectedPageComponent implements OnInit {
   family: any;
@@ -20,10 +20,10 @@ export class FamilySelectedPageComponent implements OnInit {
     private route: ActivatedRoute,
     private familyService: FamilyService,
     private productService: ProductService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(paramMap => {
+    this.route.paramMap.subscribe((paramMap) => {
       const id = paramMap.get('id')!;
       this.updateFamilyData(id);
     });
