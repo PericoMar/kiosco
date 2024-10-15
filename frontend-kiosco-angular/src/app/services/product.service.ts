@@ -8,7 +8,7 @@ import { AppConfig } from '../../config/app-config';
   providedIn: 'root',
 })
 export class ProductService {
-  public products: (Product | Menu)[] = []/* = [
+  public products: (Product | Menu)[] = [
         {
           id: "1",
           name: "Muzzarella",
@@ -77,7 +77,6 @@ export class ProductService {
           customizations: [],
           customizationQuestions: [],
         },
-        //Insertar al menos 8 productos mas de la familia 1 para poder ver el scroll
         {
           id: "9",
           name: "Napolitana",
@@ -218,7 +217,7 @@ export class ProductService {
           customizations: [],
           customizationQuestions: [],
         }
-      ]; */
+      ];
 
   constructor(private http: HttpClient) {}
 

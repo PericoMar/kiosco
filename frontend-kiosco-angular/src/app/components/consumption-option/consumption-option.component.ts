@@ -28,30 +28,38 @@ export class ConsumptionOptionComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //Se obtiene aqui porque es el inicio del flujo.
+    /* Se obtiene aquí porque es el inicio del flujo.
+    Asi se evita llamar constantemente a la DB */
     this.getAllData();
   }
 
   getAllData():void{
     this.familyService.getFamiliesObservable().subscribe({
       next: (response) => {
-        this.familyService.families = response;
+        if(response){
+          this.familyService.families = response;
+          this.firstFamilyId = this.familyService.getFirstFamilyId()
+
+        }
       },
       error: (error) => {
         console.log(error);
-      },
-      complete: () =>
-        (this.firstFamilyId = this.familyService.getFirstFamilyId()),
+        console.log(this.familyService.families)
+      }
     });
 
     this.productsService.getProductsObservable().subscribe({
       next: (response) => {
         console.log(response);
-        this.productsService.products = response;
+        if(response){
+
+          this.productsService.products = response;
+        }
       },
       error: (error) => {
         console.log(error);
-      },
+        console.log(this.productsService.products)
+      }
     });
     
   }

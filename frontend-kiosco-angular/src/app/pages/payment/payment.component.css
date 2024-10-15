@@ -37,6 +37,7 @@ body {
 
 .product-item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 20px 0px; /* Aumentado el padding */
   border-bottom: 1px solid #e0e0e0;
@@ -55,7 +56,7 @@ body {
 }
 
 .product-details {
-  width: 50%;
+  width: 45%;
 }
 
 .product-name {

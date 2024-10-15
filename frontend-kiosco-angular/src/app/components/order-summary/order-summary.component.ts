@@ -106,7 +106,7 @@ export class OrderSummaryComponent {
   // Maneja el emiter del product-suggered
   onProductSelectedFromSuggestions(product: any): void {
     this.selectedProduct = product;  // Asignar el producto seleccionado
-    this.confirmModal.open(product);  // Abrir el modal
+    this.confirmModal.open(product);
   }
 
   onConfirmSuggered(productDetails: { product: Product | Menu, quantity: number }): void {

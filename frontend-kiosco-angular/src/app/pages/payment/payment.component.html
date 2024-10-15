@@ -17,7 +17,12 @@
           <!-- Detalles adicionales (comentado) -->
         </div>
         <span class="product-quantity">Cantidad: {{ product.quantity }}</span>
-        <div class="product-price">{{ productService.getTotalPrice(product.details) | number : "1.2-2" }} €</div>
+        <div class="product-price">
+          {{
+            productService.getTotalPrice(product.details) | number : "1.2-2"
+          }}
+          €
+        </div>
       </div>
     </div>
 
@@ -25,7 +30,9 @@
     <div class="total-breakdown">
       <div class="total-line">
         <span class="total-label">Subtotal:</span>
-        <span class="total-value">{{ products.total | number : "1.2-2" }} €</span>
+        <span class="total-value"
+          >{{ products.total | number : "1.2-2" }} €</span
+        >
       </div>
       <div class="total-line">
         <span class="total-label">Impuestos:</span>
@@ -33,7 +40,9 @@
       </div>
       <div class="total-line total-line-final">
         <span class="total-label">Total:</span>
-        <span class="total-value">{{ totalPriceOrder | number : "1.2-2" }} €</span>
+        <span class="total-value"
+          >{{ totalPriceOrder | number : "1.2-2" }} €</span
+        >
       </div>
     </div>
 
@@ -67,7 +76,10 @@
               Para llevar
             </label>
           </div>
-          <div class="delivery-choice" (click)="setDeliveryMethod('comer_aqui')">
+          <div
+            class="delivery-choice"
+            (click)="setDeliveryMethod('comer_aqui')"
+          >
             <input
               type="radio"
               id="comer_aqui"
@@ -139,18 +151,13 @@
             <label for="efectivo" class="custom-radio">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                fill="currentColor"
-                class="bi bi-cash-coin"
-                viewBox="0 0 16 16"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#5f6368"
               >
                 <path
-                  fill-rule="evenodd"
-                  d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"
-                />
-                <path
-                  d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.598H9.44z"
+                  d="M560-440q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM280-320q-33 0-56.5-23.5T200-400v-320q0-33 23.5-56.5T280-800h560q33 0 56.5 23.5T920-720v320q0 33-23.5 56.5T840-320H280Zm80-80h400q0-33 23.5-56.5T840-480v-160q-33 0-56.5-23.5T760-720H360q0 33-23.5 56.5T280-640v160q33 0 56.5 23.5T360-400Zm440 240H120q-33 0-56.5-23.5T40-240v-440h80v440h680v80ZM280-400v-320 320Z"
                 />
               </svg>
               Efectivo
