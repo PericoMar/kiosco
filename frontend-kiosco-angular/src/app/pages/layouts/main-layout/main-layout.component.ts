@@ -17,6 +17,7 @@ export class MainLayoutComponent {
 
   constructor(private inactivityService : InactivityService) {
    }
+   
 
     addedReducedMovility: boolean = false;
 
