@@ -56,7 +56,7 @@ export class ConfirmModalComponent{
   isVisible = false;
 
   open(data: any): void {
-    console.log(this.currentCustomizationIndex)
+    console.log(data.customizationQuestions)
     this.quantity = 1;
     this.currentCustomizationIndex = 0
     this.product = data;

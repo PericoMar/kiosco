@@ -33,35 +33,29 @@ export class ConsumptionOptionComponent implements OnInit {
     this.getAllData();
   }
 
-  getAllData():void{
+  getAllData(): void {
     this.familyService.getFamiliesObservable().subscribe({
       next: (response) => {
-        if(response){
+        if (response) {
           this.familyService.families = response;
-          this.firstFamilyId = this.familyService.getFirstFamilyId()
-
+          this.firstFamilyId = this.familyService.getFirstFamilyId();
         }
       },
       error: (error) => {
         console.log(error);
-        console.log(this.familyService.families)
-      }
+      },
     });
 
     this.productsService.getProductsObservable().subscribe({
       next: (response) => {
-        console.log(response);
-        if(response){
-
+        if (response) {
           this.productsService.products = response;
         }
       },
       error: (error) => {
         console.log(error);
-        console.log(this.productsService.products)
-      }
+      },
     });
-    
   }
 
   safeConsumptionOption(consumptionOption: string) {

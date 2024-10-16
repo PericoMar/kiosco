@@ -64,7 +64,9 @@
 
     <div class="modal-actions">
       @if( currentCustomizationIndex > 0 ){
-      <button class="cancel-button" (click)="previousCustomization()">Anterior</button>
+      <button class="cancel-button" (click)="previousCustomization()">
+        Anterior
+      </button>
       } @else {
       <button class="cancel-button" (click)="close()">Cancelar</button>
       }
@@ -178,9 +180,11 @@
     </div>
     <div class="modal-actions">
       @if( currentCustomizationIndex > 0 ){
-        <button class="cancel-button" (click)="previousCustomization()">Anterior</button>
+      <button class="cancel-button" (click)="previousCustomization()">
+        Anterior
+      </button>
       } @else {
-        <button class="cancel-button" (click)="close()">Cancelar</button>
+      <button class="cancel-button" (click)="close()">Cancelar</button>
       }
       <button class="confirm-button" (click)="confirm()">
         <svg
