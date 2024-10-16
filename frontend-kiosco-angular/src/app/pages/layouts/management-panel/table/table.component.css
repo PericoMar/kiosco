@@ -5,8 +5,167 @@
 
 .table-container{
     width: 100%;
-    height: 100%;
+    height: 87%;
+    max-height: 375px;
     min-width: 500px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
     overflow: scroll;
 }
 
+   table.table{
+        border-spacing: 4px 0px;
+        height: 60%;
+    }
+
+  /* Ajustar el padding de las celdas para que coincida con la altura */
+  .mat-cell, .mat-header-cell {
+    padding: 4px 8px; /* Establecer padding superior e inferior más pequeño */
+  }
+  
+  /* Estilo para los encabezados de la tabla (th) */
+  th.mat-header-cell {
+    background-color: var(--manager-background-color); /* Color de fondo grisáceo */
+    padding: 0 16px;
+    border-radius: 10px; /* Borde redondeado */
+    font-weight: bold; /* Hacer el texto más prominente */
+    height: 30px; /* Asegúrate de que la altura de los encabezados coincida */
+    border-bottom-style: none;
+  }
+  
+  td.mat-cell {
+    border-bottom-style: none; /* Eliminar el borde inferior de las celdas */
+    padding: 0 16px; /* Ajustar el padding de las celdas */
+  }
+  
+
+/* Estilos adicionales para el texto y el icono de estado */
+.status-text {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+}
+  
+.status-text svg {
+    margin-right: 5px;/* Espacio entre el texto y el icono */
+    vertical-align: middle;
+}
+  
+  
+.status-icon {
+    font-size: 1em;  /* Tamaño del ícono */
+}
+
+/* Si estás usando Bootstrap Icons */
+.bi-check-circle {
+    color: #28a745;  /* Color del ícono si está disponible */
+}
+
+.bi-x-circle {
+    color: #e56f7a;  /* Color del ícono si no está disponible */
+}
+
+/* Contenedor de búsqueda */
+.search-container {
+    display: flex;
+    justify-content: space-between; /* Centrar el input si lo deseas */
+    margin-bottom: 16px;
+  }
+  
+  /* Wrapper para el input y el icono */
+  .input-wrapper {
+    position: relative; /* Para posicionar el icono */
+  }
+  
+  /* Estilos para el input */
+  .input-wrapper input {
+    font-family: var(--font-family);
+    width: 300px; /* Anchura mayor */
+    padding: 8px 12px; /* Más padding */
+    padding-left: 40px; /* Aumentar padding a la izquierda para la lupa */
+    border: 1px solid #cccccc; /* Borde claro */
+    border-radius: 10px; /* Borde redondeado */
+    font-size: 16px;
+    outline: none; /* Eliminar borde azul al hacer clic */
+    transition: border 0.3s ease;
+  }
+  
+  /* Cambiar el color del borde cuando se hace clic */
+  .input-wrapper input:focus {
+    border: 1px solid #aaaaaa; /* Borde más claro al hacer clic */
+  }
+  
+  /* Placeholder con un color más claro */
+  .input-wrapper input::placeholder {
+    color: #bbbbbb;
+  }
+  
+  /* Estilos para el icono de búsqueda */
+  .search-icon {
+    position: absolute;
+    left: 10px; /* Ajustar la posición a la izquierda */
+    top: 50%; /* Centrar verticalmente */
+    transform: translateY(-50%); /* Ajustar el centrado vertical */
+    width: 16px; /* Tamaño del icono */
+    height: 16px; /* Tamaño del icono */
+    color: #aaaaaa; /* Color del icono */
+  }
+
+  .allergen-container {
+    display: flex;               /* Utiliza flexbox para apilar los iconos */
+    align-items: center;        /* Alinea los iconos en el centro verticalmente */
+    justify-content: center;     /* Centra los iconos horizontalmente */
+    position: relative;          /* Posicionamiento relativo para el margen negativo */
+  }
+  
+  .allergen-icon {
+    width: 24px;                /* Ajusta el tamaño del icono */
+    height: 24px;               /* Ajusta el tamaño del icono */
+    margin: 0px -3px;           /* Margen negativo para superponer ligeramente los iconos */
+    border-radius: 50%;         /* Bordes redondeados para un aspecto circular */
+    border: 1px solid #ffffff;  /* Borde claro */
+    border-width: thin;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con algo de transparencia */
+    /* box-shadow: 0 0 0 1px white, 0 2px 4px rgba(0, 0, 0, 0.2); */
+    transition: transform 0.2s; /* Transición suave para efectos al pasar el mouse */
+  }
+  
+  th.actions-column{
+    width: 50px;
+  }
+
+  .row-menu {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    font-size: 0.8rem;
+}
+
+.row-menu svg {
+    color: #2d2d2d; /* Un tono más claro que el negro */
+}
+
+.row-menu:hover {
+    background-color: rgba(45, 45, 45, 0.1); /* Fondo con un poco de opacidad */
+}
+
+button.mat-mdc-icon-button.mat-mdc-button-base{
+    width: 40px;
+    height: 40px;
+}
+
+span.mat-mdc-menu-item-text{
+    color: var(--manager-ligth-text);
+}
+
+mat-paginator.mat-paginator{
+    font-family: var(--font-family);
+    margin-top: 12px;
+}

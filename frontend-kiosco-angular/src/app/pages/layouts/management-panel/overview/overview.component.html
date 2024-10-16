@@ -21,7 +21,25 @@
 </header>
 
 <main class="overview">
-    <h2>Análisis de datos</h2>
+    <header class="overview-header">
+        <h2>Análisis de datos</h2>
+        <aside class="dates-inputs-container">
+            <!-- Inputs fechas para tener un rango -->
+            <input 
+              type="month" 
+              class="date-input" 
+              [(ngModel)]="startMonth"
+              placeholder="Mes - Año"
+            >
+            -
+            <input 
+              type="month" 
+              class="date-input" 
+              [(ngModel)]="endMonth" 
+              placeholder="Mes - Año"
+            >
+          </aside>
+    </header>
     <section class="overview-cards">
         <div class="card card-1">
             <header>
@@ -53,7 +71,7 @@
         </div>
         <section class="card card-5 overview-graph">
             <h4>Reporte de ventas</h4>
-            <app-overview-graph></app-overview-graph>
+            <app-overview-graph [startMonth]="startMonth" [endMonth]="endMonth"></app-overview-graph>
         </section>
     </section>
     <section class="table-section card">

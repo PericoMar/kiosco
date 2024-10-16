@@ -88,6 +88,43 @@ aside{
     height: 70%;
 }
 
+.overview-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.dates-inputs-container{
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    width: auto;
+    align-items: center;
+}
+
+.date-input {
+    font-family: var(--font-family);
+    width: 130px; /* Anchura ajustada */
+    padding: 6px 8px; /* Padding (menos que el input de búsqueda) */
+    border: 1px solid #cccccc; /* Borde claro */
+    border-radius: 4px; /* Borde redondeado */
+    font-size: 0.8rem; /* Tamaño de fuente */
+    color: #666666; /* Color del texto (más gris) */
+    outline: none; /* Eliminar borde azul al hacer clic */
+    transition: border 0.3s ease; /* Transición suave para el borde */
+  }
+  
+  /* Cambiar el color del borde cuando se hace clic */
+  .date-input:focus {
+    border: 1px solid #aaaaaa; /* Borde más claro al hacer clic */
+  }
+  
+  /* Placeholder (no se aplica a los inputs tipo date, pero se puede incluir) */
+  .date-input::placeholder {
+    color: #bbbbbb; /* Color del placeholder */
+  }
+
 .overview-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -109,7 +146,7 @@ aside{
 .card-2:hover .watch-span,
 .card-3:hover .watch-span,
 .card-4:hover .watch-span {
-    background-color: rgb(108, 183, 248); 
+    background-color: rgb(108, 183, 248);
 }
 
 .card-1, .card-2, .card-3, .card-4{
@@ -123,14 +160,14 @@ aside{
 .card-1{
     background-image: url('../../../../../assets/productos.png');
     background-position: calc(100% - 10px) calc(100% - 10px);
-    background-size: 30%; /* Muestra el 75% de la imagen */
+    background-size: 25%; /* Muestra el 75% de la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
 }
 
 .card-2 {
     background-image: url('../../../../../assets/familias.png');
     background-position: calc(100% - 10px) calc(100% - 10px);
-    background-size: 30%; /* Muestra el 75% de la imagen */
+    background-size: 25%; /* Muestra el 75% de la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     grid-column-start: 1;
     grid-row-start: 2;
@@ -139,7 +176,7 @@ aside{
 .card-3 {
     background-image: url('../../../../../assets/devices.png');
     background-position: calc(100% - 10px) calc(100% - 10px);
-    background-size: 30%; /* Muestra el 75% de la imagen */
+    background-size: 25%; /* Muestra el 75% de la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     grid-column-start: 2;
     grid-row-start: 1;
@@ -148,7 +185,7 @@ aside{
 .card-4 {
     background-image: url('../../../../../assets/ventas.png');
     background-position: calc(100% - 10px) calc(100% - 10px);
-    background-size: 30%; /* Muestra el 75% de la imagen */
+    background-size: 25%; /* Muestra el 75% de la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     grid-column-start: 2;
     grid-row-start: 2;
@@ -187,4 +224,5 @@ aside{
 
 .table-section-header{
     width: 100%;
+    margin-bottom: 10px;
 }
