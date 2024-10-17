@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 
 @Component({
@@ -9,20 +9,38 @@ import { Chart } from 'chart.js/auto';
   styleUrl: './overview-graph.component.css'
 })
 export class OverviewGraphComponent {
-  ngAfterViewInit() {
+  @Input() startMonth!: string; // Mes inicial
+  @Input() endMonth!: string; // Mes final
+  chart!: Chart;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['startMonth'] || changes['endMont']) {
+      this.updateGraph();
+    }
+  }
+
+  updateGraph() {
+    const labels = this.getMonthRange(this.startMonth, this.endMonth);
+    const data = this.getSalesData(labels); // Aquí obtén tus datos de ventas
+
+    // Si ya existe un gráfico, destrúyelo antes de crear uno nuevo
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
     const ctx = document.getElementById('myChart') as HTMLCanvasElement;
 
-    new Chart(ctx, {
+    this.chart = new Chart(ctx, {
       type: 'line', // Gráfico de línea
       data: {
-        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+        labels: labels,
         datasets: [{
-          label: 'Ventas',
-          data: [120, 190, 300, 500, 200, 300],
-          borderColor: 'rgba(75, 192, 192, 1)', // Color de la línea
-          backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo del área bajo la línea
+          label: 'Facturación', // Etiqueta de la línea
+          data: data,
+          borderColor: 'rgb(108, 183, 248)', // Color de la línea
+          backgroundColor: 'rgb(202, 225, 245, 0.5)', // Color de fondo del área bajo la línea
           fill: true, // Rellenar debajo de la línea
-          tension: 0.4, // Curvatura de las líneas (ajústalo a tu gusto)
+          tension: 0.4, // Curvatura de las líneas
           borderWidth: 2, // Grosor de la línea
         }]
       },
@@ -41,4 +59,36 @@ export class OverviewGraphComponent {
       }
     });
   }
+
+  getMonthRange(start: string, end: string): string[] {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const labels: string[] = [];
+  
+    while (startDate <= endDate) {
+      // Formato 'mes-año' (ejemplo: 'sep-23')
+      const formattedLabel = startDate.toLocaleString('default', { month: 'short' }) + '-' + startDate.getFullYear().toString().slice(-2);
+      labels.push(formattedLabel);
+      
+      startDate.setMonth(startDate.getMonth() + 1);
+    }
+  
+    // Opcional: Limitar el número de etiquetas si es necesario
+    // Aquí puedes personalizar la lógica para mostrar solo ciertos meses
+    return labels;
+  }
+  
+
+  getSalesData(labels: string[]): number[] {
+    // Define el rango de ventas
+    const minSales = 100;  // Valor mínimo
+    const maxSales = 500;  // Valor máximo
+  
+    // Genera un array de números aleatorios en el rango definido
+    return labels.map(() => {
+      return Math.floor(Math.random() * (maxSales - minSales + 1)) + minSales;
+    });
+  }
+  
 }
+

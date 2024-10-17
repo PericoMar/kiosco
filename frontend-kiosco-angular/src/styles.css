@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+
 :root{
+    /* Fonts */
+    --font-family: "Poppins", sans-serif;
+    --mat-table-row-item-label-text-font: "Poppins", sans-serif;
+    --mat-table-header-headline-font: "Poppins", sans-serif;
+
     /* Main page */
     --main-page-width: 100%;
     --main-page-height: 100vh;
@@ -59,8 +66,16 @@
 
 
     /* MANAGER STYLES */
+    --manager-ligth-text: rgb(61, 61, 61);
+    --manager-background-color: #f2f3f8;
     --manager-side-bar-width: 15%;
-}
+    --mat-table-header-container-height: 44px;
+    --mat-table-row-item-container-height: 42px;
+    --mat-form-field-container-text-font: "Poppins", sans-serif;
+    --mat-select-trigger-text-font: "Poppins", sans-serif;
+    --mat-option-label-text-font: "Poppins", sans-serif;
+    --mat-menu-item-label-text-font: "Poppins", sans-serif;
+  }
 
 @media screen and (min-width: 1300px) {
   /* :root{
