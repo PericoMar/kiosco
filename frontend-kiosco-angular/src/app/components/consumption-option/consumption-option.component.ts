@@ -46,6 +46,8 @@ export class ConsumptionOptionComponent implements OnInit {
       },
     });
 
+    this.firstFamilyId = this.familyService.getFirstFamilyId();
+
     this.productsService.getProductsObservable().subscribe({
       next: (response) => {
         if (response) {
