@@ -41,28 +41,31 @@
           </aside>
     </header>
     <section class="overview-cards">
-        <div class="card card-1">
+        <div class="card card-1" (click)="navigateTo('management-panel/products')">
             <header>
                 <h4>Productos</h4>
                 <p>Administra tus productos</p>
             </header>
             <span class="watch-span">Ver</span>
         </div>
-        <div class="card card-2">
+        
+        <div class="card card-2" (click)="navigateTo('management-panel/families')">
             <header>
                 <h4>Familias</h4>
                 <p>Administra tus familias</p>
             </header>
             <span class="watch-span">Ver</span>
         </div>
-        <div class="card card-3">
+        
+        <div class="card card-3" (click)="navigateTo('management-panel/devices')">
             <header>
                 <h4>Dispositivos</h4>
                 <p>Visualiza tus dispositivos</p>
             </header>
             <span class="watch-span">Ver</span>
         </div>
-        <div class="card card-4">
+        
+        <div class="card card-4" (click)="navigateTo('management-panel/sales')">
             <header>
                 <h4>Ventas</h4>
                 <p>Visualiza tus ventas</p>
@@ -77,7 +80,7 @@
     <section class="table-section card">
         <header class="table-section-header space-between">
             <h3>Inspección de productos</h3>
-            <button class="green-btn">
+            <button class="green-btn" (click)="openProductModal()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
