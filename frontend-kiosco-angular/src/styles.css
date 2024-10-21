@@ -75,6 +75,8 @@
     --mat-select-trigger-text-font: "Poppins", sans-serif;
     --mat-option-label-text-font: "Poppins", sans-serif;
     --mat-menu-item-label-text-font: "Poppins", sans-serif;
+
+    --mdc-dialog-container-shape: 20px;
   }
 
 @media screen and (min-width: 1300px) {

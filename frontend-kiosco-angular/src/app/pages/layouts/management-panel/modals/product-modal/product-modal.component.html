@@ -1,0 +1,41 @@
+<main class="modal-content">
+    <div class="modal-header">
+        <div class="image-container">
+          <img [src]="productImgUrl" alt="Imagen del producto" class="product-image" *ngIf="productImgUrl">
+          <button class="edit-button" (click)="editImage()">
+            ✎
+          </button>
+        </div>
+      </div>
+      
+  
+  <div>
+    <form [formGroup]="productForm">
+      <div class="form-group">
+        <label for="name">Nombre del producto</label>
+        <input id="name" type="text" formControlName="name" placeholder="Ej. Pizza" class="form-control" />
+        <div *ngIf="productForm.controls['name'].hasError('required') && productForm.controls['name'].touched" class="error">
+          El nombre es obligatorio
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="price">Precio</label>
+        <input id="price" type="text" formControlName="price" placeholder="Ej. 10.00" class="form-control" />
+        <div *ngIf="productForm.controls['price'].hasError('required') && productForm.controls['price'].touched" class="error">
+          El precio es obligatorio
+        </div>
+        <div *ngIf="productForm.controls['price'].hasError('pattern') && productForm.controls['price'].touched" class="error">
+          El precio debe ser un número válido
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <div class="dialog-actions">
+    <button (click)="close()">Cancelar</button>
+    <button [disabled]="productForm.invalid" (click)="save()">
+      {{ isEditMode ? 'Guardar Cambios' : 'Añadir' }}
+    </button>
+  </div>
+</main>
