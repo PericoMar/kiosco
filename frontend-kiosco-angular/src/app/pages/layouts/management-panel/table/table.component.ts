@@ -1,23 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 
+
 export interface ColumnDef {
   columnId: string;
   columnName: string;
 }
 
-export interface DataItem {
-  id: number;
-  name: string;
-  family: string;
-  status: string;
-  allergens?: string[]; // Opcional
-}
 
 @Component({
   selector: 'app-table',
@@ -27,8 +21,11 @@ export interface DataItem {
   styleUrl: './table.component.css'
 })
 export class TableComponent {
+  @Input() pageSizeOptions: number[] = [5, 10, 25];
 
-  displayedColumns: { columnId: string, columnName: string }[] = [
+  @Input() heigth: string = '375px';
+
+  @Input() displayedColumns: { columnId: string, columnName: string }[] = [
     { columnId: 'id', columnName: 'Codigo' },
     { columnId: 'name', columnName: 'Nombre' },
     { columnId: 'family', columnName: 'Familia' },
@@ -36,7 +33,7 @@ export class TableComponent {
     { columnId: 'status', columnName: 'Estado' },
   ];
 
-  dataSource = new MatTableDataSource<DataItem>([
+  @Input() dataSource = new MatTableDataSource<any>([
     { id: 1, name: 'Cheeseburguer', family: 'Hamburguesas', status: 'Habilitado', allergens: ['gluten', 'lactosa'] },
     { id: 2, name: 'Margarita', family: 'Pizzas', status: 'Deshabilitado', allergens: [] },
     { id: 3, name: 'Patatas', family: 'Complementos', status: 'Habilitado', allergens: ['gluten'] },
@@ -52,6 +49,8 @@ export class TableComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  @ViewChild('tableContainer') tableContainer!: ElementRef;
+
   // Para simplificar el acceso a los IDs de columnas
   get columnIds() {
     return this.displayedColumns.map(col => col.columnId).concat('actions');
@@ -59,15 +58,25 @@ export class TableComponent {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+
+    this.tableContainer.nativeElement.style.maxHeight = this.heigth;
   }
 
   constructor() {
     // Definir el filtro personalizado
-    this.dataSource.filterPredicate = (data: DataItem, filter: string) => {
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
       const dataStr = Object.values(data).join(' ').toLowerCase();
       return dataStr.includes(filter);
     };
+
   }
+
+
+  // ngOnChanges(changes: SimpleChanges){
+  //   if(changes['heigth']){
+  //     this.tableContainer.nativeElement.style.maxHeight = this.heigth;
+  //   }
+  // }
 
   // Método para filtrar
   applyFilter(event: Event) {

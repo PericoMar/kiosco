@@ -32,6 +32,10 @@ p{
     font-size: 0.7rem;
 }
 
+.ligth-text{
+    color: #666666;
+}
+
 aside{
     width: 30%;
     display: flex;
@@ -61,28 +65,6 @@ aside{
     background-color: rgba(45, 45, 45, 0.1); /* Fondo con un poco de opacidad */
 }
 
-.green-btn {
-    background-color: #48a032;
-    border: none;
-    color: white; /* Texto y svg en blanco */
-    padding: 12px 20px;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.green-btn svg {
-    fill: white;
-}
-
-.green-btn:hover {
-    background-color: #317520;; /* Un verde pistacho aún más claro al hacer hover */
-}
 
 .overview{
     height: 70%;
@@ -132,7 +114,6 @@ aside{
     gap: 12px;
     height: 50%;
     margin: 10px 0px;
-    min-height: 300px;
 }
 
 .card-1:hover, .card-2:hover, .card-3:hover, .card-4:hover{
@@ -221,6 +202,20 @@ aside{
 .table-section{
     height: 62%;
 }
+
+/* Media query para zoom */
+@media screen and (max-height: 900px) {
+    .table-section {
+        height: 56%;
+    }
+  }
+
+  @media screen and (max-height: 800px) {
+    .table-section {
+        height: 50%;
+    }
+  }
+
 
 .table-section-header{
     width: 100%;

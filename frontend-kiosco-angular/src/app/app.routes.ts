@@ -11,6 +11,7 @@ import { FamiliesManagerComponent } from './pages/layouts/management-panel/famil
 import { SalesManagerComponent } from './pages/layouts/management-panel/sales-manager/sales-manager.component';
 import { DevicesManagerComponent } from './pages/layouts/management-panel/devices-manager/devices-manager.component';
 import { OverviewComponent } from './pages/layouts/management-panel/overview/overview.component';
+import { LoginComponent } from './pages/layouts/management-panel/login/login.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,7 @@ export const routes: Routes = [
     path: 'inactive',
     component: InactivePageComponent
   },
+  { path: 'login', component: LoginComponent },
   {
     path: 'management-panel',
     component: ManagementPanelComponent,

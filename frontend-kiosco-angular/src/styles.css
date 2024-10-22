@@ -96,7 +96,7 @@
 
 body{
   margin: 0;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   font-family: "Poppins", sans-serif;
   /* max-height: 100vh; */
@@ -168,3 +168,27 @@ button {
   ::-webkit-scrollbar-button {
     display: none;
   }
+
+
+  .green-btn {
+    background-color: #48a032;
+    border: none;
+    color: white; /* Texto y svg en blanco */
+    padding: 12px 20px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.green-btn svg {
+    fill: white;
+}
+
+.green-btn:hover {
+    background-color: #317520;; /* Un verde pistacho aún más claro al hacer hover */
+}

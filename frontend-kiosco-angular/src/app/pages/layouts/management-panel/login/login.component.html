@@ -1,0 +1,25 @@
+<header></header>
+<div class="login-container">
+    <main class="main-login">
+        <img src="assets/Standing-Kiosk.webp" alt="kiosco" class="img-kiosco">
+        <section class="login-form">
+            <form (submit)="login($event)" class="login">
+                <h1>Inicia sesión</h1>
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" placeholder="Usuario" [(ngModel)]="username" class="input input-user" required>
+                
+                <label for="password">Contraseña:</label>
+                <div class="input-wrapper">
+                  <input type="password" class="input password" placeholder="Contraseña" [(ngModel)]="password" data-lpignore="true" id="passwd" name="passwd" required>
+                  <img class="input-icon password" src="assets/eye-fill.svg" alt="Show password" id="eye" (click)="changeInputType()">
+                </div>
+            
+                <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                <small *ngIf="incorrectUser" class="error-message">Credenciales incorrectas</small>
+                
+                <button class="btn-login">Iniciar sesión</button>
+              </form>
+        </section>
+    </main>
+</div>
+<footer></footer>
