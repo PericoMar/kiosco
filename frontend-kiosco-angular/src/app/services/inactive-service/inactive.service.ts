@@ -10,8 +10,7 @@ export class InactivityService {
   private readonly inactivityTime: number = 30000; // Tiempo de inactividad
   private isActive: boolean = true; // Flag para habilitar/deshabilitar
 
-  constructor(private router: Router,
-    private screenService: ScreenService
+  constructor(private router: Router
   ) {
     this.setupEventListeners();
   }
