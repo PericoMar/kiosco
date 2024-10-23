@@ -17,6 +17,7 @@ export class FamiliesManagerComponent {
   displayedColumns: { columnId: string, columnName: string }[] = [
     { columnId: 'id', columnName: 'Codigo' },
     { columnId: 'name', columnName: 'Nombre' },
+    { columnId: 'printers', columnName: 'Impresoras' },
     { columnId: 'products', columnName: 'Nº productos' },
     { columnId: 'desc', columnName: 'Descripción' },
     { columnId: 'status', columnName: 'Estado' },
