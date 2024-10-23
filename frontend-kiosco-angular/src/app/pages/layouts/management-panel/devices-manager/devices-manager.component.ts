@@ -27,7 +27,7 @@ export class DevicesManagerComponent {
     { id: 2, name: '192.010.234.211', area: 'Cocina', desc: 'Impresora de la cocina', status: 'Habilitado' },
     
     // Nuevas impresoras
-    { id: 3, name: 'HP-LaserJet-1018', area: 'Oficina', desc: 'Impresora de la oficina', status: 'Deshabilitado' },
+    { id: 3, name: 'HP-LaserJet-1018', area: 'Oficina', desc: 'Impresora de la oficina.', status: 'Deshabilitado' },
     { id: 4, name: 'Canon-iR-ADV-C3525', area: 'Recepción', desc: 'Impresora de la recepción', status: 'Habilitado' },
     { id: 5, name: 'Brother-HL-L2370DW', area: 'Almacén', desc: 'Impresora del almacén', status: 'Habilitado' },
     { id: 6, name: 'Epson-TM-T20II', area: 'Caja', desc: 'Impresora de tickets', status: 'Habilitado' },

@@ -11,20 +11,20 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 /* Media query para zoom */
 @media screen and (max-height: 900px) {
   .table-container {
-      height: 85%;
+      height: 75%;
   }
 
 }
 
 @media screen and (max-height: 800px) {
   .table-container {
-      height: 85%;
+      height: 70%;
   }
 }
 
@@ -182,4 +182,5 @@ span.mat-mdc-menu-item-text{
 mat-paginator.mat-paginator{
     font-family: var(--font-family);
     margin-top: 12px;
+    align-self: flex-end;
 }

@@ -135,39 +135,31 @@ aside{
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
+    background-position: calc(100% - 10px) calc(100% - 10px);
+    background-size: 25%; /* Muestra el 75% de la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
 }
 
 
 .card-1{
     background-image: url('../../../../../assets/productos.png');
-    background-position: calc(100% - 10px) calc(100% - 10px);
-    background-size: 25%; /* Muestra el 75% de la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
 }
 
 .card-2 {
     background-image: url('../../../../../assets/familias.png');
-    background-position: calc(100% - 10px) calc(100% - 10px);
-    background-size: 25%; /* Muestra el 75% de la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    
     grid-column-start: 1;
     grid-row-start: 2;
 }
 
 .card-3 {
     background-image: url('../../../../../assets/devices.png');
-    background-position: calc(100% - 10px) calc(100% - 10px);
-    background-size: 25%; /* Muestra el 75% de la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
     grid-column-start: 2;
     grid-row-start: 1;
 }
 
 .card-4 {
     background-image: url('../../../../../assets/ventas.png');
-    background-position: calc(100% - 10px) calc(100% - 10px);
-    background-size: 25%; /* Muestra el 75% de la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
     grid-column-start: 2;
     grid-row-start: 2;
 }
@@ -199,25 +191,92 @@ aside{
 }
 
 
-.table-section{
-    height: 62%;
+
+main.table{
+    width: 100%;
+    overflow: scroll;
 }
 
-/* Media query para zoom */
-@media screen and (max-height: 900px) {
-    .table-section {
-        height: 56%;
-    }
-  }
-
-  @media screen and (max-height: 800px) {
-    .table-section {
-        height: 50%;
-    }
-  }
-
+section.table-section{
+    box-sizing: border-box;
+    max-height: 430px;
+    height: 430px;
+}
 
 .table-section-header{
     width: 100%;
     margin-bottom: 10px;
 }
+
+/* Media query para zoom */
+/* Para pantallas entre 900px y 950px de altura */
+@media screen and (min-height: 900px) and (max-height: 950px) {
+    section.table-section {
+        max-height: 400px;
+        height: 400px;
+    }
+
+    main.table {
+        min-height: 220px;
+    }
+}
+
+/* Para pantallas entre 800px y 900px de altura */
+@media screen and (min-height: 800px) and (max-height: 900px) {
+    section.table-section {
+        max-height: 335px;
+    }
+
+    main.table {
+        min-height: 220px;
+    }
+}
+
+/* Para pantallas entre 700px y 800px de altura */
+@media screen and (min-height: 700px) and (max-height: 800px) {
+    section.table-section {
+        max-height: 280px;
+    }
+
+    main.table {
+        max-height: 180px;
+    }
+}
+
+/* Para pantallas exactamente entre 700px y 800px */
+@media screen and (min-height: 700px) and (max-height: 800px) {
+    section.table-section {
+        max-height: 280px;
+    }
+
+    main.table {
+        max-height: 190px;
+        height: 190px;
+        box-sizing: border-box;
+    }
+}
+
+@media screen and (min-height: 600px) and (max-height: 700px) {
+    .overview-cards{
+        height: 100%;
+    }
+
+    .graph-title{
+        margin-bottom: 40px;
+    }
+
+    section.table-section {
+        display: none;
+    }
+
+    .card-1, .card-2, .card-3, .card-4{
+        background-position: calc(100% - 20px) calc(100% - 20px);
+        background-size: 35%; /* Muestra el 75% de la imagen */
+    }
+
+}
+
+
+
+
+

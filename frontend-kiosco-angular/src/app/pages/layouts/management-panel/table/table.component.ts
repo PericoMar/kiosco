@@ -23,7 +23,7 @@ export interface ColumnDef {
 export class TableComponent {
   @Input() pageSizeOptions: number[] = [5, 10, 25];
 
-  @Input() heigth: string = '375px';
+  @Input() heigth: string = '275px';
 
   @Input() displayedColumns: { columnId: string, columnName: string }[] = [
     { columnId: 'id', columnName: 'Codigo' },

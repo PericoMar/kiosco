@@ -53,7 +53,10 @@ export class OverviewGraphComponent {
         },
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            ticks: {
+              maxTicksLimit: 4 // Aquí defines que solo haya 4 números en el eje Y
+            }
           }
         }
       }

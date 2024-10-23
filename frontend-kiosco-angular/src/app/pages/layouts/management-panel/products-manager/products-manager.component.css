@@ -46,13 +46,61 @@ p{
     padding: 15px 20px;
 }
 
+.card{
+    min-height: 700px;
+}
+
 .table-section-header{
     width: 100%;
     margin-bottom: 40px;
 }
 
+main.table{
+    width: 100%;
+    overflow: scroll;
+}
+
 @media screen and (max-height: 900px) {
+    .card{
+        min-height: 600px;
+    }
+
     .section-header {
         margin-bottom: 40px;
     }
+
+    main.table{
+        max-height: 550px;
+        
+    }
+  }
+
+@media screen and (max-height: 800px) {
+    .card{
+        min-height: 500px;
+    }
+
+    .section-header {
+        margin-bottom: 40px;
+    }
+
+    main.table{
+        max-height: 475px;
+        
+    }
+  }
+
+  @media screen and (max-height: 700px) {
+    .card{
+        min-height: 400px;
+    }
+
+    .section-header {
+        margin-bottom: 40px;
+    }
+
+    main.table{
+        max-height: 400px;
+    }
+    
   }

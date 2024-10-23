@@ -46,7 +46,7 @@
                 <h4>Productos</h4>
                 <p class="ligth-text">Administra tus productos</p>
             </header>
-            <span class="watch-span">Ver</span>
+            <!-- <span class="watch-span">Ver</span> -->
         </div>
         
         <div class="card card-2" (click)="navigateTo('management-panel/families')">
@@ -54,7 +54,7 @@
                 <h4>Familias</h4>
                 <p class="ligth-text">Administra tus familias</p>
             </header>
-            <span class="watch-span">Ver</span>
+            <!-- <span class="watch-span">Ver</span> -->
         </div>
         
         <div class="card card-3" (click)="navigateTo('management-panel/devices')">
@@ -62,7 +62,7 @@
                 <h4>Dispositivos</h4>
                 <p class="ligth-text">Visualiza tus dispositivos</p>
             </header>
-            <span class="watch-span">Ver</span>
+            <!-- <span class="watch-span">Ver</span> -->
         </div>
         
         <div class="card card-4" (click)="navigateTo('management-panel/sales')">
@@ -70,10 +70,10 @@
                 <h4>Ventas</h4>
                 <p class="ligth-text">Visualiza tus ventas</p>
             </header>
-            <span class="watch-span">Ver</span>
+            <!-- <span class="watch-span">Ver</span> -->
         </div>
         <section class="card card-5 overview-graph">
-            <h4>Reporte de ventas</h4>
+            <h4 class="graph-title">Reporte de ventas</h4>
             <app-overview-graph [startMonth]="startMonth" [endMonth]="endMonth"></app-overview-graph>
         </section>
     </section>
@@ -88,6 +88,8 @@
                   Añadir producto
             </button>
         </header>
-        <app-table></app-table>
+        <main class="table">
+            <app-table></app-table>
+        </main>
     </section>
 </main>

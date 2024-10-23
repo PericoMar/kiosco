@@ -12,6 +12,7 @@ import { SalesManagerComponent } from './pages/layouts/management-panel/sales-ma
 import { DevicesManagerComponent } from './pages/layouts/management-panel/devices-manager/devices-manager.component';
 import { OverviewComponent } from './pages/layouts/management-panel/overview/overview.component';
 import { LoginComponent } from './pages/layouts/management-panel/login/login.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -39,6 +40,7 @@ export const routes: Routes = [
   {
     path: 'management-panel',
     component: ManagementPanelComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', component : OverviewComponent},
       { path: 'products', component: ProductsManagerComponent },
