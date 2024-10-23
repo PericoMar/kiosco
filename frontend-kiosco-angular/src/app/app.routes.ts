@@ -36,7 +36,12 @@ export const routes: Routes = [
     path: 'inactive',
     component: InactivePageComponent
   },
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'prueba',
+    component: OptionsPageComponent
+  },
+  { path: 'login', 
+    component: LoginComponent },
   {
     path: 'management-panel',
     component: ManagementPanelComponent,
