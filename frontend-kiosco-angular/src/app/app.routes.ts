@@ -49,5 +49,5 @@ export const routes: Routes = [
       { path: 'devices', component: DevicesManagerComponent }
     ]
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'login' },
 ];
