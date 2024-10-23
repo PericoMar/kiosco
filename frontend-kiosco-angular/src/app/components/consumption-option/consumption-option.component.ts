@@ -34,30 +34,30 @@ export class ConsumptionOptionComponent implements OnInit {
   }
 
   getAllData(): void {
-    this.familyService.getFamiliesObservable().subscribe({
-      next: (response) => {
-        if (response) {
-          this.familyService.families = response;
-          this.firstFamilyId = this.familyService.getFirstFamilyId();
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    // this.familyService.getFamiliesObservable().subscribe({
+    //   next: (response) => {
+    //     if (response) {
+    //       this.familyService.families = response;
+    //       this.firstFamilyId = this.familyService.getFirstFamilyId();
+    //     }
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   },
+    // });
 
-    this.firstFamilyId = this.familyService.getFirstFamilyId();
+    // this.firstFamilyId = this.familyService.getFirstFamilyId();
 
-    this.productsService.getProductsObservable().subscribe({
-      next: (response) => {
-        if (response) {
-          this.productsService.products = response;
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    // this.productsService.getProductsObservable().subscribe({
+    //   next: (response) => {
+    //     if (response) {
+    //       this.productsService.products = response;
+    //     }
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   },
+    // });
   }
 
   safeConsumptionOption(consumptionOption: string) {
