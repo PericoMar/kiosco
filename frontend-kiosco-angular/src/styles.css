@@ -96,16 +96,15 @@
 
 body{
   margin: 0;
-  height: 100%;
   width: 100vw;
   font-family: "Poppins", sans-serif;
   /* max-height: 100vh; */
   /* min-height: 100vh; */
-  /* height: var(--main-page-height);
+  height: var(--main-page-height);
   margin: 0px;
   margin-top: var(--main-page-margin-top);
   width: 100vw;
-  overflow: hidden; */
+  overflow: hidden;
 }
 
 button {
