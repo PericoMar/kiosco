@@ -3,7 +3,12 @@
     {
       "route": "/login",
       "methods": [
-        "get"
+        "GET",
+        "POST"
+      ],
+      "rewrite": "/index.html",
+      "allowedRoles": [
+        "anonymous"
       ]
     }
   ]
