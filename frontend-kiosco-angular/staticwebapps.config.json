@@ -1,9 +1,0 @@
-{
-    "route": "/login",
-    "methods": ["GET","POST"],
-    "rewrite": "/index.html",
-    "allowedRoles": ["anonymous"],
-    "navigationFallback": {
-        "rewrite": "/index.html"
-    }
-}
