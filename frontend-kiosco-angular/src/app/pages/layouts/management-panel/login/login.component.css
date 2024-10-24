@@ -4,7 +4,6 @@
 
 header{
     height: 10lvh;
-    background-color: rgb(26, 26, 26);
 }
 
 .login-container{
@@ -174,5 +173,4 @@ button.btn-login{
 
 footer{
     height: 10lvh;
-    background-color: rgb(26, 26, 26);
 }
