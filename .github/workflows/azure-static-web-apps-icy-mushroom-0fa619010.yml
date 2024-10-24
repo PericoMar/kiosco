@@ -49,7 +49,7 @@ jobs:
           output_location: "dist/frontend-kiosco-angular/browser"
           #### Configuraciones adicionales desde el otro ejemplo ####
           skip_app_build: true # Si deseas omitir la compilación de la aplicación, asegúrate de que esto es lo que necesitas
-          config_file_location: "/assets" # Si tienes un archivo de configuración específico, proporciona la ruta
+          config_file_location: "/src" # Si tienes un archivo de configuración específico, proporciona la ruta
           verbose: true # Opción para un despliegue más detallado en los logs
           is_static_export: false # Establece en false si no es una exportación estática
 
