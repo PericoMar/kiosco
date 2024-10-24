@@ -48,7 +48,7 @@ jobs:
           api_location: "" # Ruta de la API, opcional
           output_location: "dist/frontend-kiosco-angular/browser"
           #### Configuraciones adicionales desde el otro ejemplo ####
-          skip_app_build: true # Si deseas omitir la compilación de la aplicación, asegúrate de que esto es lo que necesitas
+          skip_app_build: false # Si deseas omitir la compilación de la aplicación, asegúrate de que esto es lo que necesitas
           config_file_location: "/frontend-kiosco-angular/src/assets" # Si tienes un archivo de configuración específico, proporciona la ruta
           verbose: true # Opción para un despliegue más detallado en los logs
           is_static_export: false # Establece en false si no es una exportación estática
