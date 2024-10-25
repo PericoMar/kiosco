@@ -57,4 +57,5 @@ export class OptionsPageComponent {
     this.screenService.setDefaultScreenHeight();
     this.showAdvert = false;
   }
+  
 }

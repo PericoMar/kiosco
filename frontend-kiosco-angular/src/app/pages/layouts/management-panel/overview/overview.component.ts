@@ -38,7 +38,7 @@ export class OverviewComponent {
 
   openProductModal(productId: number | null = null): void {
     const dialogRef = this.dialog.open(ProductModalComponent, {
-      width: '600px',
+      width: '700px',
       data: { productId: productId }
     });
 
