@@ -53,6 +53,12 @@ export class TableComponent {
     this.tableContainer.nativeElement.style.maxHeight = this.heigth;
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['dataSource']) {
+      this.dataSource.paginator = this.paginator;
+    }
+  }
+
   constructor(
     private productService: ProductService
   ) {

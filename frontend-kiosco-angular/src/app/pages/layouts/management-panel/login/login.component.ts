@@ -7,11 +7,13 @@ import { User, UserWithoutPassword } from '../../../../interfaces/user';
 import { ProductService } from '../../../../services/product.service';
 import { FamilyService } from '../../../../services/family.service';
 import { forkJoin } from 'rxjs';
+import { GroupService } from '../../../../services/group/group.service';
+import { ButtonSpinnerComponent } from '../../../../components/button-spinner/button-spinner.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, ButtonSpinnerComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -19,6 +21,7 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   incorrectUser: boolean = false;
+  loadingLogin: boolean = false;
 
   users : User[] = [
     { username: 'admin', password: 'admin', name: 'Admin', rol: 'admin' },
@@ -29,7 +32,8 @@ export class LoginComponent {
     private router : Router,
     private userService : UserService,
     private productsService : ProductService,
-    private familyService : FamilyService
+    private familyService : FamilyService,
+    private groupsService : GroupService
   ) { }
 
   // Método para cambiar el tipo de input de la contraseña
@@ -48,6 +52,7 @@ export class LoginComponent {
 
   // Método para gestionar el inicio de sesión
   login(event: Event) {
+    this.loadingLogin = true;
     event.preventDefault();
     
     const foundUser : UserWithoutPassword = this.users.find(user => 
@@ -63,24 +68,32 @@ export class LoginComponent {
       forkJoin({
         products: this.productsService.getProductsObservable(),
         families: this.familyService.getFamiliesObservable(),
+        groups: this.groupsService.getGroupsObservable()
       }).subscribe({
-        next: ({ products, families }) => {
+        next: ({ products, families, groups }) => {
           if (products) {
             this.productsService.products = products;
+            console.log(products);
           }
           if (families) {
             this.familyService.families = families;
           }
-          // Redirigir a otro componente después de que ambas solicitudes se completen
-          this.router.navigate(['/management-panel']);
+          if(groups) {
+            this.groupsService.groups = groups;
+          }
+          
         },
         error: (error) => {
           console.log(error);
+        },
+        complete: () => {
+          this.router.navigate(['/management-panel']);
         }
       });
 
     } else {
       // Si las credenciales son incorrectas
+      this.loadingLogin = false;
       this.incorrectUser = true;
     }
   }

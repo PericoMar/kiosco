@@ -66,6 +66,7 @@
 
 
     /* MANAGER STYLES */
+    --manager-side-bar-background-color:rgb(26, 26, 26);
     --manager-ligth-text: rgb(61, 61, 61);
     --manager-background-color: #f2f3f8;
     --manager-side-bar-width: 15%;
@@ -218,4 +219,34 @@ button {
   --mdc-snackbar-container-color: #317520;
   --mdc-snackbar-supporting-text-color: white;
   --mat-snack-bar-button-color: white;
+}
+
+.dates-inputs-container{
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  width: auto;
+  align-items: center;
+}
+
+.date-input {
+  font-family: var(--font-family);
+  width: 130px; /* Anchura ajustada */
+  padding: 6px 8px; /* Padding (menos que el input de búsqueda) */
+  border: 1px solid #cccccc; /* Borde claro */
+  border-radius: 4px; /* Borde redondeado */
+  font-size: 0.8rem; /* Tamaño de fuente */
+  color: #666666; /* Color del texto (más gris) */
+  outline: none; /* Eliminar borde azul al hacer clic */
+  transition: border 0.3s ease; /* Transición suave para el borde */
+}
+
+/* Cambiar el color del borde cuando se hace clic */
+.date-input:focus {
+  border: 1px solid #aaaaaa; /* Borde más claro al hacer clic */
+}
+
+/* Placeholder (no se aplica a los inputs tipo date, pero se puede incluir) */
+.date-input::placeholder {
+  color: #bbbbbb; /* Color del placeholder */
 }

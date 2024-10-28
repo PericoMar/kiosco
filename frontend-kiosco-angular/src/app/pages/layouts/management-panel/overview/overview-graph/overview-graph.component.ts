@@ -13,6 +13,10 @@ export class OverviewGraphComponent {
   @Input() endMonth!: string; // Mes final
   chart!: Chart;
 
+  ngOnInit() {
+    this.updateGraph()
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['startMonth'] || changes['endMont']) {
       this.updateGraph();

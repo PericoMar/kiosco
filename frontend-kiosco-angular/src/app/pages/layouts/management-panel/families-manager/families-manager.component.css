@@ -54,6 +54,7 @@ p{
 main.table{
     width: 100%;
     overflow: scroll;
+    max-height: 620px;
 }
 
 @media screen and (max-height: 900px) {

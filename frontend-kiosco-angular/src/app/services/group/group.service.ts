@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AppConfig } from '../../../config/app-config';
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +30,9 @@ export class GroupService {
   constructor(private http: HttpClient) {
     
   }
+
+  getGroupsObservable(): Observable<any[]> {
+    return this.http.get<any[]>(`${AppConfig.API_URL}/preguntas`);
+  }
+
 }

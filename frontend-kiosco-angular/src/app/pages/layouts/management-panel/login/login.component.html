@@ -17,7 +17,13 @@
                 <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
                 <small *ngIf="incorrectUser" class="error-message">Credenciales incorrectas</small>
                 
-                <button class="btn-login">Iniciar sesión</button>
+                <button class="btn-login">
+                  @if(loadingLogin){
+                    <app-button-spinner></app-button-spinner>
+                  } @else {
+                    Iniciar sesión
+                  } 
+                </button>
               </form>
         </section>
     </main>

@@ -1,0 +1,50 @@
+<form class="modal-content">
+    <div class="modal-header">
+      <div class="image-container">
+        <h2 >
+            Importar {{ data.elementType | lowercase }} desde Excel
+        </h2>
+      </div>
+      <button (click)="close()" class="close-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+      </button>
+    </div>
+
+    <h3>Formato</h3>
+    <!-- Tabla de ejemplo del formato -->
+    <div class="table-container">
+      <table class="example-table">
+        <thead>
+          <tr>
+            <th *ngFor="let column of columns">{{ column }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of rows">
+            <td *ngFor="let column of columns">{{ row[column] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="divider">
+    <fieldset class="form-group">
+        <header>
+          <label for="excelFile">Seleccionar archivo Excel</label>
+        </header>
+        <div class="inputs-container">
+          <div class="input-container">
+            <input type="file" id="excelFile" formControlName="excelFile" accept=".xls,.xlsx" (change)="onFileSelect($event)" class="form-control">
+          </div>
+        </div>
+      </fieldset>
+  
+    <footer class="dialog-actions">
+        <button (click)="close()" class="cancel-button">Cancelar</button>
+        <button (click)="save()" class="save-button">
+            Importar
+        </button>
+    </footer>
+</form>

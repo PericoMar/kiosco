@@ -4,15 +4,8 @@ import { Family } from '../interfaces/family';
 import { AppConfig } from '../../config/app-config';
 import { Observable } from 'rxjs';
 import { ProductService } from './product.service';
+import { FamilyData } from '../interfaces/family-data';
 
-
-interface FamilyData {
-  // { id: 1, name: 'Hamburguesas', products: 3, desc: 'Todas las hamburguesas', status: 'Habilitado' },
-  id: number;
-  name: string;
-  desc: string;
-  status: string;
-}
 
 @Injectable({
   providedIn: 'root',

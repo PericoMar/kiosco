@@ -4,17 +4,10 @@ import { Menu, Product } from '../interfaces/pedido';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../../config/app-config';
 import { FamilyService } from './family.service';
+import { ProductData } from '../interfaces/product-data';
 
 
-interface ProductData {
-  //{ id: 1, productType: 'Producto', name: 'Cheeseburguer', family: 'Hamburguesas', status: 'Habilitado', allergens: ['gluten', 'lactosa'] }
-  id: string;
-  productType: string;
-  name: string;
-  family: string;
-  status: string;
-  allergens: string[];
-}
+
 
 @Injectable({
   providedIn: 'root',
@@ -262,6 +255,8 @@ export class ProductService {
 
   getProductsData(): ProductData[] {
     const productsData: ProductData[] = [];
+
+    console.log(this.products);
   
     // Agregar productos normales
     this.products.forEach(product => {
@@ -304,16 +299,24 @@ export class ProductService {
 
   addProduct(product: any) : Observable<any> {
     return this.http.post(`${AppConfig.API_URL}/articulo`, product);
+  }
 
+  addCustomizationQuestion(question: any) : Observable<any> {
+    return this.http.post(`${AppConfig.API_URL}/pregunta`, question);
   }
   
+  addOption(option: any) : Observable<any> {
+    return this.http.post(`${AppConfig.API_URL}/opcion`, option);
+  }
 
   getTotalPrice(product: Product | Menu): number {
+    console.log('Precio producto: ', product.price);
     let totalPrice = Number(product.price);
 
     product.customizations.forEach((customization) => {
       customization.responses.forEach((response) => {
-        totalPrice += response.price || 0;
+        response.price = response.price || 0;
+        totalPrice += Math.round(response.price! * 100) / 100;
       });
     });
 
