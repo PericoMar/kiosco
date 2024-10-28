@@ -17,6 +17,11 @@
     - [x] Meter nuevos datos.
     - [x] Recoger los datos.
     - [] Desde panel de gestión interpretar los datos del formulario de creación y crearlos en BBDD.
+        - [] Creación de productos completos
+            - [x] Creación de productos sin preguntas
+            - [] Creación de grupos de moficiadores.
+            - [] Creación de modificadores.
+        - [x] Creación de familias
 
 - [] Información de las impresoras.
 - [] Importación por Excel.
