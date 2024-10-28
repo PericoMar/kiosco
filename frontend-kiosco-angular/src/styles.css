@@ -77,6 +77,18 @@
     --mat-menu-item-label-text-font: "Poppins", sans-serif;
 
     --mdc-dialog-container-shape: 20px;
+
+    --mdc-snackbar-container-color: white;
+    --mdc-snackbar-container-shape: 10px;
+    --mdc-snackbar-supporting-text-color: black;
+    --mat-snack-bar-button-color: rgb(211, 9, 9);
+    --mdc-snackbar-supporting-text-size: 1rem;
+    --mdc-text-button-label-text-size: 1rem;
+    --mdc-snackbar-supporting-text-font: "Poppins", sans-serif;
+    --mdc-snackbar-supporting-text-weight : 400;
+    --mdc-snackbar-supporting-text-line-height : 1.5rem;
+    --mdc-text-button-label-text-font: "Poppins", sans-serif;
+    /* --mdc-snackbar-container-color : white; */
   }
 
 @media screen and (min-width: 1300px) {
@@ -126,6 +138,12 @@ button {
     justify-content: flex-start;
     align-items: center;
     gap: 5%;
+}
+
+.flex-around{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .space-between{
@@ -189,5 +207,15 @@ button {
 }
 
 .green-btn:hover {
-    background-color: #317520;; /* Un verde pistacho aún más claro al hacer hover */
+    background-color: #317520; /* Un verde pistacho aún más claro al hacer hover */
+}
+
+.mdc-snackbar__surface{
+  padding: 8px 12px;
+}
+
+.success-snackbar{
+  --mdc-snackbar-container-color: #317520;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-snack-bar-button-color: white;
 }

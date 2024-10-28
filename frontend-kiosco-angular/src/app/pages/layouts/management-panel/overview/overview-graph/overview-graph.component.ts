@@ -35,7 +35,7 @@ export class OverviewGraphComponent {
       data: {
         labels: labels,
         datasets: [{
-          label: 'Facturación', // Etiqueta de la línea
+          label: 'Facturación €', // Etiqueta de la línea
           data: data,
           borderColor: 'rgb(108, 183, 248)', // Color de la línea
           backgroundColor: 'rgb(202, 225, 245, 0.5)', // Color de fondo del área bajo la línea

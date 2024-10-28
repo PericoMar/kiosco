@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '../table/table.component';
+import { MatDialog } from '@angular/material/dialog';
+import { FamilyModalComponent } from '../modals/family-modal/family-modal.component';
+import { FamilyService } from '../../../../services/family.service';
 
 @Component({
   selector: 'app-families-manager',
@@ -18,26 +21,69 @@ export class FamiliesManagerComponent {
     { columnId: 'id', columnName: 'Codigo' },
     { columnId: 'name', columnName: 'Nombre' },
     { columnId: 'printers', columnName: 'Impresoras' },
-    { columnId: 'products', columnName: 'Nº productos' },
+    // { columnId: 'products', columnName: 'Nº productos' },
     { columnId: 'desc', columnName: 'Descripción' },
     { columnId: 'status', columnName: 'Estado' },
   ];
 
-  dataSource = new MatTableDataSource<any>([
-    { id: 1, name: 'Hamburguesas', products: 3, desc: 'Todas las hamburguesas', status: 'Habilitado' },
-    { id: 2, name: 'Pizzas', products: 6, desc: 'Todas las pizzas', status: 'Deshabilitado' },
-    { id: 3, name: 'Complementos', products: 5, desc: 'Todos los complementos', status: 'Habilitado' },
-    { id: 4, name: 'Bebidas', products: 3, desc: 'Todas las bebidas', status: 'Habilitado' },
-    { id: 5, name: 'Ensaladas', products: 4, desc: 'Todas las ensaladas', status: 'Deshabilitado' },
-    { id: 6, name: 'Postres', products: 4, desc: 'Todos los postres', status: 'Deshabilitado' },
-    { id: 7, name: 'Pasta', products: 5, desc: 'Toda la pasta', status: 'Deshabilitado' },
-    { id: 8, name: 'Café', products: 10, desc: 'Todos los cafés', status: 'Habilitado' },
-    { id: 9, name: 'Cervezas', products: 6, desc: 'Todas las cervezas', status: 'Habilitado' },
-    { id: 10, name: 'Vinos', products: 12, desc: 'Todos los vinos', status: 'Habilitado' },
-    { id: 11, name: 'Licores', products: 10, desc: 'Todos los licores', status: 'Habilitado' },
-  ]);
+  dataSource!: MatTableDataSource<any>;
 
+  constructor(private dialog : MatDialog,
+    private familyService: FamilyService
+  ) { }
+
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource<any>(this.familyService.getFamiliesData());
+  
+  }
+
+  
   openFamilyModal(productId: number | null = null): void {
-    console.log('Abrir modal de producto con ID:', productId);
+    const dialogRef = this.dialog.open(FamilyModalComponent, {
+      width: '700px',
+      data: { productId: productId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Datos recibidos del modal:', result);
+        console.log('ID de la familia:', productId);
+        if (productId) {
+          this.updateFamily(productId, result);
+        } else {
+          this.addFamily(result);
+        }
+      }
+    });
+  }
+
+  addFamily(familyData: any) {
+    // Generar un ID único corto para el nuevo producto
+    const newId = (this.familyService.families.length + 1).toString();
+  
+    // Crear un nuevo producto a partir de los datos del formulario
+    const newProduct = {
+      id: newId,
+      name: familyData.name,
+      img: 'assets/sandwich.png', // La URL de la imagen que ya has obtenido
+    };
+  
+    // Agregar el nuevo producto al array de productos
+    this.familyService.families.push(newProduct);
+    this.familyService.addFamily(newProduct).subscribe(
+      {
+        next: (response) => {
+          console.log('Producto añadido correctamente', response);
+        },
+        error: (error) => {
+          console.error('Error al añadir producto', error);
+        }
+      }
+    );
+
+  }
+
+  updateFamily(familyId: number, familyData: any) {
+    // this.familyService.updateFamily(familyId, familyData);
   }
 }

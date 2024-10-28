@@ -20,7 +20,12 @@ export class ProductComponent {
   noPhotoUrl = AppConfig.NO_PHOTO_URL;
   isMenu!:Boolean;
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService) {
+  }
+
+  ngOnInit(): void {
+    this.product.img = this.product.img || this.noPhotoUrl;
+  }
 
   @ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
 

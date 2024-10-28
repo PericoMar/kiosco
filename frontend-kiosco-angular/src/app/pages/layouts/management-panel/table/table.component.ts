@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
+import { ProductService } from '../../../../services/product.service';
 
 
 export interface ColumnDef {
@@ -23,29 +24,19 @@ export interface ColumnDef {
 export class TableComponent {
   @Input() pageSizeOptions: number[] = [5, 10, 25];
 
-  @Input() heigth: string = '275px';
+  @Input() heigth: string = '320px';
 
   @Input() displayedColumns: { columnId: string, columnName: string }[] = [
     { columnId: 'id', columnName: 'Codigo' },
-    { columnId: 'name', columnName: 'Nombre' },
-    { columnId: 'family', columnName: 'Familia' },
+    { columnId: 'productType', columnName: 'Tipo' },
+    { columnId: 'name', columnName: 'Nombre / Texto' },
+    // { columnId: 'price', columnName: 'Tarifa' },
+    { columnId: 'family', columnName: 'Familia / Grupo / Producto' },
     { columnId: 'allergens', columnName: 'Alergenos' },
     { columnId: 'status', columnName: 'Estado' },
   ];
 
-  @Input() dataSource = new MatTableDataSource<any>([
-    { id: 1, name: 'Cheeseburguer', family: 'Hamburguesas', status: 'Habilitado', allergens: ['gluten', 'lactosa'] },
-    { id: 2, name: 'Margarita', family: 'Pizzas', status: 'Deshabilitado', allergens: [] },
-    { id: 3, name: 'Patatas', family: 'Complementos', status: 'Habilitado', allergens: ['gluten'] },
-    { id: 4, name: 'Coca-Cola', family: 'Bebidas', status: 'Habilitado', allergens: [] },
-    { id: 5, name: 'Ensalada', family: 'Ensaladas', status: 'Deshabilitado', allergens: ['gluten'] },
-    { id: 6, name: 'Cerveza', family: 'Bebidas', status: 'Habilitado', allergens: ['gluten'] },
-    { id: 7, name: 'Pasta', family: 'Pasta', status: 'Deshabilitado', allergens: ['gluten'] },
-    { id: 8, name: 'Hamburguesa de pollo', family: 'Hamburguesas', status: 'Habilitado', allergens: ['gluten'] },
-    { id: 9, name: 'Tarta de queso', family: 'Postres', status: 'Deshabilitado', allergens: ['gluten', 'lactosa'] },
-    { id: 10, name: 'Café', family: 'Bebidas', status: 'Habilitado', allergens: [] },
-    { id: 11, name: 'Fishburguer', family: 'Hamburguesas', status: 'Habilitado', allergens: ['pescado', 'gluten', 'lactosa', 'moluscos', 'cacahuetes'] },
-  ]);
+  @Input() dataSource! : MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -62,7 +53,10 @@ export class TableComponent {
     this.tableContainer.nativeElement.style.maxHeight = this.heigth;
   }
 
-  constructor() {
+  constructor(
+    private productService: ProductService
+  ) {
+    this.dataSource = new MatTableDataSource<any>(this.productService.getProductsData());
     // Definir el filtro personalizado
     this.dataSource.filterPredicate = (data: any, filter: string) => {
       const dataStr = Object.values(data).join(' ').toLowerCase();
@@ -71,12 +65,6 @@ export class TableComponent {
 
   }
 
-
-  // ngOnChanges(changes: SimpleChanges){
-  //   if(changes['heigth']){
-  //     this.tableContainer.nativeElement.style.maxHeight = this.heigth;
-  //   }
-  // }
 
   // Método para filtrar
   applyFilter(event: Event) {
@@ -123,6 +111,7 @@ export class TableComponent {
       'soja': 'assets/alergenos/soja.png',
       'dioxido-azufre': 'assets/alergenos/dioxido-azufre.png',
       'moluscos': 'assets/alergenos/moluscos.png',
+      'huevos': 'assets/alergenos/huevos.png',
     };
     return allergenImages[allergen] || 'path/to/default-icon.png'; // Imagen por defecto si no se encuentra
   }

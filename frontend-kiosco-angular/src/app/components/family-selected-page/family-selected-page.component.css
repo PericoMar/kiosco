@@ -3,16 +3,15 @@ h1{
     margin: 62px 0;
 }
 
-.products{
-    /* grid */
+.products {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
-    gap:16px;
-    height: var(--family-page-height);
-    overflow-y:scroll ;
+    gap: 16px;
+    align-items: start; /* Evita que las filas intenten ocupar todo el contenedor */
+    max-height: var(--family-page-height);
+    overflow-y: scroll;
     box-sizing: border-box;
     padding: 10px;
 }
-
 

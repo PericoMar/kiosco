@@ -4,6 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../../../services/user/user.service';
 import { User, UserWithoutPassword } from '../../../../interfaces/user';
+import { ProductService } from '../../../../services/product.service';
+import { FamilyService } from '../../../../services/family.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +27,9 @@ export class LoginComponent {
 
   constructor(
     private router : Router,
-    private userService : UserService
+    private userService : UserService,
+    private productsService : ProductService,
+    private familyService : FamilyService
   ) { }
 
   // Método para cambiar el tipo de input de la contraseña
@@ -34,10 +39,10 @@ export class LoginComponent {
     
     if (input.type === "password") {
       input.type = "text";
-      imgEye.src = "assets/eye-slash-fill.svg";
+      imgEye.src = "assets/svg/eye-slash-fill.svg";
     } else {
       input.type = "password";
-      imgEye.src = "assets/eye-fill.svg";
+      imgEye.src = "assets/svg/eye-fill.svg";
     }
   }
 
@@ -55,8 +60,25 @@ export class LoginComponent {
       // Si las credenciales son correctas
       this.incorrectUser = false;
       this.userService.saveUser(foundUser);
-      // Aquí puedes redirigir a otro componente o realizar la acción que necesites
-      this.router.navigate(['/management-panel']);
+      forkJoin({
+        products: this.productsService.getProductsObservable(),
+        families: this.familyService.getFamiliesObservable(),
+      }).subscribe({
+        next: ({ products, families }) => {
+          if (products) {
+            this.productsService.products = products;
+          }
+          if (families) {
+            this.familyService.families = families;
+          }
+          // Redirigir a otro componente después de que ambas solicitudes se completen
+          this.router.navigate(['/management-panel']);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
+
     } else {
       // Si las credenciales son incorrectas
       this.incorrectUser = true;

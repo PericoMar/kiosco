@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '../table/table.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DeviceModalComponent } from '../modals/device-modal/device-modal.component';
 
 @Component({
   selector: 'app-devices-manager',
@@ -13,6 +15,10 @@ export class DevicesManagerComponent {
   pageSizeOptions: number[] = [10, 20 ,50];
 
   heigth: string = '60%';
+
+  constructor(
+    private dialog : MatDialog
+  ) { }
 
   displayedColumns: { columnId: string, columnName: string }[] = [
     { columnId: 'id', columnName: 'Codigo' },
@@ -44,6 +50,9 @@ export class DevicesManagerComponent {
 
 
   openDeviceModal(productId: number | null = null): void {
-    console.log('Abrir modal de producto con ID:', productId);
+    const dialogRef = this.dialog.open(DeviceModalComponent, {
+      width: '700px',
+      data: { productId: productId }
+    });
   }
 }

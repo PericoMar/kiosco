@@ -45,11 +45,11 @@ export class OptionsPageComponent {
   languageOptions : LanguageOption[] = [
     {
       name: "Español",
-      img: "../../../assets/flag-for-flag-spain.svg"
+      img: "../../../assets/svg/flag-for-flag-spain.svg"
     },
     {
       name: "English",
-      img: "../../../assets/flag-for-flag-united-kingdom.svg"
+      img: "../../../assets/svg/flag-for-flag-united-kingdom.svg"
     }
   ]
 
