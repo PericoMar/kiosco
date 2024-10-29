@@ -52,8 +52,14 @@ export class PaymentComponent {
     this.cartService.setPaymentMethod(method);
   }
 
-  getTaxs():number{
-    return Math.round(this.products.total * this.tax * 100) / 100;
+  getTaxs(): number {
+    let sum = 0;
+    this.products.items.forEach(elem => {
+      // Monto de IVA por producto.
+      sum += elem.quantity * (Math.round((elem.details.price) *  this.tax * 100) / 100);
+      console.log(sum)
+    });
+    return sum;
   }
 
   getTotalPriceOrder():void{
