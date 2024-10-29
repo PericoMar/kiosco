@@ -1,3 +1,145 @@
 :host{
     width: 100%;
 }
+
+.section-header{
+    margin-bottom: 80px;
+}
+
+h1{
+    margin: 0px;
+    font-size: 1.7rem;
+}
+
+h2{
+    margin: 0px;
+    font-size: 1.5rem;
+}
+
+h3{
+    margin: 0px;
+    font-size: 1.3rem;
+}
+
+h4{
+    margin: 0px;
+    font-size: 1.1rem;
+}
+
+p{
+    margin: 5px 0px;
+    font-size: 0.7rem;
+}
+
+.ligth-text{
+    color: #666666;
+}
+
+.overview-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+
+.sales-graph-header{
+    width: 100%;
+}
+
+.inputs-aside{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 70%;
+}
+
+.form-control {
+    width: 50%;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    border-radius: 10px; /* Borde redondeado */
+    border: 1px solid #ccc; /* Borde claro inicialmente */
+    font-family: var(--font-family); /* Uso de la variable de fuente */
+    font-size: 0.8rem; /* Tamaño de la letra (puedes ajustarlo) */
+    transition: border-color 0.3s ease; /* Transición suave para el borde */
+    box-shadow: 0 0 2px rgba(22, 41, 61, 0.2); /* Añadir un pequeño efecto de sombra */
+}
+
+.sales-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    max-height: 620px;
+    gap:12px;
+    }
+    
+.card-1 { grid-area: 1 / 1 / 2 / 2; }
+.card-2 { grid-area: 2 / 1 / 3 / 2; }
+.card-3 { grid-area: 1 / 2 / 3 / 3; }
+
+.card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    text-align: start;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px 20px;
+}
+
+.table-section-header{
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+main.table{
+    width: 100%;
+    overflow: scroll;
+    max-height: 280px;
+}
+
+@media screen and (max-height: 900px) {
+    .card{
+        min-height:300px;
+    }
+
+    .section-header {
+        margin-bottom: 40px;
+    }
+
+    main.table{
+        max-height: 230px;
+    }
+  }
+
+@media screen and (max-height: 800px) {
+    .card{
+        min-height: 250px;
+    }
+
+    .section-header {
+        margin-bottom: 40px;
+    }
+
+    main.table{
+        max-height: 170px;
+    }
+  }
+
+  @media screen and (max-height: 700px) {
+    .card{
+        min-height: 200px;
+    }
+
+    .section-header {
+        margin-bottom: 40px;
+    }
+
+    main.table{
+        max-height: 120px;
+    }
+    
+  }

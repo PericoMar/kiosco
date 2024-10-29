@@ -66,6 +66,7 @@
 
 
     /* MANAGER STYLES */
+    --manager-side-bar-background-color:rgb(26, 26, 26);
     --manager-ligth-text: rgb(61, 61, 61);
     --manager-background-color: #f2f3f8;
     --manager-side-bar-width: 15%;
@@ -77,6 +78,18 @@
     --mat-menu-item-label-text-font: "Poppins", sans-serif;
 
     --mdc-dialog-container-shape: 20px;
+
+    --mdc-snackbar-container-color: white;
+    --mdc-snackbar-container-shape: 10px;
+    --mdc-snackbar-supporting-text-color: black;
+    --mat-snack-bar-button-color: rgb(211, 9, 9);
+    --mdc-snackbar-supporting-text-size: 1rem;
+    --mdc-text-button-label-text-size: 1rem;
+    --mdc-snackbar-supporting-text-font: "Poppins", sans-serif;
+    --mdc-snackbar-supporting-text-weight : 400;
+    --mdc-snackbar-supporting-text-line-height : 1.5rem;
+    --mdc-text-button-label-text-font: "Poppins", sans-serif;
+    /* --mdc-snackbar-container-color : white; */
   }
 
 @media screen and (min-width: 1300px) {
@@ -126,6 +139,12 @@ button {
     justify-content: flex-start;
     align-items: center;
     gap: 5%;
+}
+
+.flex-around{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .space-between{
@@ -189,5 +208,45 @@ button {
 }
 
 .green-btn:hover {
-    background-color: #317520;; /* Un verde pistacho aún más claro al hacer hover */
+    background-color: #317520; /* Un verde pistacho aún más claro al hacer hover */
+}
+
+.mdc-snackbar__surface{
+  padding: 8px 12px;
+}
+
+.success-snackbar{
+  --mdc-snackbar-container-color: #317520;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-snack-bar-button-color: white;
+}
+
+.dates-inputs-container{
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  width: auto;
+  align-items: center;
+}
+
+.date-input {
+  font-family: var(--font-family);
+  width: 130px; /* Anchura ajustada */
+  padding: 6px 8px; /* Padding (menos que el input de búsqueda) */
+  border: 1px solid #cccccc; /* Borde claro */
+  border-radius: 4px; /* Borde redondeado */
+  font-size: 0.8rem; /* Tamaño de fuente */
+  color: #666666; /* Color del texto (más gris) */
+  outline: none; /* Eliminar borde azul al hacer clic */
+  transition: border 0.3s ease; /* Transición suave para el borde */
+}
+
+/* Cambiar el color del borde cuando se hace clic */
+.date-input:focus {
+  border: 1px solid #aaaaaa; /* Borde más claro al hacer clic */
+}
+
+/* Placeholder (no se aplica a los inputs tipo date, pero se puede incluir) */
+.date-input::placeholder {
+  color: #bbbbbb; /* Color del placeholder */
 }

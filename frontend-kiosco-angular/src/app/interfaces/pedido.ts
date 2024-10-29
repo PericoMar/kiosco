@@ -31,9 +31,10 @@ export interface Product {
     taxes?: number;
     img?: string;
     familyId: string;
+    allergens: string[];
     description: string;
     customizations: CustomizationResponse[];  
-    customizationQuestions?: CustomizationQuestion[];  
+    customizationQuestions: CustomizationQuestion[];  
 }
 
 // Representa un menú que puede tener varios productos

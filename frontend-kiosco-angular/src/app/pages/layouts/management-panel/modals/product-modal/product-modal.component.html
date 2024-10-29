@@ -1,41 +1,255 @@
-<main class="modal-content">
+<form class="modal-content" [formGroup]="productForm">
     <div class="modal-header">
-        <div class="image-container">
-          <img [src]="productImgUrl" alt="Imagen del producto" class="product-image" *ngIf="productImgUrl">
-          <button class="edit-button" (click)="editImage()">
-            ✎
-          </button>
-        </div>
+      <div class="image-container">
+        <img [src]="productImgUrl" alt="Imagen del producto" class="product-image" *ngIf="productImgUrl">
+        <button class="edit-button" (click)="editImage()" [disabled]="productForm.value.productType === 'Grupo de modificadores'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+          </svg>
+        </button>
+        
+        <!-- Input de archivo oculto -->
+        <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" hidden>
       </div>
-      
+      <button (click)="close()" class="close-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+      </button>
+    </div>
   
-  <div>
-    <form [formGroup]="productForm">
-      <div class="form-group">
-        <label for="name">Nombre del producto</label>
-        <input id="name" type="text" formControlName="name" placeholder="Ej. Pizza" class="form-control" />
-        <div *ngIf="productForm.controls['name'].hasError('required') && productForm.controls['name'].touched" class="error">
-          El nombre es obligatorio
+
+    <hr class="divider">
+    <fieldset class="form-group">
+      <header>
+        <label for="productType">Tipo de producto<span class="input-mandatory"> *</span></label>
+      </header>
+      <div class="inputs-container">
+        <div class="input-container">
+          <select name="productType" formControlName="productType" id="productType" placeholder="Escoja una familia" class="form-control select"
+          [ngClass]="{'product': productForm.value.productType === 'Producto', 'modifiers': productForm.value.productType === 'Grupo de modificadores', 'modifier': productForm.value.productType === 'Modificador'}">
+            @for(tipoProducto of tiposProducto; track $index){
+              <option [value]="tipoProducto">
+
+                {{ tipoProducto }}  
+
+              </option>
+            }
+          </select>
         </div>
+        
       </div>
-  
-      <div class="form-group">
-        <label for="price">Precio</label>
-        <input id="price" type="text" formControlName="price" placeholder="Ej. 10.00" class="form-control" />
-        <div *ngIf="productForm.controls['price'].hasError('required') && productForm.controls['price'].touched" class="error">
-          El precio es obligatorio
+    </fieldset>
+
+    @if(productForm.value.productType === 'Grupo de modificadores'){
+      <hr class="divider">
+      <fieldset class="form-group">
+        <header>
+          <label for="family">Familia</label>
+        </header>
+        <div class="inputs-container">
+          <div class="input-container">
+            <select [(ngModel)]="familyId" [ngModelOptions]="{standalone: true}" name="familyId" class="form-control select" (change)="onFamilyIdChange()">
+              <option value="" class="option-disabled" selected>Todos las familias</option>
+                @for(family of families; track $index){
+                  <option [value]="family.id">{{ family.name }}</option>
+                }
+            </select>
+          </div>
         </div>
-        <div *ngIf="productForm.controls['price'].hasError('pattern') && productForm.controls['price'].touched" class="error">
-          El precio debe ser un número válido
+      </fieldset>
+    }
+
+    <hr class="divider">
+    <fieldset class="form-group">
+      <header>
+        <label for="family">{{ labelFamilia }}<span class="input-mandatory"> *</span></label>
+      </header>
+      <div class="inputs-container">
+        <div class="input-container">
+          <select name="family" formControlName="family" id="family" class="form-control select" 
+          [ngClass]="{'invalid': productForm.controls['family'].invalid && productForm.controls['family'].touched}">
+            <option value="" class="option-disabled" disabled selected>{{ placeholderFamilia }}</option>
+            @if(productForm.value.productType === 'Modificador'){
+              @for(group of groups; track $index){
+                <option [value]="group.id">{{ group.name }}</option>
+              }
+            } @else if(productForm.value.productType === 'Producto') {
+              @for(family of families; track $index){
+                <option [value]="family.id">{{ family.name }}</option>
+              }
+            } @else {
+              @for(product of products; track $index){
+                <option [value]="product.id">{{ product.name }}</option>
+              }
+            }
+          </select>
         </div>
+        <span (click)="changeStatus()" [ngClass]="getStatusClass(this.productForm.value.status)" class="status-text">
+          <!-- SVG Icono dinámico según el estado -->
+          <ng-container *ngIf="this.productForm.value.status === 'Habilitado'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill status-icon" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.904 10.803L4.3 8.2a.717.717 0 1 0-1.014 1.014l2.969 2.97a.717.717 0 0 0 1.014 0l6.18-6.18a.717.717 0 1 0-1.014-1.014L6.904 10.803z"/>
+            </svg>
+          </ng-container>
+          <ng-container *ngIf="this.productForm.value.status === 'Deshabilitado'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill status-icon" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+          </ng-container>
+          {{ this.productForm.value.status }}
+        </span>
+        
       </div>
-    </form>
-  </div>
+    </fieldset>
+
+    <hr class="divider">
+    <fieldset class="form-group">
+      <header>
+        <label for="name">{{ labelNombre }}<span class="input-mandatory"> *</span></label>
+        @if(productForm.value.productType === 'Producto'){
+          <label for="stock">Tipo de IVA<span class="input-mandatory"> *</span></label>
+        }
+      </header>
+      <div class="inputs-container">
+        <div class="input-container">
+          <input id="name" type="text" formControlName="name" [placeholder]="placeholderNombre" class="form-control" 
+          [ngClass]="{'invalid': productForm.controls['name'].invalid && productForm.controls['name'].touched}" />
+          <div *ngIf="productForm.controls['name'].hasError('required') && productForm.controls['name'].touched" class="error">
+            {{ errorMsgNombre }}
+          </div>
+        </div>
+        @if(productForm.value.productType === 'Producto'){
+              <div class="input-container iva">
+                <select name="iva" formControlName="iva" id="iva" class="form-control select">
+                    @for(tipoIVA of tiposIVA; track $index){
+                      <option [value]="tipoIVA">{{ tipoIVA }}</option>
+                    }
+                </select>
+              </div>
+        }
+      </div>
+    </fieldset>
+
+
+    @if(productForm.value.productType !== 'Grupo de modificadores'){
+      <hr class="divider">
+      <fieldset class="form-group">
+        <header>
+          <label for="price">Tarifas <span class="input-mandatory">*</span></label>
+          <span class="text-info">Puedes insertar diferentes tarifas para modificarlas facilmente.</span>
+          <div *ngIf="productForm.controls['price_1'].hasError('required') && productForm.controls['price_1'].touched" class="error">
+            La tarifa 1 es obligatoria
+          </div>
+          <div *ngIf="productForm.controls['price_1'].hasError('pattern') && productForm.controls['price_1'].touched" class="error">
+            La tarifa 1 debe ser un número válido
+          </div>
+          <div *ngIf="productForm.controls['price_2'].hasError('pattern') && productForm.controls['price_2'].touched" class="error">
+            El tarfia 2 debe ser un número válido
+          </div>
+          <div *ngIf="productForm.controls['price_3'].hasError('pattern') && productForm.controls['price_3'].touched" class="error">
+            El tarifa 3 debe ser un número válido
+          </div>
+        </header>
+        <div class="inputs-container">
+          <div class="input-container price">
+            <input id="price" type="text" formControlName="price_1" placeholder="Ej. 10.00" class="form-control" 
+            [ngClass]="{'invalid': productForm.controls['price_1'].invalid && productForm.controls['price_1'].touched}" />
+            €
+          </div>
+          <div class="input-container price">
+            <input type="text" formControlName="price_2" placeholder="Ej. 12.00" class="form-control" />
+            €
+          </div>
+          <div class="input-container price">
+            <input type="text" formControlName="price_3" placeholder="Ej. 14.00" class="form-control" />
+            €
+          </div>
+          
+        </div>
+      </fieldset>
+
+
+      <hr class="divider">
+      <fieldset class="form-group">
+        <header>
+          <label for="stock">Alergenos</label>
+        </header>
+        <div formArrayName="allergens" class="inputs-container allergens-container">
+          <div
+            *ngFor="let allergen of allergens; let i = index"
+            class="allergen-item"
+            [ngClass]="{ 'selected': allergensArray.at(i).value }"
+            (click)="toggleAllergen(i)"
+            (mouseenter)="showTooltip(i)"
+            (mouseleave)="hideTooltip(i)"
+          >
+            <label class="flex-around" (click)="$event.preventDefault()">
+              <input type="checkbox" [formControlName]="i" class="hidden-checkbox" />
+              <div class="tooltip-container">
+                <img [src]="getAllergenImage(allergen)" alt="{{ allergen }}" class="allergen-icon" />
+                <span *ngIf="tooltipIndex === i" class="tooltip-text">{{ allergen | titlecase }}</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    } @else {
+
+      <hr class="divider">
+      <fieldset class="form-group">
+        <header>
+          <label for="min">Nº min. y max. de opciones</label>
+          <span class="text-info">Por defecto no hay ninguna restricción.</span>
+          <div *ngIf="productForm.controls['min'].hasError('pattern') && productForm.controls['min'].touched" class="error">
+            Las opciones minimas deben ser un número válido
+          </div>
+          <div *ngIf="productForm.controls['max'].hasError('pattern') && productForm.controls['max'].touched" class="error">
+            Las opciones maximas deben ser un número válido
+          </div>
+        </header>
+        <div class="inputs-container">
+          <div class="input-container price">
+            min: 
+            <input id="min" type="text" formControlName="min" placeholder="Ej. 2" class="form-control" />
+          </div>
+          <div class="input-container price">
+            max:
+            <input type="text" formControlName="max" placeholder="Ej. 3" class="form-control" />
+          </div>
+          
+        </div>
+      </fieldset>
+    }
+
+      <hr class="divider">
+      <fieldset class="form-group">
+        <header>
+          <label for="description">Descripción</label>
+        </header>
+        <div class="inputs-container">
+          <div class="input-container">
+            <textarea id="description" formControlName="description" [placeholder]="placeholderDesc" class="form-control"></textarea>
+          </div>
+        </div>
+      </fieldset>
+
   
-  <div class="dialog-actions">
-    <button (click)="close()">Cancelar</button>
-    <button [disabled]="productForm.invalid" (click)="save()">
-      {{ isEditMode ? 'Guardar Cambios' : 'Añadir' }}
-    </button>
-  </div>
-</main>
+  <footer class="dialog-actions">
+    <button class="delete-button" *ngIf="data.productId" (click)="onDelete(data.productId)">Eliminar</button>
+    @if(isEditMode){
+      <div class="space-between rigth-buttons">
+        <button (click)="close()" class="cancel-button">Cancelar</button>
+        <button (click)="save()" class="save-button">
+          Guardar
+        </button>    
+      </div>
+    } @else {
+      <button (click)="close()" class="cancel-button">Cancelar</button>
+      <button (click)="save()" class="save-button">
+        Guardar
+      </button>
+    }
+  </footer>
+</form>

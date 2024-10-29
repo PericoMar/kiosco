@@ -14,7 +14,7 @@ import { ProductComponent } from '../product/product.component';
 })
 export class FamilySelectedPageComponent implements OnInit {
   family: any;
-  products!: (Product | Menu)[];
+  products!: Product[];
 
   constructor(
     private route: ActivatedRoute,

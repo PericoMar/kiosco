@@ -18,7 +18,7 @@ import { ProductService } from '../../services/product.service';
 })
 export class ConsumptionOptionComponent implements OnInit {
   @Input() consumptionOption!: ConsumptionOption;
-  noPhotoOptionSrc: string = '../../../assets/image.svg';
+  noPhotoOptionSrc: string = '../../../assets/svg/image.svg';
   firstFamilyId!: string;
 
   constructor(
@@ -52,6 +52,7 @@ export class ConsumptionOptionComponent implements OnInit {
       next: (response) => {
         if (response) {
           this.productsService.products = response;
+          console.log('Productos:', response); 
         }
       },
       error: (error) => {

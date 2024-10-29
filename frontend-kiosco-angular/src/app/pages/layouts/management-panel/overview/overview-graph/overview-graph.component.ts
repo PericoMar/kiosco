@@ -13,6 +13,10 @@ export class OverviewGraphComponent {
   @Input() endMonth!: string; // Mes final
   chart!: Chart;
 
+  ngOnInit() {
+    this.updateGraph()
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['startMonth'] || changes['endMont']) {
       this.updateGraph();
@@ -35,7 +39,7 @@ export class OverviewGraphComponent {
       data: {
         labels: labels,
         datasets: [{
-          label: 'Facturación', // Etiqueta de la línea
+          label: 'Facturación €', // Etiqueta de la línea
           data: data,
           borderColor: 'rgb(108, 183, 248)', // Color de la línea
           backgroundColor: 'rgb(202, 225, 245, 0.5)', // Color de fondo del área bajo la línea

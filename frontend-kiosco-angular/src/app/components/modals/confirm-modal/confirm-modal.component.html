@@ -25,17 +25,17 @@
         >
           <div class="option-img-container">
             @if(option.img){
-            <img
-              [src]="option.img"
-              alt="Imagen de {{ option.value }}"
-              class="option-img"
-            />
+              <img
+                [src]="option.img"
+                alt="Imagen de {{ option.value }}"
+                class="option-img"
+              />
             }@else {
-            <img
-              [src]="noPhotoUrl"
-              alt="Imagen de {{ option.value }}"
-              class="option-img"
-            />
+              <img
+                [src]="noPhotoUrl"
+                alt="Imagen de {{ option.value }}"
+                class="option-img"
+              />
             }
           </div>
           <div class="flex-center">
@@ -54,7 +54,7 @@
           </div>
           <div class="price-container">
             <span class="price">{{
-              option.price ? "+" + option.price + "€" : ""
+              option.price && option.price != 0 ? "+" + option.price + "€" : ""
             }}</span>
           </div>
         </div>
@@ -133,17 +133,17 @@
             customization.name){
             <div class="customization">
               <h5 class="customization-name">{{ customization.name }}</h5>
-              @for(responses of customization.responses; track responses.id){
+              @for(response of customization.responses; track response.id){
               <div class="space-between">
                 <div class="flex-start response-info">
-                  <img
-                    src="{{ responses.img ? responses.img : noPhotoUrl }}"
-                    alt="{{ responses.img }}"
+                  <img class="customization-img"
+                    src="{{ response.img ? response.img : noPhotoUrl }}"
+                    alt="{{ response.img }}"
                   />
-                  <p class="customization-value">{{ responses.value }}</p>
+                  <p class="customization-value">{{ response.value }}</p>
                 </div>
                 <span>{{
-                  responses.price ? "+" + responses.price + "€" : ""
+                  response.price && response.price != 0? "+" + response.price + "€" : ""
                 }}</span>
               </div>
               }

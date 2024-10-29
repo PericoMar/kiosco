@@ -36,7 +36,8 @@ export const routes: Routes = [
     path: 'inactive',
     component: InactivePageComponent
   },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', 
+    component: LoginComponent },
   {
     path: 'management-panel',
     component: ManagementPanelComponent,
@@ -49,5 +50,5 @@ export const routes: Routes = [
       { path: 'devices', component: DevicesManagerComponent }
     ]
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'login' },
 ];

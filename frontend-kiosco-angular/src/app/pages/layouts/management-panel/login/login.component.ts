@@ -4,11 +4,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../../../services/user/user.service';
 import { User, UserWithoutPassword } from '../../../../interfaces/user';
+import { ProductService } from '../../../../services/product.service';
+import { FamilyService } from '../../../../services/family.service';
+import { forkJoin } from 'rxjs';
+import { GroupService } from '../../../../services/group/group.service';
+import { ButtonSpinnerComponent } from '../../../../components/button-spinner/button-spinner.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, ButtonSpinnerComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -16,6 +21,7 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   incorrectUser: boolean = false;
+  loadingLogin: boolean = false;
 
   users : User[] = [
     { username: 'admin', password: 'admin', name: 'Admin', rol: 'admin' },
@@ -24,7 +30,10 @@ export class LoginComponent {
 
   constructor(
     private router : Router,
-    private userService : UserService
+    private userService : UserService,
+    private productsService : ProductService,
+    private familyService : FamilyService,
+    private groupsService : GroupService
   ) { }
 
   // Método para cambiar el tipo de input de la contraseña
@@ -34,15 +43,16 @@ export class LoginComponent {
     
     if (input.type === "password") {
       input.type = "text";
-      imgEye.src = "assets/eye-slash-fill.svg";
+      imgEye.src = "assets/svg/eye-slash-fill.svg";
     } else {
       input.type = "password";
-      imgEye.src = "assets/eye-fill.svg";
+      imgEye.src = "assets/svg/eye-fill.svg";
     }
   }
 
   // Método para gestionar el inicio de sesión
   login(event: Event) {
+    this.loadingLogin = true;
     event.preventDefault();
     
     const foundUser : UserWithoutPassword = this.users.find(user => 
@@ -55,10 +65,35 @@ export class LoginComponent {
       // Si las credenciales son correctas
       this.incorrectUser = false;
       this.userService.saveUser(foundUser);
-      // Aquí puedes redirigir a otro componente o realizar la acción que necesites
-      this.router.navigate(['/management-panel']);
+      forkJoin({
+        products: this.productsService.getProductsObservable(),
+        families: this.familyService.getFamiliesObservable(),
+        groups: this.groupsService.getGroupsObservable()
+      }).subscribe({
+        next: ({ products, families, groups }) => {
+          if (products) {
+            this.productsService.products = products;
+            console.log(products);
+          }
+          if (families) {
+            this.familyService.families = families;
+          }
+          if(groups) {
+            this.groupsService.groups = groups;
+          }
+          
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          this.router.navigate(['/management-panel']);
+        }
+      });
+
     } else {
       // Si las credenciales son incorrectas
+      this.loadingLogin = false;
       this.incorrectUser = true;
     }
   }

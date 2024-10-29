@@ -55,9 +55,17 @@ p{
     margin-bottom: 40px;
 }
 
+.btns-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
 main.table{
     width: 100%;
     overflow: scroll;
+    max-height: 620px;
 }
 
 @media screen and (max-height: 900px) {

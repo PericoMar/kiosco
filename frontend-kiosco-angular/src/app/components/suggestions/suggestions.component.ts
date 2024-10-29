@@ -22,8 +22,8 @@ export class SuggestionsComponent implements OnInit {
 
   @Output() productSelected = new EventEmitter<Product | Menu>(); // Volver a emitir el evento al componente superior
 
-  selectedProduct!: (Product | Menu)
-  productsSugered: (Product | Menu)[] = [];
+  selectedProduct!: Product
+  productsSugered: Product[] = [];
   isMenu!: boolean;
   isModalOpen = false;
   orderService: any;

@@ -1,0 +1,119 @@
+<form class="modal-content" [formGroup]="familyForm">
+    <div class="modal-header">
+      <div class="image-container">
+        <img [src]="productImgUrl" alt="Imagen del producto" class="product-image" *ngIf="productImgUrl">
+        <button class="edit-button" (click)="editImage()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+          </svg>
+        </button>
+        
+        <!-- Input de archivo oculto -->
+        <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" hidden>
+      </div>
+      <button (click)="close()" class="close-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+      </button>
+    </div>
+
+
+    <hr class="divider">
+    <fieldset class="form-group">
+      <header>
+        <label for="family">Nombre y estado<span class="input-mandatory"> *</span></label>
+      </header>
+      <div class="inputs-container">
+        <div class="input-container">
+            <input id="name" type="text" formControlName="name" placeholder="Ej: Pizzas" class="form-control" 
+            [ngClass]="{'invalid': familyForm.controls['name'].invalid && familyForm.controls['name'].touched}" />
+            <div *ngIf="familyForm.controls['name'].hasError('required') && familyForm.controls['name'].touched" class="error">
+              El nombre es obligatorio
+            </div>
+          </div>
+        <span (click)="changeStatus()" [ngClass]="getStatusClass(this.familyForm.value.status)" class="status-text">
+          <!-- SVG Icono dinámico según el estado -->
+          <ng-container *ngIf="this.familyForm.value.status === 'Habilitado'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill status-icon" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.904 10.803L4.3 8.2a.717.717 0 1 0-1.014 1.014l2.969 2.97a.717.717 0 0 0 1.014 0l6.18-6.18a.717.717 0 1 0-1.014-1.014L6.904 10.803z"/>
+            </svg>
+          </ng-container>
+          <ng-container *ngIf="this.familyForm.value.status === 'Deshabilitado'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill status-icon" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+          </ng-container>
+          {{ this.familyForm.value.status }}
+        </span>
+        
+      </div>
+    </fieldset>
+
+    @for(i of this.familyForm.get('printers')?.value ; track $index){
+        <fieldset class="form-group" formArrayName="printers">
+            <header>
+                @if($index === 0){
+                    <label for="printers">Impresoras<span class="input-mandatory"> *</span></label>
+                } @else {
+                    
+                }
+            </header>
+            <div class="inputs-container">
+                <div class="input-container">
+                <select name="printers" [formControlName]="$index" id="printers" class="form-control select">
+                    <option value="" class="option-disabled" disabled selected>Seleccione un impresora.</option>
+                    @for(printer of printers; track $index){
+                        <option [value]="printer.id">{{ printer.name }}</option>
+                    }
+                </select>
+                </div>
+                @if($index === 0){
+                    <button type="button" class="green-btn add-printer" (click)="addPrinterSelect()" 
+                    [disabled]="this.familyForm.get('printers')?.value.length === 6 || this.familyForm.get('printers')?.value.length === this.printers.length">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                    </button>
+                } @else {
+                    <button type="button" class="delete-button delete-printer" (click)="deletePrinterSelect($index)">
+                        <svg xmlns="http://www.w3.org/2000/svg" with=16 height=16 fill=currentColor viewBox="0 0 448 512">
+                            <path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                        </svg>
+                    </button>
+                }
+            </div>
+        </fieldset>
+    }
+
+    <hr class="divider">
+      <fieldset class="form-group">
+        <header>
+          <label for="description">Descripción</label>
+        </header>
+        <div class="inputs-container">
+          <div class="input-container">
+            <textarea id="description" formControlName="description" placeholder="Ej: Familia de menus en promoción." class="form-control"></textarea>
+          </div>
+        </div>
+      </fieldset>
+  
+  <footer class="dialog-actions">
+    <button class="delete-button" *ngIf="isEditMode" (click)="onDelete(data.familyId!)">Eliminar</button>
+    @if(isEditMode){
+      <div class="space-between rigth-buttons">
+        <button (click)="close()" class="cancel-button">Cancelar</button>
+        <button (click)="save()" class="save-button">
+          Guardar
+        </button>    
+      </div>
+    } @else {
+      <button (click)="close()" class="cancel-button">Cancelar</button>
+      <button (click)="save()" class="save-button">
+        Guardar
+      </button>
+    }
+  </footer>
+</form>

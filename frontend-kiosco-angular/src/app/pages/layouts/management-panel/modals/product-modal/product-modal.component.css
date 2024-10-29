@@ -1,12 +1,32 @@
 .modal-content{
-    padding:10px
+    padding:30px;
+    background-color: white;
 }
 
+.close-button{
+  padding: 6px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Fondo negro con opacidad del 50% */
+}
+
+
 .modal-header {
-    padding: 20px;
+    padding: 20px 40px 20px 20px;
     min-height: 80px;
-    text-align: center;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
   }
   
   .image-container {
@@ -18,11 +38,9 @@
     width: 100px;
     height: 100px;
     object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
   }
   
   .edit-button {
@@ -33,8 +51,8 @@
     color: white;
     border: none;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 36px;
+    height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,36 +65,304 @@
   .edit-button:hover {
     background-color: #0056b3; /* Azul más oscuro al pasar el cursor */
   }
+
+  .edit-button[disabled]{
+    background-color: #53a5fc;
+  }
+
+  .edit-button[disabled]:hover{
+    cursor: not-allowed;
+  }
   
-  
+  .divider{
+    border: none; /* Elimina el borde por defecto */
+    height: 1px; /* Establece el grosor del <hr> */
+    background-color: #3a3a3a1a; /* Aplica el color de fondo */
+  }
   
   .form-group {
+    padding:0px;
+    border: none;
     margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    
+  }
+
+  header{
+    display: flex;
+    flex-direction: column;
+    width: 38%;
+  }
+
+  label{
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .input-mandatory{
+    color: red;
+    font-size: 0.8rem;
+  }
+
+  .text-info{
+    font-size: 0.8rem;
+    color: #666666;
   }
   
+  .inputs-container{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .input-container{
+    width: 100%;
+  }
+
+  select.product{
+    background-color: rgb(221, 255, 221);
+    border: 2px solid rgb(221, 255, 221);
+  }
+
+  select.modifiers{
+    background-color: #f8d4d8;
+    border: 2px solid #f8d4d8;
+  }
+
+  select.modifier{
+    background-color: #fee2d6;
+    border: 2px solid #fee2d6;
+  }
+
+  select option{
+    background-color: white;
+    color: black;
+  }
+
   .form-control {
     width: 100%;
-    padding: 8px;
+    padding: 6px 18px;
     box-sizing: border-box;
-  }
-  
+    border-radius: 10px; /* Borde redondeado */
+    border: 1px solid #ccc; /* Borde claro inicialmente */
+    font-family: var(--font-family); /* Uso de la variable de fuente */
+    font-size: 1rem; /* Tamaño de la letra (puedes ajustarlo) */
+    transition: border-color 0.3s ease; /* Transición suave para el borde */
+    box-shadow: 0 0 2px rgba(22, 41, 61, 0.2); /* Añadir un pequeño efecto de sombra */
+}
+
+.form-control.select{
+  padding: 6px 12px;
+  box-shadow: 0 0 2px rgba(22, 41, 61, 0.2); /* Añadir un pequeño efecto de sombra */
+}
+
+.option-disabled {
+  color: #666666; /* Color de texto de la opción deshabilitada */
+}
+
+.form-control:focus {
+  border-color: #5c5c5c; /* Color del borde más oscuro al hacer focus */
+    outline: none; /* Quitar el borde predeterminado azul de los navegadores */
+    box-shadow: 0 0 2px rgba(22, 41, 61, 0.5); /* Añadir un pequeño efecto de sombra */
+}
+
+.price{
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.iva{
+  width: 30%;
+}
+
   .error {
     color: red;
-    font-size: 12px;
+    font-size: 0.8rem;
   }
   
-  .dialog-actions {
-    margin-top: 20px;
-    text-align: right;
+  .habilitado {
+    background-color: #c3e6cb;
+    color: #155724;
+    padding: 6px 12px;
+    border-radius: 10px;
   }
   
-  button {
-    padding: 10px 15px;
+  .deshabilitado {
+    background-color: #f5c6cb;
+    color: #721c24;
+    padding: 6px 12px;
+    border-radius: 10px;
+  }
+
+  .status-text {
     cursor: pointer;
-  }
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    min-width: 155px;
+    padding: 6px 12px;
+    box-sizing: border-box;
+    max-width: 175px;
+}
+
+.status-text:hover{
+  box-shadow: 1px 1px 5px rgba(22, 41, 61, 0.5);
+}
   
-  button[disabled] {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
+.status-text svg {
+    margin-right: 5px;/* Espacio entre el texto y el icono */
+    vertical-align: middle;
+}
   
+  
+.status-icon {
+    font-size: 1em;  /* Tamaño del ícono */
+}
+
+/* Si estás usando Bootstrap Icons */
+.bi-check-circle {
+    color: #28a745;  /* Color del ícono si está disponible */
+}
+
+.bi-x-circle {
+    color: #e56f7a;  /* Color del ícono si no está disponible */
+}
+
+.allergens-container{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.allergen-item {
+  border: 1px solid #ccc; /* Borde claro inicialmente */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 10px;
+  margin: 2px 0;
+  max-width: 150px;
+  box-shadow: 0 0 2px rgba(22, 41, 61, 0.2); /* Añadir un pequeño efecto de sombra */
+  transition: background-color 0.2s, border-color 0.2s; /* Transición suave */
+  cursor: pointer;
+}
+
+.allergen-item.selected {
+  background-color: #e6f9e6; /* Fondo verde claro */
+  border-color: #4caf50; /* Borde verde oscuro */
+}
+
+.allergen-icon {
+  width: 24px;                /* Ajusta el tamaño del icono */
+  height: 24px;               /* Ajusta el tamaño del icono */
+  border-radius: 50%;         /* Bordes redondeados para un aspecto circular */
+  border: 1px solid #ffffff;  /* Borde claro */
+  border-width: thin;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con algo de transparencia */
+  /* box-shadow: 0 0 0 1px white, 0 2px 4px rgba(0, 0, 0, 0.2); */
+  cursor: pointer;
+}
+
+.allergen-item:hover {
+  background-color: rgb(216, 216, 216);
+  box-shadow: 0 0 2px rgba(22, 41, 61, 0.6);
+}
+
+.hidden-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  width: 24px; 
+  height: 24px;
+}
+
+.tooltip-text {
+  visibility: visible;
+  position: absolute;
+  bottom: 100%; /* Aparece arriba de la imagen */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.75); /* Fondo oscuro */
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.tooltip-container:hover .tooltip-text {
+  opacity: 1;
+}
+
+.dialog-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-actions button {
+  border-radius: 10px;
+  padding: 10px 15px;
+  box-shadow: 0 0 2px rgba(22, 41, 61, 0.3);
+}
+
+.dialog-actions button:hover {
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(22, 41, 61, 0.6);
+}
+
+.dialog-actions button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.rigth-buttons{
+  gap: 6px;
+  width: 30%;
+}
+
+.cancel-button {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+}
+
+.cancel-button:hover {
+  background-color: rgb(216, 216, 216);
+  border: 1px solid #787878;
+}
+
+.delete-button {
+  border: 1px solid #f5c6cb;
+}
+
+.save-button {
+  background-color: rgb(21, 21, 21);
+  color: white;
+  border:1px solid rgb(21, 21, 21);
+}
+
+.save-button:hover {
+  background-color: rgb(4, 4, 4);
+  border:1px solid rgb(4, 4, 4);
+}
+
+.invalid {
+  border-color: rgb(252, 130, 130);
+  background-color: rgb(252, 243, 243);
+}
