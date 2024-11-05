@@ -19,7 +19,7 @@
       </button>
     </div>
   
-
+    @if(!isEditMode){
     <hr class="divider">
     <fieldset class="form-group">
       <header>
@@ -41,6 +41,7 @@
         
       </div>
     </fieldset>
+  }
 
     @if(productForm.value.productType === 'Grupo de modificadores'){
       <hr class="divider">
@@ -237,7 +238,7 @@
 
   
   <footer class="dialog-actions">
-    <button class="delete-button" *ngIf="data.productId" (click)="onDelete(data.productId)">Eliminar</button>
+    <button class="delete-button" *ngIf="data.id" (click)="onDelete(data.id)">Eliminar</button>
     @if(isEditMode){
       <div class="space-between rigth-buttons">
         <button (click)="close()" class="cancel-button">Cancelar</button>

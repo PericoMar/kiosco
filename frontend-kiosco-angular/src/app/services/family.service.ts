@@ -5,6 +5,8 @@ import { AppConfig } from '../../config/app-config';
 import { Observable } from 'rxjs';
 import { ProductService } from './product.service';
 import { FamilyData } from '../interfaces/family-data';
+import { FamilyModalComponent } from '../pages/layouts/management-panel/modals/family-modal/family-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Injectable({
@@ -36,6 +38,7 @@ export class FamilyService {
 
   constructor(private http: HttpClient,
     // private productService: ProductService,
+    private dialog : MatDialog
   ) {
     
   }
@@ -67,8 +70,62 @@ export class FamilyService {
         name: family.name,
         // products: this.productService.getNumberOfProductsByFamilyId(family.id),
         desc: `Todas las ${family.name}`,
-        status: 'Habilitado'
+        status: 'Habilitado',
+        type: 'familia',
       }
     });
+  }
+
+  openFamilyModal(productId: number | null = null): void {
+    const dialogRef = this.dialog.open(FamilyModalComponent, {
+      width: '700px',
+      data: { productId: productId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Datos recibidos del modal:', result);
+        console.log('ID de la familia:', productId);
+        if (productId) {
+          this.updateFamily(productId, result);
+        } else {
+          this.addFamilyData(result);
+        }
+      }
+    });
+  }
+
+  addFamilyData(familyData: any) {
+    // Generar un ID único corto para el nuevo producto
+    const newId = (this.families.length + 1).toString();
+  
+    // Crear un nuevo producto a partir de los datos del formulario
+    const newProduct = {
+      id: newId,
+      name: familyData.name,
+      img: 'assets/sandwich.png', // La URL de la imagen que ya has obtenido
+    };
+  
+    // Agregar el nuevo producto al array de productos
+    this.families.push(newProduct);
+    this.addFamily(newProduct).subscribe(
+      {
+        next: (response) => {
+          console.log('Producto añadido correctamente', response);
+        },
+        error: (error) => {
+          console.error('Error al añadir producto', error);
+        }
+      }
+    );
+
+  }
+
+  updateFamily(familyId: number, familyData: any) {
+    // this.familyService.updateFamily(familyId, familyData);
+  }
+
+  openDeleteFamilia(element: any) {
+    // this.familyService.openDeleteFamilia(element);
   }
 }

@@ -6,4 +6,5 @@ export interface ProductData {
     family: string;
     status: string;
     allergens: string[];
+    type: string;
   }

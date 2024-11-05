@@ -6,6 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProductService } from '../../../../services/product.service';
+import { ProductModalComponent } from '../modals/product-modal/product-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { FamilyService } from '../../../../services/family.service';
 
 
 export interface ColumnDef {
@@ -60,7 +63,8 @@ export class TableComponent {
   }
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private familyService: FamilyService,
   ) {
     this.dataSource = new MatTableDataSource<any>(this.productService.getProductsData());
     // Definir el filtro personalizado
@@ -123,13 +127,46 @@ export class TableComponent {
   }
   
 
-  editElement(element: any) {
-    // Lógica para editar el elemento
-    console.log('Edit:', element);
+  editElement(element: any): void {
+    switch (element.type) {
+      case 'familia':
+        this.familyService.openFamilyModal(element);
+        break;
+      case 'dispositivo':
+        this.openDispositivoModal(element);
+        break;
+      case 'producto':
+        this.productService.openProductModal(element);
+        break;
+      default:
+        console.error('Tipo de elemento desconocido');
+    }
+  }
+  
+  deleteElement(element: any): void {
+    switch (element.type) {
+      case 'familia':
+        this.familyService.openDeleteFamilia(element);
+        break;
+      case 'dispositivo':
+        this.deleteDispositivo(element);
+        break;
+      case 'producto':
+        this.productService.openDeleteProductModal(element);
+        break;
+      default:
+        console.error('Tipo de elemento desconocido');
+    }
   }
 
-  deleteElement(element: any) {
-    // Lógica para eliminar el elemento
-    console.log('Delete:', element);
+  openDispositivoModal(dispositivoId: number | null = null): void {
+    // const dialogRef = this.dialog.open(ProductModalComponent, {
+    //   width: '700px',
+    //   data: { productId: dispositivoId }
+    // });
+  }
+
+  deleteDispositivo(dispositivo: any): void {
+    // this.productService.openDeleteProductModal(dispositivo);
   }
 }

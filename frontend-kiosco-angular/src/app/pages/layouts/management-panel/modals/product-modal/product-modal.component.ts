@@ -39,14 +39,15 @@ export class ProductModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ProductModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { productId: number | null, family: number | null, price_1: number | null, price_2: number | null, price_3: number | null, name: string | null, status: string | null },
+    @Inject(MAT_DIALOG_DATA) public data: { id: number | null, family: number | null, price_1: number | null, price_2: number | null, price_3: number | null, name: string | null, status: string | null, productType : string },
     private fb: FormBuilder,
     private familyService: FamilyService,
     private groupService : GroupService,
     private productService: ProductService,
     private snackbarService: SnackbarService
   ) {
-    this.isEditMode = !!data.productId; // true si hay un id de producto
+    console.log(data);
+    this.isEditMode = !!data.id; // true si hay un id de producto
     this.productForm = this.fb.group({
       productType: ['Producto', Validators.required],
       name: ['', Validators.required],
@@ -63,7 +64,7 @@ export class ProductModalComponent {
     });
 
     if (this.isEditMode) {
-      this.loadProductData(data.productId!);
+      this.loadProductData(data.id! , data.productType);
     } 
   }
 
@@ -100,10 +101,14 @@ export class ProductModalComponent {
     this.products = this.productService.getProductsByFamilyId(this.familyId);
   }
 
-  loadProductData(productId: number) {
-    // Lógica para cargar los datos del producto si es modo edición
-    // Por ejemplo, hacer una petición al backend para obtener el producto
-    console.log(`Cargar datos del producto con ID: ${productId}`);
+  loadProductData(productId: number, productType: string): void {
+    this.productForm.patchValue(this.data);
+    // this.productService.getProductById(productId.toString()).subscribe(product => {
+    //   this.productForm.patchValue(product);
+    //   this.productImgUrl = product.img;
+    //   this.familyId = product.family;
+    //   this.onFamilyIdChange();
+    // });
   }
 
   onDelete(id : number) {

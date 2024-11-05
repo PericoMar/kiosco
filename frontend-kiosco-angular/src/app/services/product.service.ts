@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { AppConfig } from '../../config/app-config';
 import { FamilyService } from './family.service';
 import { ProductData } from '../interfaces/product-data';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductModalComponent } from '../pages/layouts/management-panel/modals/product-modal/product-modal.component';
 
 
 
@@ -240,9 +243,11 @@ export class ProductService {
     }
   ];
 
+  dataSource!: MatTableDataSource<any>;
 
   constructor(private http: HttpClient,
     private familyService: FamilyService,
+    private dialog: MatDialog
   ) {}
 
   getProductsObservable(): Observable<Product[]> {
@@ -267,6 +272,7 @@ export class ProductService {
         family: this.familyService.getFamilyName(product.familyId), // Función que recupera el nombre de la familia a partir del ID
         status: 'Habilitado',
         allergens: product.allergens,
+        type: 'producto',
       });
   
       // Agregar grupos de modificadores
@@ -278,6 +284,7 @@ export class ProductService {
           family: product.name, // El nombre del producto asociado
           status: 'Habilitado',
           allergens: [], // Los grupos no tienen alérgenos
+          type: 'producto',
         });
   
         // Agregar modificadores
@@ -289,6 +296,7 @@ export class ProductService {
             family: question.name, // El texto de la pregunta
             status: 'Habilitado',
             allergens: [], // Los modificadores no tienen alérgenos
+            type: 'producto',
           });
         });
       });
@@ -331,5 +339,146 @@ export class ProductService {
 
   getNumberOfProductsByFamilyId(id: string): number {
     return this.getProductsByFamilyId(id).length;
+  }
+
+  getProductById(id: string): Observable<Product> {
+    return this.http.get<Product>(`${AppConfig.API_URL}/articulo/${id}`);
+  }
+
+  openProductModal(product: any = null): void {
+    const dialogRef = this.dialog.open(ProductModalComponent, {
+      width: '700px',
+      data: { ...product }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Datos recibidos del modal:', result);
+        console.log('ID del producto:', product.id);
+        if (product.id) {
+          this.updateProduct(product.id, result);
+        } else {
+          this.addProductData(result);
+        }
+        this.dataSource = new MatTableDataSource<any>(this.getProductsData());
+      }
+    });
+  }
+
+  addProductData(productData: any) {
+    // Generar un ID único corto para el nuevo producto
+    const newId = (this.products.length + 1).toString();
+
+    switch (productData.productType) {
+      case 'Producto':
+        // Crear un nuevo producto a partir de los datos del formulario
+        this.createProduct(newId, productData);
+        break;
+      case 'Grupo de modificadores':
+        // Crear un nuevo grupo de modificadores a partir de los datos del formulario
+        this.createCustomizationQuestion(newId, productData);
+        break;
+      case 'Modificador':
+        // Crear un nuevo modificador a partir de los datos del formulario
+        this.createOption(newId, productData);
+        break;
+      }
+  
+  }
+
+  createProduct(newId : string, productData: any) {
+    const newProduct = {
+      id: newId,
+      name: productData.name,
+      price: parseFloat(productData.price_1),
+      img: 'assets/burguer_barbacoa.png', // La URL de la imagen que ya has obtenido
+      familyId: productData.family, // Asumiendo que family es un ID o nombre que usas
+      description: productData.description,
+      customizations: [],
+      customizationQuestions: [],
+      allergens: this.getSelectedAllergens(productData.allergens) // Llama a la función para obtener alérgenos seleccionados
+    };
+  
+    // Agregar el nuevo producto al array de productos
+    this.products.push(newProduct);
+    this.addProduct(newProduct).subscribe(
+      {
+        next: (response) => {
+          console.log('Producto añadido correctamente', response);
+        },
+        error: (error) => {
+          console.error('Error al añadir producto', error);
+        }
+      }
+    );
+  }
+
+  createCustomizationQuestion(newId : string, productData: any) {
+    const newCustomizationQuestion = {
+      id: newId,
+      name: productData.name,
+      productId: productData.family, // Asumiendo que family es el ID del producto asociado
+      max: parseInt(productData.max),
+      min: parseInt(productData.min),
+    };
+
+    // Agregar el nuevo grupo de modificadores al array de productos
+    this.addCustomizationQuestion(newCustomizationQuestion).subscribe(
+      {
+        next: (response) => {
+          console.log('Grupo de modificadores añadido correctamente', response);
+        },
+        error: (error) => {
+          console.error('Error al añadir grupo de modificadores', error);
+        }
+      });
+  }
+
+  createOption(newId : string, productData: any) {
+    let img = productData.name === 'Sin nata' ? 'assets/no.png' : 'assets/nata.png';
+
+    const newOption = {
+      id: newId,
+      name: productData.name,
+      price: parseFloat(productData.price_1),
+      img: img, // La URL de la imagen que ya has obtenido
+      questionId: productData.family, // Asumiendo que family es un ID o nombre que usas
+      description: productData.description,
+    };
+  
+    this.addOption(newOption).subscribe(
+      {
+        next: (response) => {
+          console.log('Producto añadido correctamente', response);
+        },
+        error: (error) => {
+          console.error('Error al añadir producto', error);
+        }
+      }
+    );
+  }
+
+  updateProduct(productId: number, productData: any) {
+    // Lógica para actualizar el producto
+    console.log('Actualizar producto', productId, productData);
+  }
+
+    // Función para obtener los alérgenos seleccionados como un array de strings
+  private getSelectedAllergens(allergens: boolean[]): string[] {
+    const allergenNames = [
+      'gluten', 'lactosa', 'altramuces', 'huevos',
+      'apio', 'cacahuetes', 'crustaceos', 'cascara',
+      'mostaza', 'pescado', 'sesamo', 'soja',
+      'dioxido-azufre', 'moluscos'
+    ];
+  
+    return allergens
+      .map((selected, index) => (selected ? allergenNames[index] : ''))
+      .filter((allergen) => allergen !== null);
+  }
+
+  openDeleteProductModal(product: any): void {
+    // Lógica para abrir el modal de confirmación de eliminación
+    console.log('Eliminar producto', product);
   }
 }
