@@ -28,6 +28,7 @@ export interface Product {
     id: string;
     name: string;
     price: number;
+    status?: string;
     taxes?: number;
     img?: string;
     familyId: string;

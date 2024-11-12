@@ -270,7 +270,7 @@ export class ProductService {
         productType: 'Producto',
         name: product.name,
         family: this.familyService.getFamilyName(product.familyId), // Función que recupera el nombre de la familia a partir del ID
-        status: 'Habilitado',
+        status: product.status!,
         allergens: product.allergens,
         type: 'producto',
       });
@@ -282,7 +282,7 @@ export class ProductService {
           productType: 'Grupo de modificadores',
           name: question.name,
           family: product.name, // El nombre del producto asociado
-          status: 'Habilitado',
+          status: product.status!,
           allergens: [], // Los grupos no tienen alérgenos
           type: 'producto',
         });
@@ -294,7 +294,7 @@ export class ProductService {
             productType: 'Modificador',
             name: option.value,
             family: question.name, // El texto de la pregunta
-            status: 'Habilitado',
+            status: product.status!,
             allergens: [], // Los modificadores no tienen alérgenos
             type: 'producto',
           });
@@ -341,8 +341,8 @@ export class ProductService {
     return this.getProductsByFamilyId(id).length;
   }
 
-  getProductById(id: string): Observable<Product> {
-    return this.http.get<Product>(`${AppConfig.API_URL}/articulo/${id}`);
+  getProductByIdAndType(productType: string, id: string): Observable<Product> {
+    return this.http.get<Product>(`${AppConfig.API_URL}/articulo/${productType}/${id}`);
   }
 
   openProductModal(product: any = null): void {
@@ -356,13 +356,17 @@ export class ProductService {
         console.log('Datos recibidos del modal:', result);
         console.log('ID del producto:', product.id);
         if (product.id) {
-          this.updateProduct(product.id, result);
+          this.updateProductData(product.id, result);
         } else {
           this.addProductData(result);
         }
         this.dataSource = new MatTableDataSource<any>(this.getProductsData());
       }
     });
+  }
+
+  getProductById(id: string, productType: string): Observable<Product> {
+    return this.http.get<Product>(`${AppConfig.API_URL}/articulo/${productType}/${id}`);
   }
 
   addProductData(productData: any) {
@@ -394,6 +398,8 @@ export class ProductService {
       img: 'assets/burguer_barbacoa.png', // La URL de la imagen que ya has obtenido
       familyId: productData.family, // Asumiendo que family es un ID o nombre que usas
       description: productData.description,
+      iva: productData.iva,
+      status: productData.status,
       customizations: [],
       customizationQuestions: [],
       allergens: this.getSelectedAllergens(productData.allergens) // Llama a la función para obtener alérgenos seleccionados
@@ -418,6 +424,9 @@ export class ProductService {
       id: newId,
       name: productData.name,
       productId: productData.family, // Asumiendo que family es el ID del producto asociado
+      status: productData.status === 'Habilitado' ? 1 : 0,
+      questionType: productData.max === '1' ? 'single' : 'multiple',
+      description: productData.description,
       max: parseInt(productData.max),
       min: parseInt(productData.min),
     };
@@ -441,9 +450,11 @@ export class ProductService {
       id: newId,
       name: productData.name,
       price: parseFloat(productData.price_1),
-      img: img, // La URL de la imagen que ya has obtenido
-      questionId: productData.family, // Asumiendo que family es un ID o nombre que usas
+      img: img, 
+      status: productData.status === 'Habilitado' ? 1 : 0,
+      questionId: productData.family, 
       description: productData.description,
+      iva: productData.iva,
     };
   
     this.addOption(newOption).subscribe(
@@ -458,9 +469,34 @@ export class ProductService {
     );
   }
 
+  updateProductData(productId: number, productData: any) {
+
+    switch (productData.productType) {
+      case 'Producto':
+        // Crear un nuevo producto a partir de los datos del formulario
+        this.updateProduct(productId, productData);
+        break;
+      case 'Grupo de modificadores':
+        // Crear un nuevo grupo de modificadores a partir de los datos del formulario
+        this.updateCustomizationQuestion(productId, productData);
+        break;
+      case 'Modificador':
+        // Crear un nuevo modificador a partir de los datos del formulario
+        this.updateOption(productId, productData);
+        break;
+      }
+  }
+
   updateProduct(productId: number, productData: any) {
-    // Lógica para actualizar el producto
-    console.log('Actualizar producto', productId, productData);
+
+  }
+
+  updateCustomizationQuestion(productId: number, productData: any) {
+    
+  }
+
+  updateOption(productId: number, productData: any) {
+
   }
 
     // Función para obtener los alérgenos seleccionados como un array de strings

@@ -9,15 +9,17 @@ import { GroupService } from '../../../../../services/group/group.service';
 import { Product } from '../../../../../interfaces/pedido';
 import { ProductService } from '../../../../../services/product.service';
 import { SnackbarService } from '../../../../../services/snackBar/snackbar.service';
+import { SpinnerComponent } from '../../../../../components/spinner/spinner.component';
 
 @Component({
   selector: 'app-product-modal',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormField, MatError, MatLabel, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, MatFormField, MatError, MatLabel, CommonModule, FormsModule, SpinnerComponent],
   templateUrl: './product-modal.component.html',
   styleUrl: './product-modal.component.css'
 })
 export class ProductModalComponent {
+  loadingProduct!: boolean;
   productForm: FormGroup;
   isEditMode: boolean;
 
@@ -30,7 +32,7 @@ export class ProductModalComponent {
   groups!: any[];
 
   tiposProducto = ['Producto', 'Grupo de modificadores' , 'Modificador'];
-  tiposIVA = ['10%', '21%', '4%', '5%' ,'0%'];
+  tiposIVA = [{id: 1, tipo_iva:'10%'}, { id:2, tipo_iva:'21%' }, { id:3,tipo_iva: '4%' }, { id: 4, tipo_iva: '5%' }, { id: 5, tipo_iva: '0%'}];
   allergens: string[] = [
     'gluten', 'lactosa', 'altramuces', 'huevos' ,'apio', 'cacahuetes', 
     'crustaceos', 'cascara', 'mostaza', 'pescado', 'sesamo', 
@@ -64,6 +66,7 @@ export class ProductModalComponent {
     });
 
     if (this.isEditMode) {
+      this.loadingProduct = true;
       this.loadProductData(data.id! , data.productType);
     } 
   }
@@ -102,13 +105,12 @@ export class ProductModalComponent {
   }
 
   loadProductData(productId: number, productType: string): void {
-    this.productForm.patchValue(this.data);
-    // this.productService.getProductById(productId.toString()).subscribe(product => {
-    //   this.productForm.patchValue(product);
-    //   this.productImgUrl = product.img;
-    //   this.familyId = product.family;
-    //   this.onFamilyIdChange();
-    // });
+    this.productService.getProductById(productId.toString(), productType).subscribe(product => {
+      console.log(product);
+      this.productForm.patchValue(product);
+      this.productImgUrl = product.img!;
+      this.loadingProduct = false;
+    });
   }
 
   onDelete(id : number) {

@@ -1,0 +1,32 @@
+Portal de DOJO:
+API Key de DOJO en lo que nos van a mandar generate API Key
+Ponerla en payment-intents
+
+Por cada cadena generar otra location.
+
+
+API Postman:
+software-house-id -> Viene desde postman
+reseller-id -> Viene desde postman
+terminalId -> Si se cambia el datafono necesitamos conocerlo. El kiosco siempre esta conectado al mismo datafono pero.
+Si se cambia necesitamos en la configuración del kiosco una variable.
+
+Unliked refund ->  otra opcion para conectarnos.
+
+Si en el kiosco nos solicitan verificar una tarjeta con signature con firma, lo redirigimos al POS.
+
+
+Error de Time-out -> corte de conexión entre Datafono y TPV.
+Aparece cuando la transacción ya a comenzado
+Puede que la complete o no.
+Confirmar manualmente si la transacción se ha hecho. (Mensaje en el TPV).
+
+Caso del kiosco.
+Mostrar mensaje al cliente para dirigirlo al mostrador y se compruebe si
+se ha realizado la transacción.
+
+Opcion de cancelar la transaccion desde el kiosco.
+
+Dojo API for testing PowerShop
+
+

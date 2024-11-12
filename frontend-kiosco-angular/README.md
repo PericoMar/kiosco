@@ -28,10 +28,42 @@
 - [] Pagina de ventas.
 - [] Meter alergenos en el kiosco.
 - [] Actualizar productos/familias/dispositivos.
+    - Productos 
+        -> productType - "Producto"
+        -> name - Articulo.articulo
+        -> price_1, price_2, price_3 son las tarifas coger las 3 primeras de Tarifa_venta
+        -> family -> Articulo.familia_id
+        -> status -> estado -> 0 o 1 que se convierte en Habilitado o Deshabilitado
+        -> descripcion -> descripcion
+        -> min, max -> null
+        -> iva -> Articulo.tipo_iva_id
+        -> allergens -> Coger de Articulos_Alergenos todos los id y de todos los id los nombres desde la tabla Alergenos
+    - Grupo de modificadores
+        -> productType - "Grupo de modificadores"
+        -> name - Preguntas_Articulo.texto
+        -> price_1, price_2, price_3 null
+        -> family - Preguntas_Articulo.articulo_id
+        -> status - 0 o 1 que se convierte en Habilitado o Deshabilitado
+        -> descripcion -> Preguntas_Articulo.descripcion
+        -> min - Preguntas_Articulo.unidades_minimas
+        -> max - Preguntas_Articulo.unidades_maximas
+        -> iva - nada
+        -> allergens - nada
+    - Modificador
+        -> productType - "Modificador"
+        -> name - Articulo.articulo
+        -> price_1, price_2, price_3 son las tarifas coger las 3 primeras de Tarifa_venta
+        -> family -> Opciones_Preguntas_Articulo.pregunta_articulo_id, donde articulo_id es el id generado cuando lo creo en la tabla Articulo
+        -> status -> estado -> 0 o 1 que se convierte en Habilitado o Deshabilitado
+        -> descripcion -> descripcion
+        -> min, max -> null
+        -> iva -> Articulo.tipo_iva_id
+        -> allergens -> Coger de Articulos_Alergenos todos los id y de todos los id los nombres desde la tabla Alergenos
+
 
 - [x] Control de paginación
 - [] Scroll con poco with
 - [] Control de tamaño de las columnas.
 - [] Conexión de los dispositivos
-- [] Configuración* foto de perfil, foto por defecto, ¿Tarifa seleccionada? Divisa, Formato del ticket. Color secundario
+- [] Configuración* foto de perfil, foto por defecto, ¿Tarifa seleccionada? Borde más oscuro para la que este en uso Divisa, Formato del ticket. Color secundario. Idiomas. Publicidad.
 - [] Habilitar / Deshabilitar con un click

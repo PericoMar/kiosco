@@ -1,4 +1,10 @@
 <form class="modal-content" [formGroup]="productForm">
+  @if(loadingProduct){
+      <main class="loading-content">
+        <app-spinner></app-spinner>
+        <p>Cargando...</p>
+      </main>
+  } @else {
     <div class="modal-header">
       <div class="image-container">
         <img [src]="productImgUrl" alt="Imagen del producto" class="product-image" *ngIf="productImgUrl">
@@ -125,7 +131,7 @@
               <div class="input-container iva">
                 <select name="iva" formControlName="iva" id="iva" class="form-control select">
                     @for(tipoIVA of tiposIVA; track $index){
-                      <option [value]="tipoIVA">{{ tipoIVA }}</option>
+                      <option [value]="tipoIVA.id">{{ tipoIVA.tipo_iva }}</option>
                     }
                 </select>
               </div>
@@ -237,20 +243,21 @@
       </fieldset>
 
   
-  <footer class="dialog-actions">
-    <button class="delete-button" *ngIf="data.id" (click)="onDelete(data.id)">Eliminar</button>
-    @if(isEditMode){
-      <div class="space-between rigth-buttons">
+    <footer class="dialog-actions">
+      <button class="delete-button" *ngIf="data.id" (click)="onDelete(data.id)">Eliminar</button>
+      @if(isEditMode){
+        <div class="space-between rigth-buttons">
+          <button (click)="close()" class="cancel-button">Cancelar</button>
+          <button (click)="save()" class="save-button">
+            Guardar
+          </button>    
+        </div>
+      } @else {
         <button (click)="close()" class="cancel-button">Cancelar</button>
         <button (click)="save()" class="save-button">
           Guardar
-        </button>    
-      </div>
-    } @else {
-      <button (click)="close()" class="cancel-button">Cancelar</button>
-      <button (click)="save()" class="save-button">
-        Guardar
-      </button>
-    }
-  </footer>
+        </button>
+      }
+    </footer>
+  }
 </form>

@@ -367,3 +367,14 @@
   border-color: rgb(252, 130, 130);
   background-color: rgb(252, 243, 243);
 }
+
+
+/* LOADING */
+.loading-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 640px;
+  width: 640px;
+}
