@@ -65,5 +65,16 @@
 - [] Scroll con poco with
 - [] Control de tamaño de las columnas.
 - [] Conexión de los dispositivos
-- [] Configuración* foto de perfil, foto por defecto, ¿Tarifa seleccionada? Borde más oscuro para la que este en uso Divisa, Formato del ticket. Color secundario. Idiomas. Publicidad.
+- [] Configuración* 
+    - Foto de perfil
+    - Foto por defecto (Cuando un articulo no tiene foto)
+    - ¿Tarifa seleccionada? 
+        - Borde más oscuro para la que este en uso (En formulario creación)
+        - Divisa
+    - Formato del ticket.
+    - Estilos.
+        - Color secundario.
+        - Modo oscuro.
+    - Idiomas.
+    - Publicidad.
 - [] Habilitar / Deshabilitar con un click
