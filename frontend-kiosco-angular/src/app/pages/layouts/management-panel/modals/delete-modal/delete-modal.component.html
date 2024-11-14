@@ -1,0 +1,20 @@
+<section class="modal-content">
+    <div class="modal-header">
+      <button (click)="close()" class="close-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+      </button>
+    </div>
+  
+    <main class="main-delete-content">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+        <h2>¿Estas seguro que quieres eliminar el siguiente {{ data.productType | lowercase }}?</h2>
+        <p class="data-name">"{{ data.name }}"</p>
+    </main>
+
+    <footer class="dialog-actions">
+        <button (click)="close()" class="cancel-button">Cancelar</button>
+        <button class="delete-button" (click)="onDelete()">Eliminar</button>
+    </footer>
+</section>

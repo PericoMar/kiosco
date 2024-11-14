@@ -7,6 +7,8 @@ import { ProductService } from './product.service';
 import { FamilyData } from '../interfaces/family-data';
 import { FamilyModalComponent } from '../pages/layouts/management-panel/modals/family-modal/family-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DeleteModalComponent } from '../pages/layouts/management-panel/modals/delete-modal/delete-modal.component';
+import { SnackbarService } from './snackBar/snackbar.service';
 
 
 @Injectable({
@@ -38,7 +40,8 @@ export class FamilyService {
 
   constructor(private http: HttpClient,
     // private productService: ProductService,
-    private dialog : MatDialog
+    private dialog : MatDialog,
+    private snackbarService: SnackbarService
   ) {
     
   }
@@ -69,7 +72,7 @@ export class FamilyService {
         id: parseInt(family.id),
         name: family.name,
         // products: this.productService.getNumberOfProductsByFamilyId(family.id),
-        desc: `Todas las ${family.name}`,
+        desc:  family.description ? family.description : 'Sin descripción',
         status: 'Habilitado',
         type: 'familia',
       }
@@ -125,7 +128,27 @@ export class FamilyService {
     // this.familyService.updateFamily(familyId, familyData);
   }
 
-  openDeleteFamilia(element: any) {
-    // this.familyService.openDeleteFamilia(element);
+  openDeleteFamilyModal(product: any): void {
+    const dialogRef = this.dialog.open(DeleteModalComponent, {
+      width: '500px',
+      data: { productType: product.productType, name: product.name, id: product.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteFamily(product.id).subscribe({
+          next: (response) => {
+            this.snackbarService.openSnackBar('Familia eliminada correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+          },
+          error: (error) => {
+            console.error('Error al eliminar familia', error);
+          }
+        });
+      }
+    });
+  }
+
+  deleteFamily(familyId: number) : Observable<any> {
+    return this.http.delete(`${AppConfig.API_URL}/familia/${familyId}`);
   }
 }

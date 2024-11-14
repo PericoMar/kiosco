@@ -146,7 +146,7 @@ export class TableComponent {
   deleteElement(element: any): void {
     switch (element.type) {
       case 'familia':
-        this.familyService.openDeleteFamilia(element);
+        this.familyService.openDeleteFamilyModal(element);
         break;
       case 'dispositivo':
         this.deleteDispositivo(element);

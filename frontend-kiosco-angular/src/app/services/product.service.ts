@@ -8,6 +8,8 @@ import { ProductData } from '../interfaces/product-data';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductModalComponent } from '../pages/layouts/management-panel/modals/product-modal/product-modal.component';
+import { SnackbarService } from './snackBar/snackbar.service';
+import { DeleteModalComponent } from '../pages/layouts/management-panel/modals/delete-modal/delete-modal.component';
 
 
 
@@ -247,7 +249,8 @@ export class ProductService {
 
   constructor(private http: HttpClient,
     private familyService: FamilyService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService
   ) {}
 
   getProductsObservable(): Observable<Product[]> {
@@ -369,54 +372,24 @@ export class ProductService {
     return this.http.get<Product>(`${AppConfig.API_URL}/articulo/${productType}/${id}`);
   }
 
-  addProductData(productData: any) {
-    // Generar un ID único corto para el nuevo producto
-    const newId = (this.products.length + 1).toString();
-
-    switch (productData.productType) {
-      case 'Producto':
-        // Crear un nuevo producto a partir de los datos del formulario
-        this.createProduct(newId, productData);
-        break;
-      case 'Grupo de modificadores':
-        // Crear un nuevo grupo de modificadores a partir de los datos del formulario
-        this.createCustomizationQuestion(newId, productData);
-        break;
-      case 'Modificador':
-        // Crear un nuevo modificador a partir de los datos del formulario
-        this.createOption(newId, productData);
-        break;
-      }
-  
-  }
-
   createProduct(newId : string, productData: any) {
     const newProduct = {
       id: newId,
       name: productData.name,
-      price: parseFloat(productData.price_1),
-      img: 'assets/burguer_barbacoa.png', // La URL de la imagen que ya has obtenido
+      price_1: parseFloat(productData.price_1),
+      price_2: parseFloat(productData.price_2),
+      price_3: parseFloat(productData.price_3),
+      img: 'assets/pizza.png', // La URL de la imagen que ya has obtenido
       familyId: productData.family, // Asumiendo que family es un ID o nombre que usas
       description: productData.description,
       iva: productData.iva,
-      status: productData.status,
+      status: productData.status === 'Habilitado' ? 1 : 0,
       customizations: [],
       customizationQuestions: [],
       allergens: this.getSelectedAllergens(productData.allergens) // Llama a la función para obtener alérgenos seleccionados
     };
-  
-    // Agregar el nuevo producto al array de productos
-    this.products.push(newProduct);
-    this.addProduct(newProduct).subscribe(
-      {
-        next: (response) => {
-          console.log('Producto añadido correctamente', response);
-        },
-        error: (error) => {
-          console.error('Error al añadir producto', error);
-        }
-      }
-    );
+    
+    return newProduct;
   }
 
   createCustomizationQuestion(newId : string, productData: any) {
@@ -431,16 +404,7 @@ export class ProductService {
       min: parseInt(productData.min),
     };
 
-    // Agregar el nuevo grupo de modificadores al array de productos
-    this.addCustomizationQuestion(newCustomizationQuestion).subscribe(
-      {
-        next: (response) => {
-          console.log('Grupo de modificadores añadido correctamente', response);
-        },
-        error: (error) => {
-          console.error('Error al añadir grupo de modificadores', error);
-        }
-      });
+    return newCustomizationQuestion;
   }
 
   createOption(newId : string, productData: any) {
@@ -449,7 +413,9 @@ export class ProductService {
     const newOption = {
       id: newId,
       name: productData.name,
-      price: parseFloat(productData.price_1),
+      price_1: parseFloat(productData.price_1),
+      price_2: parseFloat(productData.price_2),
+      price_3: parseFloat(productData.price_3),
       img: img, 
       status: productData.status === 'Habilitado' ? 1 : 0,
       questionId: productData.family, 
@@ -457,16 +423,67 @@ export class ProductService {
       iva: productData.iva,
     };
   
-    this.addOption(newOption).subscribe(
-      {
-        next: (response) => {
-          console.log('Producto añadido correctamente', response);
-        },
-        error: (error) => {
-          console.error('Error al añadir producto', error);
-        }
+    return newOption;
+  }
+
+  addProductData(productData: any) {
+    // Generar un ID único corto para el nuevo producto
+    const newId = (this.products.length + 1).toString();
+
+    switch (productData.productType) {
+      case 'Producto':
+        // Crear un nuevo producto a partir de los datos del formulario
+        const newProduct = this.createProduct(newId, productData);
+        // Agregar el nuevo producto al array de productos
+        // this.products.push(newProduct);
+        this.addProduct(newProduct).subscribe(
+          {
+            next: (response) => {
+              console.log('Producto añadido correctamente', response);
+              this.snackbarService.openSnackBar('Producto añadido correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+            },
+            error: (error) => {
+              console.error('Error al añadir producto', error);
+            }
+          }
+        );
+        break;
+      
+      case 'Grupo de modificadores':
+        // Crear un nuevo grupo de modificadores a partir de los datos del formulario
+        const newCustomizationQuestion = this.createCustomizationQuestion(newId, productData);
+
+        // Agregar el nuevo grupo de modificadores al array de productos
+        this.addCustomizationQuestion(newCustomizationQuestion).subscribe(
+          {
+            next: (response) => {
+              console.log('Grupo de modificadores añadido correctamente', response);
+              this.snackbarService.openSnackBar('Grupo de modificadores añadido correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+            },
+            error: (error) => {
+              console.error('Error al añadir grupo de modificadores', error);
+            }
+          });
+        break;
+      
+      case 'Modificador':
+        // Crear un nuevo modificador a partir de los datos del formulario
+        const newOption = this.createOption(newId, productData);
+
+        this.addOption(newOption).subscribe(
+          {
+            next: (response) => {
+              console.log('Producto añadido correctamente', response);
+              this.snackbarService.openSnackBar('Producto añadido correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+            },
+            error: (error) => {
+              console.error('Error al añadir producto', error);
+            }
+          }
+        );
+        break;
       }
-    );
+  
   }
 
   updateProductData(productId: number, productData: any) {
@@ -474,29 +491,60 @@ export class ProductService {
     switch (productData.productType) {
       case 'Producto':
         // Crear un nuevo producto a partir de los datos del formulario
-        this.updateProduct(productId, productData);
+        const product = this.createProduct(productId.toString(), productData);
+        console.log(product);
+        this.updateProduct(productId, product).subscribe(
+          {
+            next: (response) => {
+              console.log('Producto actualizado correctamente', response);
+              this.snackbarService.openSnackBar('Producto actualizado correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+            },
+            error: (error) => {
+              console.error('Error al actualizar producto', error);
+            }
+          });
         break;
       case 'Grupo de modificadores':
         // Crear un nuevo grupo de modificadores a partir de los datos del formulario
-        this.updateCustomizationQuestion(productId, productData);
+        const question = this.createCustomizationQuestion(productId.toString(), productData);
+        this.updateCustomizationQuestion(productId, question).subscribe(
+          {
+            next: (response) => {
+              console.log('Grupo de modificadores actualizado correctamente', response);
+              this.snackbarService.openSnackBar('Grupo de modificadores actualizado correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+            },
+            error: (error) => {
+              console.error('Error al actualizar grupo de modificadores', error);
+            }
+          }
+        )
         break;
       case 'Modificador':
         // Crear un nuevo modificador a partir de los datos del formulario
-        this.updateOption(productId, productData);
+        const option = this.createOption(productId.toString(), productData);
+        this.updateOption(productId, option).subscribe(
+          {
+            next: (response) => {
+              console.log('Modificador actualizado correctamente', response);
+            },
+            error: (error) => {
+              console.error('Error al actualizar modificador', error);
+            }
+          });
         break;
       }
   }
 
   updateProduct(productId: number, productData: any) {
-
+    return this.http.put(`${AppConfig.API_URL}/articulo/${productId}`, productData);
   }
 
   updateCustomizationQuestion(productId: number, productData: any) {
-    
+    return this.http.put(`${AppConfig.API_URL}/pregunta/${productId}`, productData);
   }
 
   updateOption(productId: number, productData: any) {
-
+    return this.http.put(`${AppConfig.API_URL}/opcion/${productId}`, productData);
   }
 
     // Función para obtener los alérgenos seleccionados como un array de strings
@@ -514,7 +562,53 @@ export class ProductService {
   }
 
   openDeleteProductModal(product: any): void {
-    // Lógica para abrir el modal de confirmación de eliminación
-    console.log('Eliminar producto', product);
+    const dialogRef = this.dialog.open(DeleteModalComponent, {
+      width: '500px',
+      data: { productType: product.productType, name: product.name, id: product.id }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let deleteObservable;
+  
+        switch (product.productType) {
+          case 'Producto':
+            deleteObservable = this.deleteProduct(product.id);
+            break;
+          case 'Grupo de modificadores':
+            deleteObservable = this.deleteCustomizationQuestion(product.id);
+            break;
+          case 'Modificador':
+            deleteObservable = this.deleteOption(product.id);
+            break;
+        }
+  
+        if (deleteObservable) {
+          deleteObservable.subscribe({
+            next: () => {
+              this.snackbarService.openSnackBar(`${product.productType} eliminado con éxito`, 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+              // Aquí puedes actualizar tu lista de productos o mostrar un mensaje al usuario
+            },
+            error: (err) => {
+              console.error(`Error al eliminar ${product.productType}:`, err);
+              // Maneja el error, por ejemplo, mostrando una alerta o mensaje de error al usuario
+            }
+          });
+        }
+      }
+    });
   }
+  
+  deleteProduct(productId: number): Observable<any> {
+    return this.http.delete(`${AppConfig.API_URL}/articulo/${productId}`);
+  }
+  
+  deleteCustomizationQuestion(productId: number): Observable<any> {
+    return this.http.delete(`${AppConfig.API_URL}/pregunta/${productId}`);
+  }
+  
+  deleteOption(productId: number): Observable<any> {
+    return this.http.delete(`${AppConfig.API_URL}/opcion/${productId}`);
+  }
+  
 }

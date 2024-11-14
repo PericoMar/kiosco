@@ -85,6 +85,7 @@ export class LoginComponent {
         },
         error: (error) => {
           console.log(error);
+          this.router.navigate(['/management-panel']);
         },
         complete: () => {
           this.router.navigate(['/management-panel']);

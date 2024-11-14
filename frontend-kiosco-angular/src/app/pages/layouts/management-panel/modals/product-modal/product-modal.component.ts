@@ -14,7 +14,7 @@ import { SpinnerComponent } from '../../../../../components/spinner/spinner.comp
 @Component({
   selector: 'app-product-modal',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormField, MatError, MatLabel, CommonModule, FormsModule, SpinnerComponent],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, SpinnerComponent],
   templateUrl: './product-modal.component.html',
   styleUrl: './product-modal.component.css'
 })
@@ -54,8 +54,8 @@ export class ProductModalComponent {
       productType: ['Producto', Validators.required],
       name: ['', Validators.required],
       price_1: ['', [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?€?')]],
-      price_2: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})$')],
-      price_3: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})$')],
+      price_2: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')],
+      price_3: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')],
       family: ['', Validators.required],
       status: ['Habilitado', Validators.required],
       description: [''],
@@ -248,9 +248,9 @@ export class ProductModalComponent {
     if (this.productForm.valid) {
       const productData = this.productForm.value;
       this.dialogRef.close(productData);
-      this.snackbarService.openSnackBar( `${productData.productType} creado con exito.` , 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+      
     } else {
-      this.snackbarService.openSnackBar('Por favor, rellene los campos obligatorios', 'Cerrar');
+      this.snackbarService.openSnackBar('Por favor, revise los campos y rellene los obligatorios.', 'Cerrar');
     }
   }
 
