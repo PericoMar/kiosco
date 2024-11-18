@@ -57,7 +57,7 @@ export class ProductModalComponent {
       productType: ['Producto', Validators.required],
       name: ['', Validators.required],
       img: [null],
-      price_1: ['', [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?€?')]],
+      price_1: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?€?')],
       price_2: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')],
       price_3: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')],
       family: ['', Validators.required],
@@ -65,7 +65,7 @@ export class ProductModalComponent {
       description: [''],
       min: ['', Validators.pattern('^[0-9]+')],
       max: ['', Validators.pattern('^[0-9]+')],
-      iva: ['1', Validators.required],
+      iva: ['1'],
       allergens: this.fb.array(this.allergens.map(() => new FormControl(false))) // Array de checkboxes
     });
 
@@ -127,12 +127,21 @@ export class ProductModalComponent {
     this.productService.getProductById(productId.toString(), productType).subscribe(product => {
       console.log(product);
       this.productForm.patchValue(product);
-      // Verificar si existe la familia y si no existe quitarla
-      // if (!this.families.find(family => family.id === product.familyId)) {
-      //   this.productForm.get('family')?.setValue('');
-      // }
+
+      if(productType !== 'Grupo de modificadores') {
+        // Procesar los alérgenos
+        const allergensState = this.allergens.map(allergen => 
+          product.allergens?.includes(allergen) || false
+        );
+
+        // Actualizar el FormArray de alérgenos
+        this.allergensArray.clear(); // Limpiar el array anterior
+        allergensState.forEach(state => this.allergensArray.push(new FormControl(state)));
+      }
+
       this.productImgUrl = product.img ? AppConfig.STORAGE_URL + product.img : 'assets/svg/camera.svg';
       this.loadingProduct = false;
+      console.log(this.allergensArray);
     });
   }
 
@@ -279,6 +288,8 @@ export class ProductModalComponent {
       // this.snackbarService.openSnackBar( `${productData.productType} creado con exito.` , 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
     } else {
       this.snackbarService.openSnackBar('Por favor, revise los campos y rellene los obligatorios.', 'Cerrar');
+      // Hacer console.log de porque es invalido el formulario:
+      console.log(this.productForm);
     }
   }
 

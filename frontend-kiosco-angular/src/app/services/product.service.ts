@@ -309,7 +309,7 @@ export class ProductService {
             name: option.value,
             family: question.name, // El texto de la pregunta
             status: product.status!,
-            allergens: [], // Los modificadores no tienen alérgenos
+            allergens: option.allergens!, // Los modificadores no tienen alérgenos
             type: 'producto',
           });
         });
@@ -607,6 +607,7 @@ export class ProductService {
       questionId: productData.family, 
       description: productData.description,
       iva: productData.iva,
+      allergens: this.getSelectedAllergens(productData.allergens)
     };
   
     return newOption;

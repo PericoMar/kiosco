@@ -37,7 +37,9 @@ hr{
 
 
 a.family-button img{
-    width: 30%;
+    object-fit: contain;
+    width: 20%; /* Ancho del 20% del contenedor */
+    height: 100%; /* Altura del 100% del contenedor */
 }
 
 a.selected{

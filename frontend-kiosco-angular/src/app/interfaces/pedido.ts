@@ -20,6 +20,7 @@ export interface CustomizationOption {
     value: string; // e.g., "Well done", "With ketchup"
     img?: string; // Opcional, puede no tener imagen
     price?: number; // Opcional, puede no tener precio
+    allergens?: string[]; // Opcional, puede no tener alérgenos
 }
 
 
