@@ -265,7 +265,7 @@ export class ProductService {
   }
 
   getProductsObservable(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${AppConfig.API_URL}/articulos`);
+    return this.http.get<Product[]>(`${AppConfig.API_URL}/articulos`)
   }
 
   getProducts(): Product[] {

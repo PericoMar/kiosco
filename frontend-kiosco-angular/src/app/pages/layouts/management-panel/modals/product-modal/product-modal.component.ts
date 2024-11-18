@@ -108,16 +108,19 @@ export class ProductModalComponent {
       //Si el tipo de producto es un grupo de modificadores, se le settea a price_1 el valor de 0
       if(value === 'Grupo de modificadores'){
         this.productForm.get('price_1')?.setValue('0');
-        this.familyId = '';
       } else {
-        this.familyId = '';
         this.productForm.get('price_1')?.setValue('');
       }
+      this.familyId = '';
     });
   }
 
   onFamilyIdChange(): void {
-    this.products = this.productService.getProductsByFamilyId(this.familyId);
+    this.familyService.getFamiliesObservable().subscribe(families => {
+      this.familyService.families = families;
+      this.products = this.productService.getProductsByFamilyId(this.familyId);
+    });
+    
   }
 
   loadProductData(productId: number, productType: string): void {
