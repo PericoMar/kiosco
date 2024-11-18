@@ -68,7 +68,7 @@ export class ProductsManagerComponent {
       next: (products) => {
         this.productService.products = products;
         this.dataSource = new MatTableDataSource<any>(this.productService.getProductsData());
-        this.hayProductosSinFamilia = this.productService.getProductsData().some((product: any) => product.family === '');
+        this.hayProductosSinFamilia = this.productService.getProductsData().some((product: any) => product.familyId === '');
         this.loadingData = false;
 
       }

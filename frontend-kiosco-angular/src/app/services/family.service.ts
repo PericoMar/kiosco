@@ -60,6 +60,10 @@ export class FamilyService {
     return this.http.post<Family>(`${AppConfig.API_URL}/familia`, family);
   }
 
+  updateFamily(familyId: number, family: any): Observable<any> {
+    return this.http.put<Family>(`${AppConfig.API_URL}/familia/${familyId}`, family);
+  }
+
   getFamiliesObservable(): Observable<Family[]> {
     return this.http.get<Family[]>(`${AppConfig.API_URL}/familias`);
   }
@@ -68,12 +72,20 @@ export class FamilyService {
     return this.families.find((family) => family.id == id);
   }
 
+  getFamilyByIdObservable(id: string): Observable<Family> {
+    return this.http.get<Family>(`${AppConfig.API_URL}/familia/${id}`);
+  }
+
   getFirstFamilyId(): string {
     return this.families[0].id;
   }
 
   getFamilyName(id: string): string {
-    return this.families.find((family) => family.id == id)?.name || '';
+    let familyName = '';
+    this.getFamiliesObservable().subscribe(families => {
+      familyName = families.find((family) => family.id == id)?.name || '';
+    });
+    return familyName;
   }
 
   getFamiliesData() : FamilyData[] {
@@ -89,18 +101,18 @@ export class FamilyService {
     });
   }
 
-  openFamilyModal(productId: number | null = null): void {
+  openFamilyModal(familyId: number | null = null): void {
     const dialogRef = this.dialog.open(FamilyModalComponent, {
       width: '700px',
-      data: { productId: productId }
+      data: { familyId: familyId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Datos recibidos del modal:', result);
-        console.log('ID de la familia:', productId);
-        if (productId) {
-          this.updateFamily(productId, result);
+        console.log('ID de la familia:', familyId);
+        if (familyId) {
+          this.updateFamilyData(familyId, result);
         } else {
           this.addFamilyData(result);
         }
@@ -116,7 +128,8 @@ export class FamilyService {
     const newFamily = {
       id: newId,
       name: familyData.name,
-      img: 'assets/sandwich.png', // La URL de la imagen que ya has obtenido
+      desc: familyData.description,
+      status: familyData.status === 'Habilitado' ? 1 : 0,
     };
   
     // Agregar el nuevo producto al array de productos
@@ -125,7 +138,7 @@ export class FamilyService {
         console.log('Familia añadido correctamente', response);
     
         // Verificar si productData.image está definido
-        return familyData.img
+        return familyData.img && familyData.img instanceof File
           ? this.imageService.uploadImage('Familias', response.familia.id, 'imagen', familyData.img)
           : of(null); // Retorna un observable vacío si no hay imagen
       })
@@ -149,14 +162,47 @@ export class FamilyService {
 
   }
 
-  updateFamily(familyId: number, familyData: any) {
-    // this.familyService.updateFamily(familyId, familyData);
+  updateFamilyData(familyId: number, familyData: any) {
+
+    const family = {
+      name: familyData.name,
+      desc: familyData.description,
+      status: familyData.status === 'Habilitado' ? 1 : 0,
+    };
+  
+    // Agregar el nuevo producto al array de productos
+    this.updateFamily(familyId, family).pipe(
+      switchMap((response) => {
+        console.log('Familia añadido correctamente', response);
+    
+        // Verificar si productData.image está definido
+        return familyData.img && familyData.img instanceof File
+          ? this.imageService.uploadImage('Familias', response.familia, 'imagen', familyData.img)
+          : of(null); // Retorna un observable vacío si no hay imagen
+      })
+    ).subscribe({
+      next: (uploadResponse) => {
+        if (uploadResponse) {
+          console.log('Imagen subida correctamente', uploadResponse);
+        }
+        this.snackbarService.openSnackBar('Familia actualizada correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+        this.emitFamilyChange({ type: 'familia' });
+      },
+      error: (error) => {
+        console.error('Error en el proceso:', error);
+        if (error?.stage === 'addProduct') {
+          console.error('Error al añadir producto');
+        } else if (error?.stage === 'uploadImage') {
+          console.error('Error al subir imagen');
+        }
+      }
+    });    
   }
 
   openDeleteFamilyModal(product: any): void {
     const dialogRef = this.dialog.open(DeleteModalComponent, {
       width: '500px',
-      data: { productType: product.productType, name: product.name, id: product.id }
+      data: { productType: 'Familia', name: product.name, id: product.id }
     });
 
     dialogRef.afterClosed().subscribe(result => {

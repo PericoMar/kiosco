@@ -138,7 +138,7 @@ export class TableComponent {
   editElement(element: any): void {
     switch (element.type) {
       case 'familia':
-        this.familyService.openFamilyModal(element);
+        this.familyService.openFamilyModal(element.id);
         break;
       case 'dispositivo':
         this.openDispositivoModal(element);

@@ -359,6 +359,34 @@ export class ProductService {
     return this.http.get<Product>(`${AppConfig.API_URL}/articulo/${productType}/${id}`);
   }
 
+  getProductById(id: string, productType: string): Observable<Product> {
+    return this.http.get<Product>(`${AppConfig.API_URL}/articulo/${productType}/${id}`);
+  }
+
+  deleteProduct(productId: number): Observable<any> {
+    return this.http.delete(`${AppConfig.API_URL}/articulo/${productId}`);
+  }
+  
+  deleteCustomizationQuestion(productId: number): Observable<any> {
+    return this.http.delete(`${AppConfig.API_URL}/pregunta/${productId}`);
+  }
+  
+  deleteOption(productId: number): Observable<any> {
+    return this.http.delete(`${AppConfig.API_URL}/opcion/${productId}`);
+  }
+
+  updateProduct(productId: number, productData: any) {
+    return this.http.put(`${AppConfig.API_URL}/articulo/${productId}`, productData);
+  }
+
+  updateCustomizationQuestion(productId: number, productData: any) {
+    return this.http.put(`${AppConfig.API_URL}/pregunta/${productId}`, productData);
+  }
+
+  updateOption(productId: number, productData: any) {
+    return this.http.put(`${AppConfig.API_URL}/opcion/${productId}`, productData);
+  }
+
   openProductModal(product: any = null): void {
     const dialogRef = this.dialog.open(ProductModalComponent, {
       width: '700px',
@@ -378,88 +406,161 @@ export class ProductService {
   }
   
 
-  getProductById(id: string, productType: string): Observable<Product> {
-    return this.http.get<Product>(`${AppConfig.API_URL}/articulo/${productType}/${id}`);
-  }
-
+  
 
   addProductData(productData: any) {
-    // Generar un ID único corto para el nuevo producto
     const newId = (this.products.length + 1).toString();
-
+  
+    let createMethod: any;
+    let addMethod: any;
+    let type: string;
+  
     switch (productData.productType) {
       case 'Producto':
-        // Crear un nuevo producto a partir de los datos del formulario
-        const newProduct = this.createProduct(newId, productData);
-        // Agregar el nuevo producto al array de productos
-        // this.products.push(newProduct);
-        this.addProduct(newProduct).pipe(
-          switchMap((response) => {
-            console.log('Producto añadido correctamente', response);
-        
-            // Verificar si productData.image está definido
-            return productData.img
-              ? this.imageService.uploadImage('Articulos', response.articulo.id, 'imagen', productData.img)
-              : of(null); // Retorna un observable vacío si no hay imagen
-          })
-        ).subscribe({
-          next: (uploadResponse) => {
-            if (uploadResponse) {
-              console.log('Imagen subida correctamente', uploadResponse);
-            }
-            this.snackbarService.openSnackBar('Producto añadido correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
-            this.emitProductChange({ type: 'producto' });
-          },
-          error: (error) => {
-            console.error('Error en el proceso:', error);
-            if (error?.stage === 'addProduct') {
-              console.error('Error al añadir producto');
-            } else if (error?.stage === 'uploadImage') {
-              console.error('Error al subir imagen');
-            }
-          }
-        });        
-        
+        createMethod = this.createProduct;
+        addMethod = this.addProduct;
+        type = 'producto';
         break;
-      
       case 'Grupo de modificadores':
-        // Crear un nuevo grupo de modificadores a partir de los datos del formulario
-        const newCustomizationQuestion = this.createCustomizationQuestion(newId, productData);
+        createMethod = this.createCustomizationQuestion;
+        addMethod = this.addCustomizationQuestion;
+        type = 'grupo de modificadores';
+        break;
+      case 'Modificador':
+        createMethod = this.createOption;
+        addMethod = this.addOption;
+        type = 'modificador';
+        break;
+    }
+  
+    const newItem = createMethod.call(this, newId, productData);
+  
+    addMethod.call(this, newItem)
+      .pipe(
+        switchMap((response : any) => {
+          console.log(`${type} añadido correctamente`, response);
+  
+          // Verificar si hay imagen para subir
+          return productData.img && productData.img instanceof File
+            ? this.imageService.uploadImage('Articulos', response.articulo.id, 'imagen', productData.img)
+            : of(null); // Observable vacío si no hay imagen
+        })
+      )
+      .subscribe({
+        next: (uploadResponse : any) => {
+          if (uploadResponse) {
+            console.log('Imagen subida correctamente', uploadResponse);
+          }
+          this.snackbarService.openSnackBar(
+            `${type.charAt(0).toUpperCase() + type.slice(1)} añadido correctamente`,
+            'Cerrar',
+            3000,
+            ['custom-snackbar', 'success-snackbar']
+          );
+          this.emitProductChange({ type });
+        },
+        error: (error : any) => {
+          console.error(`Error al añadir ${type}:`, error);
+        }
+      });
+  }
+  
+  updateProductData(productId: number, productData: any) {
+    let createMethod: any;
+    let updateMethod: any;
+    let type: string;
+  
+    switch (productData.productType) {
+      case 'Producto':
+        createMethod = this.createProduct;
+        updateMethod = this.updateProduct;
+        type = 'producto';
+        break;
+      case 'Grupo de modificadores':
+        createMethod = this.createCustomizationQuestion;
+        updateMethod = this.updateCustomizationQuestion;
+        type = 'grupo de modificadores';
+        break;
+      case 'Modificador':
+        createMethod = this.createOption;
+        updateMethod = this.updateOption;
+        type = 'modificador';
+        break;
+    }
+  
+    const updatedItem = createMethod.call(this, productId.toString(), productData);
 
-        // Agregar el nuevo grupo de modificadores al array de productos
-        this.addCustomizationQuestion(newCustomizationQuestion).subscribe(
-          {
-            next: (response) => {
-              console.log('Grupo de modificadores añadido correctamente', response);
-              this.snackbarService.openSnackBar('Grupo de modificadores añadido correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+    console.log('updatedItem', updatedItem);
+  
+    updateMethod.call(this, productId, updatedItem)
+      .pipe(
+        switchMap((response) => {
+          console.log(`${type} actualizado correctamente`, response);
+  
+          // Verificar si hay imagen para subir
+          return productData.img && productData.img instanceof File
+            ? this.imageService.uploadImage('Articulos', productId, 'imagen', productData.img)
+            : of(null); // Observable vacío si no hay imagen
+        })
+      )
+      .subscribe({
+        next: (uploadResponse : any) => {
+          if (uploadResponse) {
+            console.log('Imagen subida correctamente', uploadResponse);
+          }
+          this.snackbarService.openSnackBar(
+            `${type.charAt(0).toUpperCase() + type.slice(1)} actualizado correctamente`,
+            'Cerrar',
+            3000,
+            ['custom-snackbar', 'success-snackbar']
+          );
+          this.emitProductChange({ type });
+        },
+        error: (error : any) => {
+          console.error(`Error al actualizar ${type}:`, error);
+        }
+      });
+  }
+  
+
+  openDeleteProductModal(product: any): void {
+    const dialogRef = this.dialog.open(DeleteModalComponent, {
+      width: '500px',
+      data: { productType: product.productType, name: product.name, id: product.id }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let deleteObservable;
+  
+        switch (product.productType) {
+          case 'Producto':
+            deleteObservable = this.deleteProduct(product.id);
+            break;
+          case 'Grupo de modificadores':
+            deleteObservable = this.deleteCustomizationQuestion(product.id);
+            break;
+          case 'Modificador':
+            deleteObservable = this.deleteOption(product.id);
+            break;
+        }
+  
+        if (deleteObservable) {
+          deleteObservable.subscribe({
+            next: () => {
+              this.snackbarService.openSnackBar(`${product.productType} eliminado con éxito`, 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+              // Aquí puedes actualizar tu lista de productos o mostrar un mensaje al usuario
             },
-            error: (error) => {
-              console.error('Error al añadir grupo de modificadores', error);
+            error: (err) => {
+              console.error(`Error al eliminar ${product.productType}:`, err);
+              // Maneja el error, por ejemplo, mostrando una alerta o mensaje de error al usuario
             }
           });
-        break;
-      
-      case 'Modificador':
-        // Crear un nuevo modificador a partir de los datos del formulario
-        const newOption = this.createOption(newId, productData);
-
-        this.addOption(newOption).subscribe(
-          {
-            next: (response) => {
-              console.log('Producto añadido correctamente', response);
-              this.snackbarService.openSnackBar('Producto añadido correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
-            },
-            error: (error) => {
-              console.error('Error al añadir producto', error);
-            }
-          }
-        );
-        break;
+        }
       }
-  
+    });
   }
-
-
+  
   createProduct(newId : string, productData: any) {
     const newProduct = {
       id: newId,
@@ -510,72 +611,9 @@ export class ProductService {
   
     return newOption;
   }
-
-
-  updateProductData(productId: number, productData: any) {
-
-    switch (productData.productType) {
-      case 'Producto':
-        // Crear un nuevo producto a partir de los datos del formulario
-        const product = this.createProduct(productId.toString(), productData);
-        console.log(product);
-        this.updateProduct(productId, product).subscribe(
-          {
-            next: (response) => {
-              console.log('Producto actualizado correctamente', response);
-              this.snackbarService.openSnackBar('Producto actualizado correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
-            },
-            error: (error) => {
-              console.error('Error al actualizar producto', error);
-            }
-        });
-
-        break;
-      case 'Grupo de modificadores':
-        // Crear un nuevo grupo de modificadores a partir de los datos del formulario
-        const question = this.createCustomizationQuestion(productId.toString(), productData);
-        this.updateCustomizationQuestion(productId, question).subscribe(
-          {
-            next: (response) => {
-              console.log('Grupo de modificadores actualizado correctamente', response);
-              this.snackbarService.openSnackBar('Grupo de modificadores actualizado correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
-            },
-            error: (error) => {
-              console.error('Error al actualizar grupo de modificadores', error);
-            }
-          }
-        )
-        break;
-      case 'Modificador':
-        // Crear un nuevo modificador a partir de los datos del formulario
-        const option = this.createOption(productId.toString(), productData);
-        this.updateOption(productId, option).subscribe(
-          {
-            next: (response) => {
-              console.log('Modificador actualizado correctamente', response);
-            },
-            error: (error) => {
-              console.error('Error al actualizar modificador', error);
-            }
-          });
-        break;
-      }
-  }
-
-  updateProduct(productId: number, productData: any) {
-    return this.http.put(`${AppConfig.API_URL}/articulo/${productId}`, productData);
-  }
-
-  updateCustomizationQuestion(productId: number, productData: any) {
-    return this.http.put(`${AppConfig.API_URL}/pregunta/${productId}`, productData);
-  }
-
-  updateOption(productId: number, productData: any) {
-    return this.http.put(`${AppConfig.API_URL}/opcion/${productId}`, productData);
-  }
-
-    // Función para obtener los alérgenos seleccionados como un array de strings
-  private getSelectedAllergens(allergens: boolean[]): string[] {
+  
+   // Función para obtener los alérgenos seleccionados como un array de strings
+   private getSelectedAllergens(allergens: boolean[]): string[] {
     const allergenNames = [
       'gluten', 'lactosa', 'altramuces', 'huevos',
       'apio', 'cacahuetes', 'crustaceos', 'cascara',
@@ -586,58 +624,6 @@ export class ProductService {
     return allergens
       .map((selected, index) => (selected ? allergenNames[index] : ''))
       .filter((allergen) => allergen !== null);
-  }
-
-  openDeleteProductModal(product: any): void {
-    const dialogRef = this.dialog.open(DeleteModalComponent, {
-      width: '500px',
-      data: { productType: product.productType, name: product.name, id: product.id }
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        let deleteObservable;
-  
-        switch (product.productType) {
-          case 'Producto':
-            deleteObservable = this.deleteProduct(product.id);
-            break;
-          case 'Grupo de modificadores':
-            deleteObservable = this.deleteCustomizationQuestion(product.id);
-            break;
-          case 'Modificador':
-            deleteObservable = this.deleteOption(product.id);
-            break;
-        }
-  
-        if (deleteObservable) {
-          deleteObservable.subscribe({
-            next: () => {
-              this.snackbarService.openSnackBar(`${product.productType} eliminado con éxito`, 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
-              // Aquí puedes actualizar tu lista de productos o mostrar un mensaje al usuario
-            },
-            error: (err) => {
-              console.error(`Error al eliminar ${product.productType}:`, err);
-              // Maneja el error, por ejemplo, mostrando una alerta o mensaje de error al usuario
-            }
-          });
-        }
-      }
-    });
-  }
-  
-
-  
-  deleteProduct(productId: number): Observable<any> {
-    return this.http.delete(`${AppConfig.API_URL}/articulo/${productId}`);
-  }
-  
-  deleteCustomizationQuestion(productId: number): Observable<any> {
-    return this.http.delete(`${AppConfig.API_URL}/pregunta/${productId}`);
-  }
-  
-  deleteOption(productId: number): Observable<any> {
-    return this.http.delete(`${AppConfig.API_URL}/opcion/${productId}`);
   }
   
 }

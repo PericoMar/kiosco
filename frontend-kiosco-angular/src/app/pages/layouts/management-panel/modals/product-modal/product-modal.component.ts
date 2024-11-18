@@ -10,6 +10,8 @@ import { Product } from '../../../../../interfaces/pedido';
 import { ProductService } from '../../../../../services/product.service';
 import { SnackbarService } from '../../../../../services/snackBar/snackbar.service';
 import { SpinnerComponent } from '../../../../../components/spinner/spinner.component';
+import { AppConfig } from '../../../../../../config/app-config';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-product-modal',
@@ -69,15 +71,27 @@ export class ProductModalComponent {
 
     if (this.isEditMode) {
       this.loadingProduct = true;
-      this.loadProductData(data.id! , data.productType);
-    } 
+    }
   }
 
   ngOnInit(){
-    this.families = this.familyService.families;
-    this.products = this.productService.products;
-    this.groups = this.groupService.groups;
-    console.log(this.groups);
+    forkJoin({
+      families: this.familyService.getFamiliesObservable(),
+      products: this.productService.getProductsObservable(),
+      groups: this.groupService.getGroupsObservable()
+    }).subscribe({
+      next: ({ families, products, groups }) => {
+        this.families = families;
+        this.products = products;
+        this.groups = groups;
+        if (this.isEditMode) {
+          this.loadProductData(this.data.id! , this.data.productType);
+        } 
+      },
+      error: (error) => {
+        console.error('Error al cargar datos:', error);
+      }
+    });
     this.onTipoProductoChange();
   }
 
@@ -110,7 +124,11 @@ export class ProductModalComponent {
     this.productService.getProductById(productId.toString(), productType).subscribe(product => {
       console.log(product);
       this.productForm.patchValue(product);
-      this.productImgUrl = product.img ? product.img : 'assets/svg/camera.svg';
+      // Verificar si existe la familia y si no existe quitarla
+      // if (!this.families.find(family => family.id === product.familyId)) {
+      //   this.productForm.get('family')?.setValue('');
+      // }
+      this.productImgUrl = product.img ? AppConfig.STORAGE_URL + product.img : 'assets/svg/camera.svg';
       this.loadingProduct = false;
     });
   }

@@ -5,6 +5,8 @@ import { SnackbarService } from '../../../../../services/snackBar/snackbar.servi
 import { ProductModalComponent } from '../product-modal/product-modal.component';
 import { CommonModule } from '@angular/common';
 import { PrinterService } from '../../../../../services/printer/printer.service';
+import { FamilyService } from '../../../../../services/family.service';
+import { AppConfig } from '../../../../../../config/app-config';
 
 @Component({
   selector: 'app-family-modal',
@@ -17,17 +19,18 @@ export class FamilyModalComponent {
   familyForm: FormGroup;
   isEditMode: boolean;
 
-  productImgUrl: string | ArrayBuffer | null = 'assets/svg/camera.svg';
+  familyImgUrl: string | ArrayBuffer | null = 'assets/svg/camera.svg';
 
   printers!: any[];
-
+  loadingFamily: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ProductModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { familyId: number | null, name: string | null, status: string | null },
     private fb: FormBuilder,
     private printerService: PrinterService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private familyService: FamilyService
   ) {
     this.isEditMode = !!data.familyId; // true si hay un id de producto
     this.familyForm = this.fb.group({
@@ -40,7 +43,8 @@ export class FamilyModalComponent {
     
 
     if (this.isEditMode) {
-      this.loadProductData(data.familyId!);
+      this.loadFamilyData(data.familyId!);
+      this.loadingFamily = true;
     } 
   }
 
@@ -49,10 +53,14 @@ export class FamilyModalComponent {
   }
 
 
-  loadProductData(productId: number) {
-    // Lógica para cargar los datos del producto si es modo edición
-    // Por ejemplo, hacer una petición al backend para obtener el producto
-    console.log(`Cargar datos del producto con ID: ${productId}`);
+  loadFamilyData(familyId: number) {
+    console.log(familyId)
+    this.familyService.getFamilyByIdObservable(familyId.toString()).subscribe(family => {
+      console.log("Family:", family);
+      this.familyForm.patchValue(family);
+      this.familyImgUrl = family.img ? AppConfig.STORAGE_URL + family.img : 'assets/svg/camera.svg';
+      this.loadingFamily = false;
+    });
   }
 
   addPrinterSelect(): void {
@@ -67,9 +75,8 @@ export class FamilyModalComponent {
     printersArray.removeAt(index); // Elimina el control en el índice indicado
   }
 
-  onDelete(id : number) {
-    // Lógica para eliminar el producto
-    console.log('Eliminar producto');
+  onDelete() {
+    this.familyService.openDeleteFamilyModal({ name: this.familyForm.value.name , id: this.data.familyId!});
   }
 
   // ViewChild para acceder al input de archivo
@@ -92,7 +99,7 @@ export class FamilyModalComponent {
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.productImgUrl = e.target?.result!; // Guarda la URL de la imagen cargada
+        this.familyImgUrl = e.target?.result!; // Guarda la URL de la imagen cargada
       };
       reader.readAsDataURL(file); // Lee el archivo como una URL de datos
     }
@@ -117,7 +124,7 @@ export class FamilyModalComponent {
     if (this.familyForm.valid) {
       const familyData = this.familyForm.value;
       this.dialogRef.close(familyData);
-      this.snackbarService.openSnackBar( `Familia creada con exito.` , 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+      // this.snackbarService.openSnackBar( `Familia creada con exito.` , 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
     } else {
       this.snackbarService.openSnackBar('Por favor, rellene los campos obligatorios', 'Cerrar');
     }

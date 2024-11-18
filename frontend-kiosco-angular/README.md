@@ -23,6 +23,7 @@
     - Idiomas.
     - Publicidad.
     - Imagenes de las opciones.
+    - Porductos Favoritos
 - [] Habilitar / Deshabilitar con un click
 
 

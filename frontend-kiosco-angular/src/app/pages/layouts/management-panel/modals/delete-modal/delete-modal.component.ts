@@ -32,4 +32,12 @@ export class DeleteModalComponent {
   close() {
     this.dialogRef.close();
   }
+
+  get msgDelete(): string {
+    if(!this.data) return '¿Estás seguro?';
+
+    if(!this.data.productType) return '¿Estás seguro?';
+
+    return this.data.productType != 'Familia' ? `¿Estás seguro de que deseas eliminar este ${this.data.productType.toLowerCase()}?` : `¿Estás segura de que deseas eliminar esta ${this.data.productType.toLowerCase()}?`;
+  }
 }
