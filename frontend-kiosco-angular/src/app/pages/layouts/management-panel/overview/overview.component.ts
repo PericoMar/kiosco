@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductModalComponent } from '../modals/product-modal/product-modal.component';
 import { ProductService } from '../../../../services/product.service';
+import { FamilyService } from '../../../../services/family.service';
+import { SnackbarService } from '../../../../services/snackBar/snackbar.service';
 
 @Component({
   selector: 'app-overview',
@@ -21,10 +23,20 @@ export class OverviewComponent {
 
   constructor(private router : Router,
     private dialog : MatDialog,
-    private productService : ProductService
+    private productService : ProductService,
+    private familyService : FamilyService,
+    private snackbarService : SnackbarService
   ) { }
 
+  families : any[] = [];
+
   ngOnInit() {
+    this.familyService.getFamiliesObservable().subscribe({
+      next: (families) => {
+        this.families = families;
+      }
+    });
+
     const now = new Date();
     this.startMonth = this.getMonthString(now.getMonth(), now.getFullYear() - 1); // Un mes antes
     this.endMonth = this.getMonthString(now.getMonth(), now.getFullYear()); // Mes actual
@@ -39,54 +51,13 @@ export class OverviewComponent {
   }
 
   openProductModal(productId: number | null = null): void {
-    const dialogRef = this.dialog.open(ProductModalComponent, {
-      width: '700px',
-      data: { productId: productId }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Datos recibidos del modal:', result);
-        console.log('ID del producto:', productId);
-        if (productId) {
-          this.updateProduct(productId, result);
-        } else {
-          this.addProduct(result);
-        }
-      }
-    });
+    if(this.families.length !== 0){
+      this.productService.openProductModal(productId);
+    } else {
+      this.snackbarService.openSnackBar('Añada primero alguna familia en la pagina de familias.', 'Cerrar');
+    }
   }
 
-  addProduct(productData: any) {
-    // Generar un ID único corto para el nuevo producto
-    const newId = (this.productService.products.length + 1).toString();
-  
-    // Crear un nuevo producto a partir de los datos del formulario
-    const newProduct = {
-      id: newId,
-      name: productData.name,
-      price: parseFloat(productData.price_1),
-      img: 'assets/burguer_barbacoa.png', // La URL de la imagen que ya has obtenido
-      familyId: productData.family, // Asumiendo que family es un ID o nombre que usas
-      description: productData.description,
-      customizations: [],
-      customizationQuestions: [],
-      allergens: this.getSelectedAllergens(productData.allergens) // Llama a la función para obtener alérgenos seleccionados
-    };
-  
-    // Agregar el nuevo producto al array de productos
-    this.productService.products.push(newProduct);
-    this.productService.addProduct(newProduct).subscribe(
-      {
-        next: (response) => {
-          console.log('Producto añadido correctamente', response);
-        },
-        error: (error) => {
-          console.error('Error al añadir producto', error);
-        }
-      }
-    );
-  }
   
   // Función para obtener los alérgenos seleccionados como un array de strings
   private getSelectedAllergens(allergens: boolean[]): string[] {

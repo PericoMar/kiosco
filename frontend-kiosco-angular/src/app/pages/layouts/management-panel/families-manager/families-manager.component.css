@@ -46,6 +46,11 @@ p{
     padding: 15px 20px;
 }
 
+.card{
+    min-height: 700px;
+}
+
+
 .table-section-header{
     width: 100%;
     margin-bottom: 40px;

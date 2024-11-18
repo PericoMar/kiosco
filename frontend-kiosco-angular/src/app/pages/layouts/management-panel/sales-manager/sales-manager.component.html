@@ -56,7 +56,13 @@
                     </select>
                 </div>
             </header>
-            <app-products-graph [familySelected]="familySelected"></app-products-graph>
+            @if(products.length === 0){
+                <div class="flex-center graph-msg">
+                    <h3>No tienes productos para mostrar en la grafica.</h3>
+                </div>
+            } @else {
+                <app-products-graph [familySelected]="familySelected"></app-products-graph>
+            }
         </section>
         <div class="card card-2 sales-card">
             <header class="table-section-header space-between">

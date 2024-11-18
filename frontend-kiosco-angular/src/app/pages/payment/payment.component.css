@@ -13,10 +13,13 @@ body {
 .checkout-container {
   width: var(--main-page-width); 
   margin: 0;
-  padding: 5% 10%;
+  padding: 5% 10% 0 10%; /* Ajustado el padding */
   background-color: #fff;
   border-radius: 16px; /* Borde más redondeado */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumentada la sombra */
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Título principal */
@@ -268,4 +271,10 @@ input[type="radio"]:checked + label svg {
 .products-list {
   scrollbar-width: thin; /* Scrollbar fino */
   scrollbar-color: #ccc #f1f1f1; /* Color del scrollbar y de la pista */
+}
+
+.reduced-movility-footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

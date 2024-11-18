@@ -6,9 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProductService } from '../../../../services/product.service';
-import { ProductModalComponent } from '../modals/product-modal/product-modal.component';
-import { MatDialog } from '@angular/material/dialog';
 import { FamilyService } from '../../../../services/family.service';
+import { SpinnerComponent } from '../../../../components/spinner/spinner.component';
 
 
 export interface ColumnDef {
@@ -20,11 +19,13 @@ export interface ColumnDef {
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatFormFieldModule, MatButtonModule, MatPaginatorModule, MatMenuModule],
+  imports: [CommonModule, MatTableModule, MatFormFieldModule, MatButtonModule, MatPaginatorModule, MatMenuModule, SpinnerComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
 export class TableComponent {
+  @Input() loadingData: boolean = false;
+
   @Input() pageSizeOptions: number[] = [5, 10, 25];
 
   @Input() heigth: string = '320px';
@@ -50,22 +51,7 @@ export class TableComponent {
     return this.displayedColumns.map(col => col.columnId).concat('actions');
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-
-    this.tableContainer.nativeElement.style.maxHeight = this.heigth;
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['dataSource']) {
-      this.dataSource.paginator = this.paginator;
-    }
-  }
-
-  constructor(
-    private productService: ProductService,
-    private familyService: FamilyService,
-  ) {
+  ngOnInit() {
     this.dataSource = new MatTableDataSource<any>(this.productService.getProductsData());
     // Definir el filtro personalizado
     this.dataSource.filterPredicate = (data: any, filter: string) => {
@@ -73,6 +59,28 @@ export class TableComponent {
       return dataStr.includes(filter);
     };
 
+  }
+
+  ngAfterViewInit() {
+    // Asigna el paginator después de que las vistas hayan sido inicializadas
+    this.dataSource.paginator = this.paginator;
+    this.tableContainer.nativeElement.style.maxHeight = this.heigth;
+  }
+  
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['dataSource'] && this.dataSource) {
+      console.log('Cambios en la fuente de datos');
+      // Set Timeout de 1 segundo
+      setTimeout(() => {
+        this.dataSource.paginator = this.paginator;
+      }, 100);
+    }
+  }
+
+  constructor(
+    private productService: ProductService,
+    private familyService: FamilyService,
+  ) {
   }
 
 
@@ -146,7 +154,7 @@ export class TableComponent {
   deleteElement(element: any): void {
     switch (element.type) {
       case 'familia':
-        this.familyService.openDeleteFamilia(element);
+        this.familyService.openDeleteFamilyModal(element);
         break;
       case 'dispositivo':
         this.deleteDispositivo(element);

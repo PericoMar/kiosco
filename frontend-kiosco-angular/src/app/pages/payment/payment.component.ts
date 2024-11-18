@@ -8,11 +8,14 @@ import { FamilyService } from '../../services/family.service';
 import { BackButtonComponent } from '../../components/back-button/back-button.component';
 import { PrinterService } from '../../services/printer/printer.service';
 import { ProductService } from '../../services/product.service';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { MatDialog } from '@angular/material/dialog';
+import { PaymentService } from '../../services/payment/payment.service';
 
 @Component({
   selector: 'app-payment',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule,BackButtonComponent],
+  imports: [CommonModule, FormsModule, RouterModule,BackButtonComponent, FooterComponent],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css',
 })
@@ -31,6 +34,7 @@ export class PaymentComponent {
     private familyService: FamilyService,
     private router:Router,
     private printerService: PrinterService,
+    private paymentService: PaymentService
   ) {
     this.firstFamilyId = this.familyService.getFirstFamilyId();
   }
@@ -70,14 +74,21 @@ export class PaymentComponent {
     const order = {
       ...this.products,
     }
-    this.printerService.printTicket(order).subscribe({
-      next : (response) => {
-        console.log(response);
-      },
-      error : (error) => {
-        console.error(error);
-      }
-    });
-    this.router.navigate(['/confirm-page']);
+    if(this.paymentMethod === 'efectivo'){
+      this.printerService.printTicket(order).subscribe({
+        next : (response) => {
+          console.log(response);
+        },
+        error : (error) => {
+          console.error(error);
+        }
+      });
+      this.router.navigate(['/confirm-page']);
+    } else {
+      this.paymentService.openCardPaymentModal(order);
+      this.router.navigate(['/payment-card']);
+    }
   }
+
+  
 }

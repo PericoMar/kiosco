@@ -33,7 +33,7 @@ export class OptionsPageComponent {
     {
       name: "comer_aqui",
       title: "Comer aquí",
-      img: "../../../assets/Fork_spoon_dish_icon__outline_style-removebg-preview.png"
+      img: "../../../assets/svg/eat.svg"
     },
     {
       name: "llevar",

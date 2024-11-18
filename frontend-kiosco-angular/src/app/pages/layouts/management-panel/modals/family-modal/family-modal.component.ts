@@ -32,6 +32,7 @@ export class FamilyModalComponent {
     this.isEditMode = !!data.familyId; // true si hay un id de producto
     this.familyForm = this.fb.group({
       name: ['', Validators.required],
+      img: [null],
       status: ['Habilitado', Validators.required],
       description: [''],
       printers: this.fb.array([this.fb.control('')]) // Cambiar a this.fb.control
@@ -84,6 +85,11 @@ export class FamilyModalComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
+
+      this.familyForm.patchValue({
+        img: file
+      });
+
       const reader = new FileReader();
       reader.onload = (e) => {
         this.productImgUrl = e.target?.result!; // Guarda la URL de la imagen cargada

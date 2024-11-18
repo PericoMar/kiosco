@@ -77,9 +77,11 @@ export class LoginComponent {
           }
           if (families) {
             this.familyService.families = families;
+            console.log(families);
           }
           if(groups) {
             this.groupsService.groups = groups;
+            console.log(groups);
           }
           
         },

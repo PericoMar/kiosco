@@ -7,6 +7,7 @@ import { ProductsGraphComponent } from './products-graph/products-graph.componen
 import { FamilyService } from '../../../../services/family.service';
 import { FamilyData } from '../../../../interfaces/family-data';
 import { FormsModule } from '@angular/forms';
+import { ProductService } from '../../../../services/product.service';
 
 @Component({
   selector: 'app-sales-manager',
@@ -27,13 +28,22 @@ export class SalesManagerComponent {
 
   familySelected: string = '';
 
+  products : any[] = [];
+
+
   constructor(
     private dialog : MatDialog,
-    private familyService: FamilyService
+    private familyService: FamilyService,
+    private productService: ProductService
   ) { }
 
   ngOnInit() {
     this.families = this.familyService.getFamiliesData();
+    this.productService.getProductsObservable().subscribe({
+      next: (products) => {
+        this.products = products;
+      }
+    })
 
     const now = new Date();
     this.startMonth = this.getMonthString(now.getMonth(), now.getFullYear() - 1); // Un mes antes

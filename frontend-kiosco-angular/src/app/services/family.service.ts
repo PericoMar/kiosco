@@ -2,48 +2,61 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Family } from '../interfaces/family';
 import { AppConfig } from '../../config/app-config';
-import { Observable } from 'rxjs';
+import { Observable, of, Subject, switchMap } from 'rxjs';
 import { ProductService } from './product.service';
 import { FamilyData } from '../interfaces/family-data';
 import { FamilyModalComponent } from '../pages/layouts/management-panel/modals/family-modal/family-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DeleteModalComponent } from '../pages/layouts/management-panel/modals/delete-modal/delete-modal.component';
+import { SnackbarService } from './snackBar/snackbar.service';
+import { ImageService } from './image/image.service';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class FamilyService {
-  public families: Family[] = [
-    {
-      id: "1",
-      name: "Pizzas",
-      img : "assets/pizza.png",
-    },
-    {
-      id: "2",
-      name: "Bebidas",
-      img : "assets/bebidas.png",
-    },
-    {
-      id: "3",
-      name: "Hamburguesas",
-      img : "assets/burguer.png",
-    },
-    {
-      id: "4",
-      name: "Postres",
-      img : "assets/postre.png",
-    }
-  ];
+  public families: Family[] = [];
+  //  = [
+  //   {
+  //     id: "1",
+  //     name: "Pizzas",
+  //     img : "assets/pizza.png",
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "Bebidas",
+  //     img : "assets/bebidas.png",
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "Hamburguesas",
+  //     img : "assets/burguer.png",
+  //   },
+  //   {
+  //     id: "4",
+  //     name: "Postres",
+  //     img : "assets/postre.png",
+  //   }
+  // ];
 
   constructor(private http: HttpClient,
     // private productService: ProductService,
-    private dialog : MatDialog
-  ) {
-    
+    private dialog : MatDialog,
+    private snackbarService: SnackbarService,
+    private imageService: ImageService
+  ) { 
   }
 
-  addFamily(family: any): Observable<Family> {
+  private familyChangedSource = new Subject<any>();
+  familyChanged$ = this.familyChangedSource.asObservable();
+
+  // Método para emitir cambios
+  emitFamilyChange(changes: any): void {
+    this.familyChangedSource.next(changes);
+  }
+
+  addFamily(family: any): Observable<any> {
     return this.http.post<Family>(`${AppConfig.API_URL}/familia`, family);
   }
 
@@ -69,7 +82,7 @@ export class FamilyService {
         id: parseInt(family.id),
         name: family.name,
         // products: this.productService.getNumberOfProductsByFamilyId(family.id),
-        desc: `Todas las ${family.name}`,
+        desc: family.desc ? family.desc : 'Sin descripción',
         status: 'Habilitado',
         type: 'familia',
       }
@@ -100,24 +113,39 @@ export class FamilyService {
     const newId = (this.families.length + 1).toString();
   
     // Crear un nuevo producto a partir de los datos del formulario
-    const newProduct = {
+    const newFamily = {
       id: newId,
       name: familyData.name,
       img: 'assets/sandwich.png', // La URL de la imagen que ya has obtenido
     };
   
     // Agregar el nuevo producto al array de productos
-    this.families.push(newProduct);
-    this.addFamily(newProduct).subscribe(
-      {
-        next: (response) => {
-          console.log('Producto añadido correctamente', response);
-        },
-        error: (error) => {
-          console.error('Error al añadir producto', error);
+    this.addFamily(newFamily).pipe(
+      switchMap((response) => {
+        console.log('Familia añadido correctamente', response);
+    
+        // Verificar si productData.image está definido
+        return familyData.img
+          ? this.imageService.uploadImage('Familias', response.familia.id, 'imagen', familyData.img)
+          : of(null); // Retorna un observable vacío si no hay imagen
+      })
+    ).subscribe({
+      next: (uploadResponse) => {
+        if (uploadResponse) {
+          console.log('Imagen subida correctamente', uploadResponse);
+        }
+        this.snackbarService.openSnackBar('Familia añadida correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+        this.emitFamilyChange({ type: 'familia' });
+      },
+      error: (error) => {
+        console.error('Error en el proceso:', error);
+        if (error?.stage === 'addProduct') {
+          console.error('Error al añadir producto');
+        } else if (error?.stage === 'uploadImage') {
+          console.error('Error al subir imagen');
         }
       }
-    );
+    });    
 
   }
 
@@ -125,7 +153,28 @@ export class FamilyService {
     // this.familyService.updateFamily(familyId, familyData);
   }
 
-  openDeleteFamilia(element: any) {
-    // this.familyService.openDeleteFamilia(element);
+  openDeleteFamilyModal(product: any): void {
+    const dialogRef = this.dialog.open(DeleteModalComponent, {
+      width: '500px',
+      data: { productType: product.productType, name: product.name, id: product.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteFamily(product.id).subscribe({
+          next: (response) => {
+            this.snackbarService.openSnackBar('Familia eliminada correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+            this.emitFamilyChange({ type: 'familia' });
+          },
+          error: (error) => {
+            console.error('Error al eliminar familia', error);
+          }
+        });
+      }
+    });
+  }
+
+  deleteFamily(familyId: number) : Observable<any> {
+    return this.http.delete(`${AppConfig.API_URL}/familia/${familyId}`);
   }
 }

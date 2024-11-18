@@ -14,7 +14,7 @@ import { SpinnerComponent } from '../../../../../components/spinner/spinner.comp
 @Component({
   selector: 'app-product-modal',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormField, MatError, MatLabel, CommonModule, FormsModule, SpinnerComponent],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, SpinnerComponent],
   templateUrl: './product-modal.component.html',
   styleUrl: './product-modal.component.css'
 })
@@ -24,6 +24,7 @@ export class ProductModalComponent {
   isEditMode: boolean;
 
   productImgUrl: string | ArrayBuffer | null = 'assets/svg/camera.svg';
+  selectedFile!: File;  
   families!: Family[];
 
   familyId: string = '';
@@ -53,6 +54,7 @@ export class ProductModalComponent {
     this.productForm = this.fb.group({
       productType: ['Producto', Validators.required],
       name: ['', Validators.required],
+      img: [null],
       price_1: ['', [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?€?')]],
       price_2: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})$')],
       price_3: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})$')],
@@ -61,7 +63,7 @@ export class ProductModalComponent {
       description: [''],
       min: ['', Validators.pattern('^[0-9]+')],
       max: ['', Validators.pattern('^[0-9]+')],
-      iva: ['10%', Validators.required],
+      iva: ['1', Validators.required],
       allergens: this.fb.array(this.allergens.map(() => new FormControl(false))) // Array de checkboxes
     });
 
@@ -108,14 +110,13 @@ export class ProductModalComponent {
     this.productService.getProductById(productId.toString(), productType).subscribe(product => {
       console.log(product);
       this.productForm.patchValue(product);
-      this.productImgUrl = product.img!;
+      this.productImgUrl = product.img ? product.img : 'assets/svg/camera.svg';
       this.loadingProduct = false;
     });
   }
 
-  onDelete(id : number) {
-    // Lógica para eliminar el producto
-    console.log('Eliminar producto');
+  onDelete(product : any) {
+    this.productService.openDeleteProductModal(product);
   }
 
   // ViewChild para acceder al input de archivo
@@ -126,12 +127,18 @@ export class ProductModalComponent {
     this.fileInput.nativeElement.click();
   }
 
-  // Método para manejar la carga de la imagen
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
       const file = input.files[0];
       const reader = new FileReader();
+
+      this.productForm.patchValue({
+        img: file
+      });
+
       reader.onload = (e) => {
         this.productImgUrl = e.target?.result!; // Guarda la URL de la imagen cargada
       };
@@ -248,7 +255,7 @@ export class ProductModalComponent {
     if (this.productForm.valid) {
       const productData = this.productForm.value;
       this.dialogRef.close(productData);
-      this.snackbarService.openSnackBar( `${productData.productType} creado con exito.` , 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+      // this.snackbarService.openSnackBar( `${productData.productType} creado con exito.` , 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
     } else {
       this.snackbarService.openSnackBar('Por favor, rellene los campos obligatorios', 'Cerrar');
     }

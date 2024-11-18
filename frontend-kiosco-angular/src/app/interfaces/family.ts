@@ -3,4 +3,5 @@ export interface Family {
     name: string,
     img?: string,
     products?: number,
+    desc?: string,
 }

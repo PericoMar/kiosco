@@ -13,6 +13,8 @@ import { FamilyService } from '../../../../services/family.service';
   styleUrl: './families-manager.component.css'
 })
 export class FamiliesManagerComponent {
+  loadingData: boolean = false;
+
   pageSizeOptions: number[] = [10, 20 ,50];
 
   heigth: string = '60%';
@@ -33,8 +35,24 @@ export class FamiliesManagerComponent {
   ) { }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<any>(this.familyService.getFamiliesData());
-  
+    this.refreshTable(null);
+    
+    this.familyService.familyChanged$.subscribe(changes => {
+      this.refreshTable(changes);
+    });
+  } 
+
+  refreshTable(changes: any) {
+    console.log('Recargar tabla de productos');
+    this.loadingData = true;
+    this.familyService.getFamiliesObservable().subscribe({
+      next: (families) => {
+        this.familyService.families = families;
+        this.dataSource = new MatTableDataSource<any>(this.familyService.getFamiliesData());
+        this.loadingData = false;
+
+      }
+    });
   }
 
   openFamilyModal(){

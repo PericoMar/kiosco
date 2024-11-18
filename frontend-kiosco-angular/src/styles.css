@@ -188,19 +188,19 @@ button {
   }
 
 
-  .green-btn {
-    background-color: #48a032;
-    border: none;
-    color: white; /* Texto y svg en blanco */
-    padding: 12px 20px;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.green-btn {
+  background-color: #48a032;
+  border: none;
+  color: white; /* Texto y svg en blanco */
+  padding: 12px 20px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .green-btn svg {
@@ -209,6 +209,19 @@ button {
 
 .green-btn:hover {
     background-color: #317520; /* Un verde pistacho aún más claro al hacer hover */
+}
+
+.alert-span{
+  background-color: #ffecec;
+  color: red;
+  font-size: 0.8rem;    
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .mdc-snackbar__surface{

@@ -244,7 +244,7 @@
 
   
     <footer class="dialog-actions">
-      <button class="delete-button" *ngIf="data.id" (click)="onDelete(data.id)">Eliminar</button>
+      <button class="delete-button" *ngIf="data.id" (click)="onDelete(productForm.value)">Eliminar</button>
       @if(isEditMode){
         <div class="space-between rigth-buttons">
           <button (click)="close()" class="cancel-button">Cancelar</button>
