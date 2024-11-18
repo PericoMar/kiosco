@@ -16,50 +16,16 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './consumption-option.component.html',
   styleUrl: './consumption-option.component.css',
 })
-export class ConsumptionOptionComponent implements OnInit {
+export class ConsumptionOptionComponent {
   @Input() consumptionOption!: ConsumptionOption;
   noPhotoOptionSrc: string = '../../../assets/svg/image.svg';
   firstFamilyId!: string;
 
   constructor(
     private cartService: OrderService,
-    private familyService: FamilyService,
-    private productsService: ProductService
+    public familyService: FamilyService,
   ) {}
-
-  ngOnInit() {
-    /* Se obtiene aquí porque es el inicio del flujo.
-    Asi se evita llamar constantemente a la DB */
-    this.getAllData();
-  }
-
-  getAllData(): void {
-    this.familyService.getFamiliesObservable().subscribe({
-      next: (response) => {
-        if (response) {
-          this.familyService.families = response;
-          this.firstFamilyId = this.familyService.getFirstFamilyId();
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-
-    this.firstFamilyId = this.familyService.getFirstFamilyId();
-
-    this.productsService.getProductsObservable().subscribe({
-      next: (response) => {
-        if (response) {
-          this.productsService.products = response;
-          console.log('Productos:', response); 
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
+  
 
   safeConsumptionOption(consumptionOption: string) {
     this.cartService.setConsumptionOption(consumptionOption);

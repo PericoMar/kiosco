@@ -24,7 +24,9 @@ export class InactivePageComponent {
   ) {}
 
   ngOnInit(): void {
-    this.firstFamilyId = this.familyService.getFirstFamilyId();
+    this.familyService.getFamiliesObservable().subscribe((families) => {
+      this.firstFamilyId = families[0].id;
+    });
     this.startCountdown();
   }
 

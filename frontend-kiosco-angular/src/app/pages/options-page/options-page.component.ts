@@ -7,6 +7,8 @@ import { LanguageOptionComponent } from '../../components/language-option/langua
 import { FooterComponent } from '../../components/footer/footer.component';
 import { AdvertComponent } from '../../components/advert/advert.component';
 import { ScreenService } from '../../services/screen/screen.service';
+import { FamilyService } from '../../services/family.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-options-page',
@@ -22,8 +24,13 @@ export class OptionsPageComponent {
 
   showAdvert: boolean = true;
 
-  constructor(public screenService: ScreenService) {      
+  constructor(
+    public screenService: ScreenService,
+    private familyService: FamilyService,
+    private productsService: ProductService
+  ) {      
     this.showAdvert = true;
+    this.getAllData();
   }
   
 
@@ -56,6 +63,31 @@ export class OptionsPageComponent {
   quitAdvert() {
     this.screenService.setDefaultScreenHeight();
     this.showAdvert = false;
+  }
+
+  getAllData(): void {
+    this.familyService.getFamiliesObservable().subscribe({
+      next: (response) => {
+        if (response) {
+          this.familyService.families = response;
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+
+    this.productsService.getProductsObservable().subscribe({
+      next: (response) => {
+        if (response) {
+          this.productsService.products = response;
+          console.log('Productos:', response); 
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
   
 }

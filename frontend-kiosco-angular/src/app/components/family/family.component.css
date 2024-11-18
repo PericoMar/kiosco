@@ -1,4 +1,8 @@
 /* src/app/pages/family-list/family-list.component.css */
+:host{
+    width: 100%;
+}
+
 a.family-button {
     width: 100%;
     text-decoration: none;
@@ -12,7 +16,7 @@ a.family-button {
     border-top: 2px solid #ccc; 
     border-top-right-radius: 8px; /* Borde redondeado en la esquina superior derecha */
     border-bottom-right-radius: 8px; /* Borde redondeado en la esquina inferior derecha */
-    padding: 10px; /* Espaciado interno */
+    padding: 10px 20px; /* Espaciado interno */
     box-sizing: border-box; /* Incluye el borde y el padding en el ancho total */
     transition: transform 0.3s ease-in-out; /* Transición suave para cambios de transform */
     font-weight: 200;
@@ -26,6 +30,7 @@ a.family-button img {
 
 .family-name{
     min-width: 192px;
+    width: 100%;
 }
 
 hr{
@@ -38,8 +43,8 @@ hr{
 
 a.family-button img{
     object-fit: contain;
-    width: 20%; /* Ancho del 20% del contenedor */
-    height: 100%; /* Altura del 100% del contenedor */
+    width: 100px; /* Ancho del 20% del contenedor */
+    height: 100px; /* Altura del 100% del contenedor */
 }
 
 a.selected{
