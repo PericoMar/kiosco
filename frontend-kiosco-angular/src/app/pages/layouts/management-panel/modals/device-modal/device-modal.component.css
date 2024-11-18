@@ -284,6 +284,7 @@
 .cancel-button:hover {
   background-color: rgb(216, 216, 216);
   border: 1px solid #787878;
+  cursor: pointer;
 }
 
 .delete-button {

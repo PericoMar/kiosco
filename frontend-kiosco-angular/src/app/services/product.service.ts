@@ -382,6 +382,7 @@ export class ProductService {
     return this.http.get<Product>(`${AppConfig.API_URL}/articulo/${productType}/${id}`);
   }
 
+
   addProductData(productData: any) {
     // Generar un ID único corto para el nuevo producto
     const newId = (this.products.length + 1).toString();
@@ -458,6 +459,7 @@ export class ProductService {
   
   }
 
+
   createProduct(newId : string, productData: any) {
     const newProduct = {
       id: newId,
@@ -509,6 +511,7 @@ export class ProductService {
     return newOption;
   }
 
+
   updateProductData(productId: number, productData: any) {
 
     switch (productData.productType) {
@@ -526,6 +529,7 @@ export class ProductService {
               console.error('Error al actualizar producto', error);
             }
         });
+
         break;
       case 'Grupo de modificadores':
         // Crear un nuevo grupo de modificadores a partir de los datos del formulario
@@ -622,6 +626,8 @@ export class ProductService {
     });
   }
   
+
+  
   deleteProduct(productId: number): Observable<any> {
     return this.http.delete(`${AppConfig.API_URL}/articulo/${productId}`);
   }
@@ -633,4 +639,5 @@ export class ProductService {
   deleteOption(productId: number): Observable<any> {
     return this.http.delete(`${AppConfig.API_URL}/opcion/${productId}`);
   }
+  
 }

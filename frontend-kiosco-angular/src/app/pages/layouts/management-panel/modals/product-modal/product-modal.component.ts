@@ -56,8 +56,8 @@ export class ProductModalComponent {
       name: ['', Validators.required],
       img: [null],
       price_1: ['', [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?€?')]],
-      price_2: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})$')],
-      price_3: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})$')],
+      price_2: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')],
+      price_3: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')],
       family: ['', Validators.required],
       status: ['Habilitado', Validators.required],
       description: [''],
@@ -257,7 +257,7 @@ export class ProductModalComponent {
       this.dialogRef.close(productData);
       // this.snackbarService.openSnackBar( `${productData.productType} creado con exito.` , 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
     } else {
-      this.snackbarService.openSnackBar('Por favor, rellene los campos obligatorios', 'Cerrar');
+      this.snackbarService.openSnackBar('Por favor, revise los campos y rellene los obligatorios.', 'Cerrar');
     }
   }
 
