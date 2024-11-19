@@ -6,3 +6,30 @@
     justify-content: center;
     align-items: center;
 }
+
+.dialog-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap:20px;
+    align-items: center;
+  }
+
+.dialog-actions button {
+    border-radius: 10px;
+    padding: 10px 15px;
+    box-shadow: 0 0 2px rgba(22, 41, 61, 0.3);
+    width: 100%;
+  }
+
+.delete-button {
+    background-color: #d21928;
+    color: #ffffff;
+    border: 1px solid #b9000f;
+}
+
+.delete-button:hover {
+  background-color: #7d040a; /* Rojo más claro al pasar el cursor */
+  border: 1px solid #c0020b;
+  cursor: pointer
+}

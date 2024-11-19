@@ -30,10 +30,11 @@ a.family-button img {
 
 .family-name{
     min-width: 192px;
-    width: 100%;
+    width: 95%;
 }
 
 hr{
+    width: 95%;
     height: 3px;
     background-color: var(--secondary-color);
     border: none;

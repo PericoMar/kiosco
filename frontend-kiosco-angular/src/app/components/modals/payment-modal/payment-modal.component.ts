@@ -1,5 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PaymentService } from '../../../services/payment/payment.service';
+import { Order } from '../../../interfaces/pedido';
 
 @Component({
   selector: 'app-payment-modal',
@@ -8,14 +10,25 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './payment-modal.component.html',
   styleUrl: './payment-modal.component.css'
 })
-export class PaymentModalComponent {
+export class PaymentModalComponent implements OnInit{
   constructor(
+    private paymentService: PaymentService,
     public dialogRef: MatDialogRef<PaymentModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { productType: string, name: string, id: number },
+    @Inject(MAT_DIALOG_DATA) public data: { order: Order },
   ) {
 
   }
 
+  ngOnInit(): void {
+    this.paymentService.payWithCard(this.data.order).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
 
   loadProductData(productId: number) {
     // Lógica para cargar los datos del producto si es modo edición
@@ -23,19 +36,8 @@ export class PaymentModalComponent {
     console.log(`Cargar datos del producto con ID: ${productId}`);
   }
 
-  onDelete() {
-    this.dialogRef.close({id: this.data.id, productType: this.data.productType});  
-  }
-
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close({cancel : true});
   }
 
-  get msgDelete(): string {
-    if(!this.data) return '¿Estás seguro?';
-
-    if(!this.data.productType) return '¿Estás seguro?';
-
-    return this.data.productType != 'Familia' ? `¿Estás seguro de que deseas eliminar este ${this.data.productType.toLowerCase()}?` : `¿Estás segura de que deseas eliminar esta ${this.data.productType.toLowerCase()}?`;
-  }
 }

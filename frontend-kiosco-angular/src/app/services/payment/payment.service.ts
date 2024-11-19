@@ -27,13 +27,24 @@ export class PaymentService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
+      if (result.cancel) {
+        this.cancelPayment().subscribe({
+          next: (response) => {
+            console.log(response);
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        });
       }
     });
   }
 
   payWithCard(order: Order): Observable<any> {
-    return this.http.post(`${AppConfig.DOJO_API_URL}/payment`, order)
+    return this.http.post(`${AppConfig.API_URL}/payment`, order)
+  }
+
+  cancelPayment(): Observable<any> {
+    return this.http.post(`${AppConfig.API_URL}/payment/cancel`, {})
   }
 }
