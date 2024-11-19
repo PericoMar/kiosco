@@ -346,6 +346,10 @@ export class ProductService {
     return Math.round(totalPrice * 100) / 100;
   }
 
+  getTax(product: Product): number {
+    return Math.round(product.price * product.taxes!) / 100;
+  }
+
   // Obtener productos filtrados por ID de familia
   getProductsByFamilyId(id: string): Product[] {
     return this.products.filter((product) => product.familyId === id);

@@ -32,17 +32,17 @@
         <div class="total-line">
           <span class="total-label">Subtotal:</span>
           <span class="total-value"
-            >{{ products.total | number : "1.2-2" }} €</span
+            >{{ (cartService.totalPrice - cartService.totalTaxes) | number : "1.2-2" }} €</span
           >
         </div>
         <div class="total-line">
           <span class="total-label">Impuestos:</span>
-          <span class="total-value">{{ getTaxs() | number : "1.2-2" }} €</span>
+          <span class="total-value">{{ cartService.totalTaxes | number : "1.2-2" }} €</span>
         </div>
         <div class="total-line total-line-final">
           <span class="total-label">Total:</span>
           <span class="total-value"
-            >{{ totalPriceOrder | number : "1.2-2" }} €</span
+            >{{ cartService.totalPrice | number : "1.2-2" }} €</span
           >
         </div>
       </div>

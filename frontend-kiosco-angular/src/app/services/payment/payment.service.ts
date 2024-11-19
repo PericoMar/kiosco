@@ -5,6 +5,8 @@ import { PrinterService } from '../printer/printer.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../../../config/app-config';
+import { Router } from '@angular/router';
+import { Order } from '../../interfaces/pedido';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +16,13 @@ export class PaymentService {
   constructor(
     private dialog: MatDialog,
     private printerService: PrinterService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   openCardPaymentModal(order: any): void {
     const dialogRef = this.dialog.open(PaymentModalComponent, {
-      width: '700px',
+      width: '500px',
       data: structuredClone(order)
     });
 
@@ -30,7 +33,7 @@ export class PaymentService {
     });
   }
 
-  payWithCard(order: any): Observable<any> {
+  payWithCard(order: Order): Observable<any> {
     return this.http.post(`${AppConfig.DOJO_API_URL}/payment`, order)
   }
 }

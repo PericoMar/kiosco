@@ -77,6 +77,8 @@ export class OptionsPageComponent {
         this.familyService.families = families;
         this.productsService.products = products;
         this.snackbarService.openSnackBar('Datos cargados.', 'Cerrar');
+        console.log('Families:', families);
+        console.log('Products:', products);
       }
     });
   }

@@ -29,7 +29,7 @@ export class PaymentComponent {
   firstFamilyId: any = '';
 
   constructor(
-    private cartService: OrderService,
+    public cartService: OrderService,
     public productService: ProductService,
     private familyService: FamilyService,
     private router:Router,
@@ -41,7 +41,6 @@ export class PaymentComponent {
 
   ngOnInit() {
     this.products = this.getOrderProducts();
-    this.getTotalPriceOrder();
   }
 
   getOrderProducts(): Order {
@@ -54,20 +53,6 @@ export class PaymentComponent {
 
   setPaymentMethod(method: string): void {
     this.cartService.setPaymentMethod(method);
-  }
-
-  getTaxs(): number {
-    let sum = 0;
-    this.products.items.forEach(elem => {
-      // Monto de IVA por producto.
-      sum += elem.quantity * (Math.round((elem.details.price) *  this.tax * 100) / 100);
-      console.log(sum)
-    });
-    return sum;
-  }
-
-  getTotalPriceOrder():void{
-    this.totalPriceOrder = Math.round((this.getTaxs() + this.products.total) * 100) / 100;
   }
 
   onCheckout(){
@@ -86,7 +71,6 @@ export class PaymentComponent {
       this.router.navigate(['/confirm-page']);
     } else {
       this.paymentService.openCardPaymentModal(order);
-      this.router.navigate(['/payment-card']);
     }
   }
 

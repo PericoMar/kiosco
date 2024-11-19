@@ -51,6 +51,14 @@ export class OrderService {
     }, 0);
   }
 
+  get totalTaxes(): number {
+    if (!this.cartProduct) return 0;
+
+    return this.cartProduct.items.reduce((total, item) => {
+      return total + item.quantity * this.productService.getTax((item.details as Product));
+    }, 0);
+  }
+
   get countTotalProducts(): number {
     if (!this.cartProduct) return 0;
 
