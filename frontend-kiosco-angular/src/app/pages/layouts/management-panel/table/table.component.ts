@@ -24,6 +24,8 @@ export interface ColumnDef {
   styleUrl: './table.component.css'
 })
 export class TableComponent {
+  @Input() bigTable: boolean = false;
+
   @Input() loadingData: boolean = false;
 
   @Input() pageSizeOptions: number[] = [5, 10, 25];

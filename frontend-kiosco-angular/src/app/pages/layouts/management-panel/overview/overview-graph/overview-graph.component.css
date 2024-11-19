@@ -17,21 +17,17 @@ canvas {
     max-height: 260px;
 }
 
+/* Para pantalla entre 800 y 900: */
 @media screen and (max-height: 900px) {
     canvas {
-        max-height: 200px;
+        max-height: 220px;
+        height: 220px;
     }
-  
-  }
-  
-  @media screen and (max-height: 800px) {
-    canvas {
-        height: 150px;
-    }
-  }
+}
 
-  @media screen and (min-height: 600px) and (max-height: 700px) {
+@media screen and (max-height: 800px) {
     canvas {
         max-height: 400px;
+        height: 400px;
     }
-  }
+}

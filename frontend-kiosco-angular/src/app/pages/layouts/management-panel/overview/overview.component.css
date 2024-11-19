@@ -166,7 +166,6 @@ aside{
 
 main.table{
     width: 100%;
-    overflow: scroll;
 }
 
 section.table-section{
@@ -204,31 +203,7 @@ section.table-section{
     }
 }
 
-/* Para pantallas entre 700px y 800px de altura */
-@media screen and (min-height: 700px) and (max-height: 800px) {
-    section.table-section {
-        max-height: 280px;
-    }
-
-    main.table {
-        max-height: 180px;
-    }
-}
-
-/* Para pantallas exactamente entre 700px y 800px */
-@media screen and (min-height: 700px) and (max-height: 800px) {
-    section.table-section {
-        max-height: 280px;
-    }
-
-    main.table {
-        max-height: 190px;
-        height: 190px;
-        box-sizing: border-box;
-    }
-}
-
-@media screen and (min-height: 600px) and (max-height: 700px) {
+@media screen and (max-height: 800px) {
     .overview-cards{
         height: 100%;
     }

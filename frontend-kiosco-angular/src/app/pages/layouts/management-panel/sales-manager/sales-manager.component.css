@@ -102,7 +102,6 @@ p{
 
 main.table{
     width: 100%;
-    overflow: scroll;
     max-height: 280px;
 }
 

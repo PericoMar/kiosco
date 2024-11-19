@@ -22,7 +22,7 @@
       </div>
     </div>  
   
-    <main class="overflow-scroll">
+    <main class="overflow-scroll" [ngClass]="{ 'big-table' : bigTable }">
       <table mat-table class="table" [dataSource]="dataSource">
   
         <!-- Recorre las columnas y utiliza tanto el id como el nombre -->

@@ -28,7 +28,7 @@ export class SalesManagerComponent {
 
   pageSizeOptions: number[] = [5, 10 ,20];
 
-  heigth: string = '60%';
+  heigth: string = '100%';
 
   familySelected: string = '';
 

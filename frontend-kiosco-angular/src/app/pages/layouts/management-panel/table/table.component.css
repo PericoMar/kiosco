@@ -23,8 +23,12 @@
 }
 
 .overflow-scroll{
-    /* overflow: scroll; */
-    height: 500px;
+    max-height: 500px;
+    overflow: scroll;
+}
+
+.big-table{
+    height: 480px;
 }
 
 /* Media query para zoom */
@@ -33,17 +37,31 @@
       height: 75%;
   }
 
+  .overflow-scroll.big-table {
+    height: 415px;
+  }
+
 }
 
 @media screen and (max-height: 800px) {
   .table-container {
       height: 70%;
   }
+
+  .overflow-scroll.big-table {
+    height: 340px;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .overflow-scroll.big-table {
+    height: 275px;
+  }
 }
 
    table.table{
         border-spacing: 4px 0px;
-        height: 60%;
+        height: 100%;
     }
 
   /* Ajustar el padding de las celdas para que coincida con la altura */
