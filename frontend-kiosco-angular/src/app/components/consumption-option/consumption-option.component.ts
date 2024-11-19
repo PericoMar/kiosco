@@ -18,6 +18,7 @@ import { ProductService } from '../../services/product.service';
 })
 export class ConsumptionOptionComponent {
   @Input() consumptionOption!: ConsumptionOption;
+  
   noPhotoOptionSrc: string = '../../../assets/svg/image.svg';
   firstFamilyId!: string;
 

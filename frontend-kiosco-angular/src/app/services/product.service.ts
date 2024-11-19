@@ -549,7 +549,7 @@ export class ProductService {
           deleteObservable.subscribe({
             next: () => {
               this.snackbarService.openSnackBar(`${product.productType} eliminado con éxito`, 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
-              // Aquí puedes actualizar tu lista de productos o mostrar un mensaje al usuario
+              this.emitProductChange({ type: product.productType });
             },
             error: (err) => {
               console.error(`Error al eliminar ${product.productType}:`, err);

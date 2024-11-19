@@ -20,6 +20,10 @@ export class SalesManagerComponent {
   startMonth!: string;
   endMonth!: string;
 
+  displayedColumns!: { columnId: string, columnName: string }[];
+
+  dataSource!: MatTableDataSource<any>;
+
   families! : FamilyData[];
 
   pageSizeOptions: number[] = [5, 10 ,20];
@@ -30,6 +34,7 @@ export class SalesManagerComponent {
 
   products : any[] = [];
 
+  loadingData: boolean = false;
 
   constructor(
     private dialog : MatDialog,
@@ -38,6 +43,7 @@ export class SalesManagerComponent {
   ) { }
 
   ngOnInit() {
+    this.refreshTable(null);
     this.families = this.familyService.getFamiliesData();
     this.productService.getProductsObservable().subscribe({
       next: (products) => {
@@ -54,25 +60,35 @@ export class SalesManagerComponent {
     return `${year}-${('0' + (month + 1)).slice(-2)}`; // Formato "YYYY-MM"
   }
 
-  displayedColumns: { columnId: string, columnName: string }[] = [
-    { columnId: 'id', columnName: 'Código' },
-    { columnId: 'numProducts', columnName: 'Nº Productos' },
-    { columnId: 'amount', columnName: 'Importe' },
-    { columnId: 'date', columnName: 'Fecha' },
-    { columnId: 'iva', columnName: 'IVA' },
-  ];
-  
-  dataSource = new MatTableDataSource<any>([
-    { id: 1, numProducts: 3, amount: '30.00', date: '2024-10-28', iva: '21%' },
-    { id: 2, numProducts: 2, amount: '18.50', date: '2024-10-28', iva: '10%' },
-    { id: 3, numProducts: 5, amount: '55.00', date: '2024-10-28', iva: '21%' },
-    { id: 4, numProducts: 1, amount: '1.50', date: '2024-10-28', iva: '10%' },
-    { id: 5, numProducts: 4, amount: '48.00', date: '2024-10-28', iva: '21%' },
-    { id: 6, numProducts: 3, amount: '9.00', date: '2024-10-28', iva: '10%' },
-    { id: 7, numProducts: 2, amount: '10.00', date: '2024-10-28', iva: '21%' },
-    { id: 8, numProducts: 6, amount: '24.00', date: '2024-10-28', iva: '21%' },
-    { id: 9, numProducts: 1, amount: '1.80', date: '2024-10-28', iva: '10%' },
-  ]);
+ 
+  refreshTable(changes: any) {
+    console.log('Recargar tabla de productos');
+    this.loadingData = true;
+    setTimeout(() => {
+      this.displayedColumns = [
+        { columnId: 'id', columnName: 'Código' },
+        { columnId: 'numProducts', columnName: 'Nº Productos' },
+        { columnId: 'amount', columnName: 'Importe' },
+        { columnId: 'date', columnName: 'Fecha' },
+        { columnId: 'iva', columnName: 'IVA' },
+      ];
+      
+      this.dataSource = new MatTableDataSource<any>([
+        { id: 1, numProducts: 3, amount: '30.00', date: '2024-10-28', iva: '21%' },
+        { id: 2, numProducts: 2, amount: '18.50', date: '2024-10-28', iva: '10%' },
+        { id: 3, numProducts: 5, amount: '55.00', date: '2024-10-28', iva: '21%' },
+        { id: 4, numProducts: 1, amount: '1.50', date: '2024-10-28', iva: '10%' },
+        { id: 5, numProducts: 4, amount: '48.00', date: '2024-10-28', iva: '21%' },
+        { id: 6, numProducts: 3, amount: '9.00', date: '2024-10-28', iva: '10%' },
+        { id: 7, numProducts: 2, amount: '10.00', date: '2024-10-28', iva: '21%' },
+        { id: 8, numProducts: 6, amount: '24.00', date: '2024-10-28', iva: '21%' },
+        { id: 9, numProducts: 1, amount: '1.80', date: '2024-10-28', iva: '10%' },
+      ]);
+      
+
+      this.loadingData = false;
+    }, 1000);
+  }
   
 
 

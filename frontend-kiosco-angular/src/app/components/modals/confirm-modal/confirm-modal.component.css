@@ -172,7 +172,7 @@
 .customization-option img.option-img {
   height: 200px !important;
   width: 200px !important;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .customization-option input[type="radio"] {

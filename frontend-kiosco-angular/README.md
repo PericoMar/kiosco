@@ -25,6 +25,5 @@
     - Imagenes de las opciones.
     - Porductos Favoritos
 - [] Habilitar / Deshabilitar con un click
-
-
-- [] Modal de eliminar y todos los cambios hechos desde casa traerlos aquí
+- [] Ordenar familias.
+- [] Filtros.

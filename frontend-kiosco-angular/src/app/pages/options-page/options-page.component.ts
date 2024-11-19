@@ -9,6 +9,8 @@ import { AdvertComponent } from '../../components/advert/advert.component';
 import { ScreenService } from '../../services/screen/screen.service';
 import { FamilyService } from '../../services/family.service';
 import { ProductService } from '../../services/product.service';
+import { forkJoin } from 'rxjs';
+import { SnackbarService } from '../../services/snackBar/snackbar.service';
 
 @Component({
   selector: 'app-options-page',
@@ -27,7 +29,8 @@ export class OptionsPageComponent {
   constructor(
     public screenService: ScreenService,
     private familyService: FamilyService,
-    private productsService: ProductService
+    private productsService: ProductService,
+    private snackbarService: SnackbarService
   ) {      
     this.showAdvert = true;
     this.getAllData();
@@ -66,27 +69,15 @@ export class OptionsPageComponent {
   }
 
   getAllData(): void {
-    this.familyService.getFamiliesObservable().subscribe({
-      next: (response) => {
-        if (response) {
-          this.familyService.families = response;
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-
-    this.productsService.getProductsObservable().subscribe({
-      next: (response) => {
-        if (response) {
-          this.productsService.products = response;
-          console.log('Productos:', response); 
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
+    forkJoin([
+      this.familyService.getFamiliesObservable(),
+      this.productsService.getProductsObservable()
+    ]).subscribe({
+      next: ([families, products]) => {
+        this.familyService.families = families;
+        this.productsService.products = products;
+        this.snackbarService.openSnackBar('Datos cargados.', 'Cerrar');
+      }
     });
   }
   
