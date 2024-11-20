@@ -7,7 +7,8 @@ Prioridades:
     - [x] Comprobar llamadas desde Postman.
     - [x] Generar payment - intent.
     - [x] Generar terminalSession.
-    - [] Poll de la respuesta del datafono.
+    - [x] Poll de la respuesta del datafono.
+    - [] Cancelar pago. Cancelar antes de reintentar.
         
 - [] Ordenar Familias.
 
@@ -24,6 +25,7 @@ Prioridades:
     - Estilos.
         - Color secundario.
         - Modo oscuro.
+        - Imagen de comer aquí, para llevar, datafono y logo.
     - Idiomas.
     - Publicidad.
     - Imagenes de las opciones.

@@ -14,7 +14,7 @@ import { ProductSuggestedComponent } from '../product-suggested/product-suggeste
 @Component({
   selector: 'app-suggestions',
   standalone: true,
-  imports: [CommonModule, ProductSuggestedComponent, ConfirmModalComponent],
+  imports: [CommonModule, ProductSuggestedComponent],
   templateUrl: './suggestions.component.html',
   styleUrls: ['./suggestions.component.css'],
 })

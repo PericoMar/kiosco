@@ -32,14 +32,10 @@ export class PaymentModalComponent implements OnInit{
 
         this.paymentService.pollTerminalSession(response.id).subscribe({
           next: (result) => {
-            console.log('Polling result:', result);
-            this.receivingData = false;
-            this.dialogRef.close({ success: true, result });
+            this.dialogRef.close({ success: true, status: result.status, data: result.data });
           },
           error: (error) => {
-            console.error('Polling error:', error);
-            this.receivingData = false;
-            this.dialogRef.close({ success: false, error });
+            this.dialogRef.close({ success: false, status: error.status, data: error.data });
           },
         });
 

@@ -7,11 +7,20 @@ import { last, Observable } from 'rxjs';
 import { AppConfig } from '../../../config/app-config';
 import { Router } from '@angular/router';
 import { Order } from '../../interfaces/pedido';
+import { AlertModalComponent } from '../../components/modals/alert-modal/alert-modal.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
+
+  statusMessages: Record<string, string> = {
+    Captured: 'El pago se completó con éxito.',
+    Declined: 'El pago fue denegado. Por favor, intente de nuevo.',
+    Expired: 'La sesión de pago ha expirado. Por favor, reinicie el proceso.',
+    Canceled: 'El pago fue cancelado.',
+    SignatureVerificationRequired: 'Se requiere verificación de firma. Para pagar con tarjeta acuda a la caja.',
+  };
 
   constructor(
     private dialog: MatDialog,
@@ -20,10 +29,10 @@ export class PaymentService {
     private router: Router
   ) { }
 
-  openCardPaymentModal(order: any): void {
+  openCardPaymentModal(amount: any): void {
     const dialogRef = this.dialog.open(PaymentModalComponent, {
       width: '626px',
-      data: structuredClone(order),
+      data: amount,
       disableClose: true
     });
 
@@ -41,51 +50,53 @@ export class PaymentService {
 
       if(result.success){
         this.router.navigate(['/confirm-page']);
+      } else {
+        const message = this.statusMessages[result.status] || 'Ha ocurrido un error desconocido.';
+        const alertDialogRef = this.dialog.open(AlertModalComponent, {
+          width: '626px',
+          data: { msg: message, status: result.status, data: result.data },
+          disableClose: true
+        });
+
+        alertDialogRef.afterClosed().subscribe(retry => {
+          if (retry) {
+            this.openCardPaymentModal(amount);
+          }
+        });
       }
     });
   }
 
   pollTerminalSession(terminalSessionId: string): Observable<any> {
     return new Observable((observer) => {
-      let lastResponse: any = null;
-
       const interval = setInterval(() => {
         this.getTerminalSessionStatus(terminalSessionId).subscribe({
           next: (response: any) => {
-            console.log('Respuesta: ', response);
-            lastResponse = response;
-
-            if (response.status === 'Captured' && response.paymentDetails.message === 'SUCCESSFUL') {
-              console.log('Condición cumplida:', response);
-              clearInterval(interval); // Detenemos el polling
-              observer.next(response); // Emitimos la respuesta al suscriptor
-              observer.complete(); // Finalizamos el Observable
+            console.log('Mensaje de estado:', response.status);
+            console.log('Estado de la sesión:', response);
+            if (response.status === 'Captured') {
+              clearInterval(interval);
+              observer.next({ status: 'Captured', data: response }); // Emitimos el estado
+              observer.complete();
+            } else if (['Declined', 'Expired', 'Canceled', 'SignatureVerificationRequired'].includes(response.status)) {
+              clearInterval(interval);
+              observer.error({ status: response.status, data: response }); // Emitimos el estado
             }
           },
           error: (error) => {
-            console.error('Error:', error);
-            lastResponse = error;
             clearInterval(interval);
-            observer.error(error); // Emitimos el error al suscriptor
-          }
+            observer.error({ status: 'Error', data: error }); // Emitimos un error genérico
+          },
         });
-      }, 2000); // Repetir cada 2 segundos
-
-      // // Opción para finalizar tras un tiempo límite
-      // setTimeout(() => {
-      //   clearInterval(interval);
-
-      //   // Si hubo alguna respuesta, la emitimos
-      //   if (lastResponse) {
-      //     observer.next(lastResponse); // Emitimos la última respuesta
-      //   } else {
-      //     observer.error(new Error('Tiempo de espera agotado sin respuesta válida'));
-      //   }
-
-      //   observer.complete(); // Cerramos el Observable
-      // }, 20000); // Finalizar después de 20 segundos
+      }, 2000);
+  
+      setTimeout(() => {
+        clearInterval(interval);
+        observer.error({ status: 'Timeout' }); // Error de tiempo agotado
+      }, 60000);
     });
   }
+  
 
   handleFinalResponse(response: any): void {
     if (response) {
