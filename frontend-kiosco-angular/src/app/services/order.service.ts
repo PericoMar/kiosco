@@ -47,7 +47,7 @@ export class OrderService {
     if (!this.cartProduct) return 0;
 
     return this.cartProduct.items.reduce((total, item) => {
-      return total + item.quantity * this.productService.getTotalPrice((item.details as Product | Menu));
+      return total + item.quantity * this.productService.getTotalPrice((item.details as Product));
     }, 0);
   }
 

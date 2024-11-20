@@ -22,6 +22,7 @@ export class ScreenService {
       document.documentElement.style.setProperty('--main-page-height', this.normalHeight);
       document.documentElement.style.setProperty('--family-page-height', this.normalFamilyPageHeight);
       document.documentElement.style.setProperty('--product-list-max-height', '60%');
+      document.documentElement.style.setProperty('--family-list-max-heigth', '60vh');
       document.documentElement.style.setProperty('--main-page-margin-top', '0');
       document.documentElement.style.setProperty('--modal-transform-position-y', '-50%');
       document.documentElement.style.setProperty('--order-summary-max-height', '95vh');
@@ -33,6 +34,7 @@ export class ScreenService {
       document.documentElement.style.setProperty('--main-page-height', this.reducedMovilityHeight);
       document.documentElement.style.setProperty('--family-page-height', this.reducedMovilityFamilyPageHeight);
       document.documentElement.style.setProperty('--product-list-max-height', '40%');
+      document.documentElement.style.setProperty('--family-list-max-heigth', '30vh');
       document.documentElement.style.setProperty('--main-page-margin-top', '30vh');
       document.documentElement.style.setProperty('--modal-transform-position-y', '-30%');
       document.documentElement.style.setProperty('--order-summary-max-height', '65vh');
@@ -46,6 +48,7 @@ export class ScreenService {
     document.documentElement.style.setProperty('--main-page-height', this.normalHeight);
     document.documentElement.style.setProperty('--family-page-height', this.normalFamilyPageHeight);
     document.documentElement.style.setProperty('--product-list-max-height', '60%');
+    document.documentElement.style.setProperty('--family-list-max-heigth', '60vh');
     document.documentElement.style.setProperty('--main-page-margin-top', '0');
     document.documentElement.style.setProperty('--modal-transform-position-y', '-50%');
     document.documentElement.style.setProperty('--order-summary-max-height', '95vh');

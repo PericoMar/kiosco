@@ -20,7 +20,7 @@
 
     /* Family page */
     --family-page-height: 65vh;
-
+    --family-list-max-heigth: 60vh;
 
     /* Side bar */
     --side-bar-width: 40%;

@@ -5,10 +5,13 @@ Prioridades:
     - [x] Modal de sigue las instrucciones del datafono.
     - [x] Generar API key.
     - [x] Comprobar llamadas desde Postman.
-    - [] Generar pago
+    - [x] Generar payment - intent.
+    - [x] Generar terminalSession.
+    - [] Poll de la respuesta del datafono.
         
 - [] Ordenar Familias.
 
+- [] Conexión con tickets (Ver si hace distinto que el kiosco atendido)
 - [] Conexión de los dispositivos.
 - [] Meter alergenos en el kiosco.
 - [] Configuración* 
