@@ -41,7 +41,8 @@ export class PaymentModalComponent implements OnInit{
 
       },
       error: (error) => {
-        console.error(error);
+        error.status = 'Unauthorized';
+        this.dialogRef.close({ success: false, status: error.status, data: error.data });
       }
     });
   }

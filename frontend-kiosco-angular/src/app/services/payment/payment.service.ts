@@ -14,12 +14,13 @@ import { AlertModalComponent } from '../../components/modals/alert-modal/alert-m
 })
 export class PaymentService {
 
-  statusMessages: Record<string, string> = {
+  public statusMessages: Record<string, string> = {
     Captured: 'El pago se completó con éxito.',
     Declined: 'El pago fue denegado. Por favor, intente de nuevo.',
     Expired: 'La sesión de pago ha expirado. Por favor, reinicie el proceso.',
     Canceled: 'El pago fue cancelado.',
     SignatureVerificationRequired: 'Se requiere verificación de firma. Para pagar con tarjeta acuda a la caja.',
+    Unauthorized: 'No se ha podido establecer conexión con el terminal de pago. Por favor, acuda a caja.',
   };
 
   constructor(
