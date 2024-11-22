@@ -12,9 +12,11 @@ Prioridades:
         
 - [] Ordenar Familias.
 
-- [] Conexión con tickets (Ver si hace distinto que el kiosco atendido)
+- [] Conexión con tickets (Ver si se hace distinto que el kiosco atendido)
+- [] Abrir el chrome en modo kiosco "C:\Program Files\Google\Chrome\Application\chrome.exe" --kiosk "http://tu-pagina-web.com"
 - [] Conexión de los dispositivos.
 - [] Meter alergenos en el kiosco.
+
 - [] Configuración* 
     - Foto de perfil
     - Foto por defecto (Cuando un articulo no tiene foto) Foto por defecto por familia
