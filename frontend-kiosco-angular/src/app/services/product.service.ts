@@ -367,6 +367,10 @@ export class ProductService {
     return this.http.get<Product>(`${AppConfig.API_URL}/articulo/${productType}/${id}`);
   }
 
+  getProductByOptionId(optionId: string): Observable<Product> {
+    return this.http.get<Product>(`${AppConfig.API_URL}/articulo/opcion/${optionId}`);
+  }
+
   deleteProduct(productId: number): Observable<any> {
     return this.http.delete(`${AppConfig.API_URL}/articulo/${productId}`);
   }
@@ -498,12 +502,14 @@ export class ProductService {
   
     updateMethod.call(this, productId, updatedItem)
       .pipe(
-        switchMap((response) => {
+        switchMap((response : any) => {
           console.log(`${type} actualizado correctamente`, response);
   
           // Verificar si hay imagen para subir
           return productData.img && productData.img instanceof File
-            ? this.imageService.uploadImage('Articulos', productId, 'imagen', productData.img)
+
+          // Si es un Modificador el response.id es de la tabla Articulos no de la tabla OpcionesPreguntasArticulo
+            ? this.imageService.uploadImage('Articulos', response.id , 'imagen', productData.img)
             : of(null); // Observable vacío si no hay imagen
         })
       )
@@ -515,7 +521,7 @@ export class ProductService {
           this.snackbarService.openSnackBar(
             `${type.charAt(0).toUpperCase() + type.slice(1)} actualizado correctamente`,
             'Cerrar',
-            3000,
+            3000, 
             ['custom-snackbar', 'success-snackbar']
           );
           this.emitProductChange({ type });
