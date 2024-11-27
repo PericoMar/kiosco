@@ -35,3 +35,10 @@
   border: 1px solid #c0020b;
   cursor: pointer
 }
+
+.retry-button:disabled {
+  /* Tonos mas grisaceos */
+  background-color: #ddb1b4;
+  border: 1px solid #ff949d;
+  cursor: not-allowed;
+}

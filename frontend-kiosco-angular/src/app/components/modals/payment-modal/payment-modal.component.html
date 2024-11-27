@@ -1,7 +1,14 @@
 <section class="modal-content">
-    <h1>Siga las instrucciones del datafono.</h1>
-    <img src="assets/dataphone-device-icon_24911-35871.avif" alt="Datafono">
-    <footer class="dialog-actions">
-        <button class="delete-button" (click)="close()" >Cancelar pago con tarjeta</button>
-    </footer>
+    @if(cancelandoPago){
+        <main class="canceling-payment-loader">
+            <app-spinner></app-spinner>
+            Cancelando pago con tarjeta...
+        </main>
+    } @else {
+        <h1>Siga las instrucciones del datafono.</h1>
+        <img src="assets/dataphone-device-icon_24911-35871.avif" alt="Datafono">
+        <footer class="dialog-actions">
+            <button class="delete-button" (click)="close()" [hidden]="!this.terminalSessionId">Cancelar pago con tarjeta</button>
+        </footer>
+    }
 </section>  

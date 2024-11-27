@@ -20,7 +20,8 @@ export class PaymentService {
     Expired: 'La sesión de pago ha expirado. Por favor, reinicie el proceso.',
     Canceled: 'El pago fue cancelado.',
     SignatureVerificationRequired: 'Se requiere verificación de firma. Para pagar con tarjeta acuda a la caja.',
-    Unauthorized: 'No se ha podido establecer conexión con el terminal de pago. Por favor, acuda a caja.',
+    Unauthorized: 'No se ha podido establecer conexión con el terminal de pago (Conexión no autorizada). Por favor, acuda a caja.',
+    '404': 'La conexión con el terminal de pago no se ha podido establecer, puede que este apagado o la conexión no esté bien establecida. Por favor, acuda a caja.'
   };
 
   constructor(
@@ -31,39 +32,39 @@ export class PaymentService {
   ) { }
 
   openCardPaymentModal(amount: any): void {
-    const dialogRef = this.dialog.open(PaymentModalComponent, {
+    if(amount > AppConfig.MINIMUM_CARD_AMOUNT){
+      const dialogRef = this.dialog.open(PaymentModalComponent, {
+        width: '626px',
+        data: amount,
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if(!result.canceled){
+          if(result.success){
+            this.router.navigate(['/confirm-page']);
+          } else {
+            const message = this.statusMessages[result.status] || 'Ha ocurrido un error.';
+            this.openAlertModal({ msg: message, status: result.status, data: result.data, terminalSessionId: result.terminalSessionId });
+          }
+        }
+      });
+    } else {  
+      const message = 'Seleccione algún producto antes de pagar.';
+      this.openAlertModal({ msg: message, status: 'Error', data: null, terminalSessionId: '' });
+    }
+  }
+
+  openAlertModal(data : { msg: string, status: string, data: any, terminalSessionId: string }): void {
+    const dialogRef = this.dialog.open(AlertModalComponent, {
       width: '626px',
-      data: amount,
+      data,
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result.cancel) {
-        this.cancelPayment().subscribe({
-          next: (response) => {
-            console.log(response);
-          },
-          error: (error) => {
-            console.error(error);
-          }
-        });
-      }
-
-      if(result.success){
-        this.router.navigate(['/confirm-page']);
-      } else {
-        const message = this.statusMessages[result.status] || 'Ha ocurrido un error desconocido.';
-        const alertDialogRef = this.dialog.open(AlertModalComponent, {
-          width: '626px',
-          data: { msg: message, status: result.status, data: result.data },
-          disableClose: true
-        });
-
-        alertDialogRef.afterClosed().subscribe(retry => {
-          if (retry) {
-            this.openCardPaymentModal(amount);
-          }
-        });
+    dialogRef.afterClosed().subscribe(retry => {
+      if (retry) {
+        this.openCardPaymentModal(data);
       }
     });
   }
@@ -79,7 +80,7 @@ export class PaymentService {
               clearInterval(interval);
               observer.next({ status: 'Captured', data: response }); // Emitimos el estado
               observer.complete();
-            } else if (['Declined', 'Expired', 'Canceled', 'SignatureVerificationRequired'].includes(response.status)) {
+            } else if (['Declined', 'Expired', 'Canceled', 'SignatureVerificationRequired', '404'].includes(response.status.toString())) {
               clearInterval(interval);
               observer.error({ status: response.status, data: response }); // Emitimos el estado
             }
@@ -111,11 +112,16 @@ export class PaymentService {
     return this.http.post(`${AppConfig.API_URL}/payment/`, { amount })
   }
 
-  cancelPayment(): Observable<any> {
-    return this.http.post(`${AppConfig.API_URL}/payment/cancel`, {})
+  cancelPayment(terminalSessionId : string): Observable<any> {
+    return this.http.put(`${AppConfig.API_URL}/payment/${terminalSessionId}/cancel`, {})
+  }
+
+  signatureVerfication(terminalSessionId: string, accepted: boolean): Observable<any> {
+    return this.http.put(`${AppConfig.API_URL}/payment/signature-verification/${terminalSessionId}`, { accepted })
   }
 
   getTerminalSessionStatus(terminalSessionId: string): Observable<any> {
     return this.http.get(`${AppConfig.API_URL}/payment/status/${terminalSessionId}`)
   }
+
 }

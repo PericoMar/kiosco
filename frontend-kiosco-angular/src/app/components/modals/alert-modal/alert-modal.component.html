@@ -6,6 +6,12 @@
     <h2>{{ data.msg }}</h2>
     <footer class="dialog-actions">
         <button class="delete-button" (click)="close(false)" >Cancelar pago con tarjeta</button>
-        <button class="delete-button" (click)="close(true)" >Reintentar</button>
+        <button class="delete-button retry-button" (click)="close(true)" [disabled]="!canRetry">
+            @if(canRetry){
+                Reintentar
+            } @else {
+                <app-button-spinner></app-button-spinner>
+            }
+        </button>
     </footer>
 </section>

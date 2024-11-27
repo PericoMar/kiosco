@@ -7,6 +7,16 @@
     align-items: center;
 }
 
+.canceling-payment-loader{
+  height: 426px;
+  box-sizing: border-box;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .dialog-actions {
     margin-top: 20px;
     display: flex;
@@ -32,4 +42,10 @@
   background-color: #7d040a; /* Rojo más claro al pasar el cursor */
   border: 1px solid #c0020b;
   cursor: pointer
+}
+
+.delete-button:disabled {
+  background-color: #d21928;
+  border: 1px solid #b9000f;
+  cursor: not-allowed;
 }
