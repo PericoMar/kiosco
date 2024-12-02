@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Menu, Product } from '../interfaces/pedido';
+import { CustomizationOption, CustomizationQuestion, Product } from '../interfaces/pedido';
 import { Observable, of, Subject, switchMap } from 'rxjs';
 import { AppConfig } from '../../config/app-config';
 import { FamilyService } from './family.service';
@@ -19,234 +19,234 @@ import { ImageService } from './image/image.service';
   providedIn: 'root',
 })
 export class ProductService {
-  public products: Product[]
-  = [
-    {
-      id: '1',
-      name: 'Muzzarella',
-      price: 10.75,
-      img: 'assets/pizza.png',
-      familyId: '1',
-      taxes: 10,
-      description: 'Muzzarella, tomate y aceitunas',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa', 'gluten']
-    },
-    {
-      id: 'p1',
-      name: 'Hamburguesa especial',
-      img: 'assets/burguer.png',
-      price: 12.99,
-      description: 'Una deliciosa hamburguesa con ingredientes frescos y personalizables.',
-      familyId: '1',
-      customizations: [],
-      customizationQuestions: [
-        {
-          id: 'pan',
-          name: '¿Qué tipo de pan prefieres?',
-          questionType: 'single',
-          minChoices: 1,
-          options: [
-            { id: 'pan-avena', value: 'Pan de avena', price: 0, img: 'assets/pan.png' },
-            { id: 'pan-integral', value: 'Pan integral', price: 0.5, img: 'assets/pan.png' },
-            { id: 'pan-brioche', value: 'Pan brioche', price: 1.0, img: 'assets/pan.png' },
-            { id: 'pan-cereales', value: 'Pan cereales', price: 1.5, img: 'assets/pan.png' },
-            { id: 'pan-tostado', value: 'Pan tostado', price: 0, img: 'assets/pan.png' }
-          ],
-        },
-        {
-          id: 'carne',
-          name: '¿Qué nivel de cocción deseas?',
-          questionType: 'single',
-          minChoices: 1,
-          options: [
-            { id: 'poco-hecho', value: 'Poco hecho', price: 0 },
-            { id: 'en-su-punto', value: 'En su punto', price: 0 },
-            { id: 'bien-hecho', value: 'Bien hecho', price: 0.5 }
-          ],
-        },
-        {
-          id: 'extra',
-          name: 'Añade algún extra:',
-          questionType: 'multiple',
-          minChoices: 0,
-          maxChoices: 2,
-          options: [
-            { id: 'bacon', value: 'Bacon', price: 1.5 },
-            { id: 'aguacate', value: 'Aguacate', price: 1.0 },
-            { id: 'champinones', value: 'Champiñones', price: 0.7 }
-          ],
-        },
-      ],
-      allergens: ['gluten', 'lactosa', 'soja']
-    },
-    {
-      id: '2',
-      name: 'Fugazzeta',
-      price: 9.75,
-      img: 'assets/pizza.png',
-      familyId: '1',
-      description: 'Fugazzeta con cebolla y queso',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa']
-    },
-    {
-      id: '9',
-      name: 'Napolitana',
-      price: 11.75,
-      img: 'assets/pizza.png',
-      familyId: '1',
-      description: 'Muzzarella, tomate y ajo',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa', 'gluten']
-    },
-    {
-      id: '10',
-      name: 'Calabresa',
-      price: 10,
-      img: 'assets/pizza.png',
-      familyId: '1',
-      description: 'Muzzarella y calabresa',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa', 'gluten', 'mostaza']
-    },
-    {
-      id: '11',
-      name: 'Cuatro Quesos',
-      price: 10.75,
-      img: 'assets/pizza.png',
-      familyId: '1',
-      description: 'Muzzarella, provolone, roquefort y parmesano',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa', 'gluten']
-    },
-    {
-      id: '12',
-      name: 'Hawaiana',
-      price: 10,
-      img: 'assets/pizza.png',
-      familyId: '1',
-      description: 'Muzzarella, jamón y ananá',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa', 'gluten', 'soja']
-    },
-    {
-      id: '13',
-      name: 'Pepperoni',
-      price: 10.30,
-      img: 'assets/pizza.png',
-      familyId: '1',
-      description: 'Muzzarella y pepperoni',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa', 'gluten', 'soja']
-    },
-    {
-      id: '14',
-      name: 'Vegetariana',
-      price: 8,
-      img: 'assets/pizza.png',
-      familyId: '1',
-      description: 'Muzzarella, pimientos, cebolla, aceitunas y champiñones',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa', 'gluten', 'soja', 'sesamo']
-    },
-    {
-      id: '15',
-      name: 'Margherita',
-      price: 10.30,
-      img: 'assets/pizza.png',
-      familyId: '1',
-      description: 'Muzzarella, tomate y albahaca',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa', 'gluten']
-    },
-    {
-      id: '16',
-      name: 'Barbacoa',
-      price: 12,
-      img: 'assets/pizza.png',
-      familyId: '1',
-      description: 'Muzzarella, carne, cebolla y salsa barbacoa',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa', 'gluten', 'soja', 'dioxido-azufre']
-    },
-    {
-      id: '3',
-      name: 'Coca Cola',
-      price: 1.25,
-      img: 'assets/coca.png',
-      familyId: '2',
-      description: 'Coca Cola 1.5L',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['dioxido-azufre']
-    },
-    {
-      id: '4',
-      name: 'Fanta',
-      price: 1,
-      img: 'assets/fanta.png',
-      familyId: '2',
-      description: 'Fanta 1.5L',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['dioxido-azufre']
-    },
-    {
-      id: '5',
-      name: 'Hamburguesa',
-      price: 8.95,
-      img: 'assets/burguer.png',
-      familyId: '3',
-      description: 'Hamburguesa con queso',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['gluten', 'lactosa', 'huevos']
-    },
-    {
-      id: '6',
-      name: 'Papas',
-      price: 2.30,
-      img: 'assets/papas.png',
-      familyId: '3',
-      description: 'Papas fritas',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: []
-    },
-    {
-      id: '7',
-      name: 'Helado',
-      price: 3.50,
-      img: 'assets/helado.png',
-      familyId: '4',
-      description: 'Helado de chocolate',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['lactosa', 'cascara']
-    },
-    {
-      id: '8',
-      name: 'Brownie',
-      price: 4.40,
-      img: 'assets/brownie.png',
-      familyId: '4',
-      description: 'Brownie de chocolate',
-      customizations: [],
-      customizationQuestions: [],
-      allergens: ['gluten', 'lactosa', 'huevos', 'cascara', 'cacahuetes']
-    }
-  ];
+  // public products: Product[]
+  // = [
+  //   {
+  //     id: '1',
+  //     name: 'Muzzarella',
+  //     price: 10.75,
+  //     img: 'assets/pizza.png',
+  //     familyId: '1',
+  //     taxes: 10,
+  //     description: 'Muzzarella, tomate y aceitunas',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa', 'gluten']
+  //   },
+  //   {
+  //     id: 'p1',
+  //     name: 'Hamburguesa especial',
+  //     img: 'assets/burguer.png',
+  //     price: 12.99,
+  //     description: 'Una deliciosa hamburguesa con ingredientes frescos y personalizables.',
+  //     familyId: '1',
+  //     customizations: [],
+  //     customizationQuestions: [
+  //       {
+  //         id: 'pan',
+  //         name: '¿Qué tipo de pan prefieres?',
+  //         questionType: 'single',
+  //         minChoices: 1,
+  //         options: [
+  //           { id: 'pan-avena', value: 'Pan de avena', price: 0, img: 'assets/pan.png' },
+  //           { id: 'pan-integral', value: 'Pan integral', price: 0.5, img: 'assets/pan.png' },
+  //           { id: 'pan-brioche', value: 'Pan brioche', price: 1.0, img: 'assets/pan.png' },
+  //           { id: 'pan-cereales', value: 'Pan cereales', price: 1.5, img: 'assets/pan.png' },
+  //           { id: 'pan-tostado', value: 'Pan tostado', price: 0, img: 'assets/pan.png' }
+  //         ],
+  //       },
+  //       {
+  //         id: 'carne',
+  //         name: '¿Qué nivel de cocción deseas?',
+  //         questionType: 'single',
+  //         minChoices: 1,
+  //         options: [
+  //           { id: 'poco-hecho', value: 'Poco hecho', price: 0 },
+  //           { id: 'en-su-punto', value: 'En su punto', price: 0 },
+  //           { id: 'bien-hecho', value: 'Bien hecho', price: 0.5 }
+  //         ],
+  //       },
+  //       {
+  //         id: 'extra',
+  //         name: 'Añade algún extra:',
+  //         questionType: 'multiple',
+  //         minChoices: 0,
+  //         maxChoices: 2,
+  //         options: [
+  //           { id: 'bacon', value: 'Bacon', price: 1.5 },
+  //           { id: 'aguacate', value: 'Aguacate', price: 1.0 },
+  //           { id: 'champinones', value: 'Champiñones', price: 0.7 }
+  //         ],
+  //       },
+  //     ],
+  //     allergens: ['gluten', 'lactosa', 'soja']
+  //   },
+  //   {
+  //     id: '2',
+  //     name: 'Fugazzeta',
+  //     price: 9.75,
+  //     img: 'assets/pizza.png',
+  //     familyId: '1',
+  //     description: 'Fugazzeta con cebolla y queso',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa']
+  //   },
+  //   {
+  //     id: '9',
+  //     name: 'Napolitana',
+  //     price: 11.75,
+  //     img: 'assets/pizza.png',
+  //     familyId: '1',
+  //     description: 'Muzzarella, tomate y ajo',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa', 'gluten']
+  //   },
+  //   {
+  //     id: '10',
+  //     name: 'Calabresa',
+  //     price: 10,
+  //     img: 'assets/pizza.png',
+  //     familyId: '1',
+  //     description: 'Muzzarella y calabresa',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa', 'gluten', 'mostaza']
+  //   },
+  //   {
+  //     id: '11',
+  //     name: 'Cuatro Quesos',
+  //     price: 10.75,
+  //     img: 'assets/pizza.png',
+  //     familyId: '1',
+  //     description: 'Muzzarella, provolone, roquefort y parmesano',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa', 'gluten']
+  //   },
+  //   {
+  //     id: '12',
+  //     name: 'Hawaiana',
+  //     price: 10,
+  //     img: 'assets/pizza.png',
+  //     familyId: '1',
+  //     description: 'Muzzarella, jamón y ananá',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa', 'gluten', 'soja']
+  //   },
+  //   {
+  //     id: '13',
+  //     name: 'Pepperoni',
+  //     price: 10.30,
+  //     img: 'assets/pizza.png',
+  //     familyId: '1',
+  //     description: 'Muzzarella y pepperoni',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa', 'gluten', 'soja']
+  //   },
+  //   {
+  //     id: '14',
+  //     name: 'Vegetariana',
+  //     price: 8,
+  //     img: 'assets/pizza.png',
+  //     familyId: '1',
+  //     description: 'Muzzarella, pimientos, cebolla, aceitunas y champiñones',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa', 'gluten', 'soja', 'sesamo']
+  //   },
+  //   {
+  //     id: '15',
+  //     name: 'Margherita',
+  //     price: 10.30,
+  //     img: 'assets/pizza.png',
+  //     familyId: '1',
+  //     description: 'Muzzarella, tomate y albahaca',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa', 'gluten']
+  //   },
+  //   {
+  //     id: '16',
+  //     name: 'Barbacoa',
+  //     price: 12,
+  //     img: 'assets/pizza.png',
+  //     familyId: '1',
+  //     description: 'Muzzarella, carne, cebolla y salsa barbacoa',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa', 'gluten', 'soja', 'dioxido-azufre']
+  //   },
+  //   {
+  //     id: '3',
+  //     name: 'Coca Cola',
+  //     price: 1.25,
+  //     img: 'assets/coca.png',
+  //     familyId: '2',
+  //     description: 'Coca Cola 1.5L',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['dioxido-azufre']
+  //   },
+  //   {
+  //     id: '4',
+  //     name: 'Fanta',
+  //     price: 1,
+  //     img: 'assets/fanta.png',
+  //     familyId: '2',
+  //     description: 'Fanta 1.5L',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['dioxido-azufre']
+  //   },
+  //   {
+  //     id: '5',
+  //     name: 'Hamburguesa',
+  //     price: 8.95,
+  //     img: 'assets/burguer.png',
+  //     familyId: '3',
+  //     description: 'Hamburguesa con queso',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['gluten', 'lactosa', 'huevos']
+  //   },
+  //   {
+  //     id: '6',
+  //     name: 'Papas',
+  //     price: 2.30,
+  //     img: 'assets/papas.png',
+  //     familyId: '3',
+  //     description: 'Papas fritas',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: []
+  //   },
+  //   {
+  //     id: '7',
+  //     name: 'Helado',
+  //     price: 3.50,
+  //     img: 'assets/helado.png',
+  //     familyId: '4',
+  //     description: 'Helado de chocolate',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['lactosa', 'cascara']
+  //   },
+  //   {
+  //     id: '8',
+  //     name: 'Brownie',
+  //     price: 4.40,
+  //     img: 'assets/brownie.png',
+  //     familyId: '4',
+  //     description: 'Brownie de chocolate',
+  //     customizations: [],
+  //     customizationQuestions: [],
+  //     allergens: ['gluten', 'lactosa', 'huevos', 'cascara', 'cacahuetes']
+  //   }
+  // ];
 
   dataSource!: MatTableDataSource<any>;
 
@@ -257,8 +257,22 @@ export class ProductService {
     private imageService: ImageService
   ) {}
 
+  private PRODUCTS_LOCAL_STORAGE_KEY = 'products';
+
   private productChangedSource = new Subject<any>();
   productChanged$ = this.productChangedSource.asObservable();
+
+  keyExists(key: string = 'products'): boolean {
+    return localStorage.getItem(key) !== null;
+  }
+
+  get products(): Product[] {
+    return JSON.parse(localStorage.getItem(this.PRODUCTS_LOCAL_STORAGE_KEY) || '[]');
+  }
+
+  set products(products: Product[]) {
+    localStorage.setItem(this.PRODUCTS_LOCAL_STORAGE_KEY, JSON.stringify(products));
+  }
 
   // Método para emitir cambios
   emitProductChange(changes: any): void {
@@ -267,10 +281,6 @@ export class ProductService {
 
   getProductsObservable(): Observable<Product[]> {
     return this.http.get<Product[]>(`${AppConfig.API_URL}/articulos`)
-  }
-
-  getProducts(): Product[] {
-    return this.products;
   }
 
   getProductsData(): ProductData[] {
@@ -324,21 +334,63 @@ export class ProductService {
     return this.http.post(`${AppConfig.API_URL}/articulo`, product);
   }
 
+  addProductToLocalStorage(product: Product): void {
+    const products = this.products;
+    products.push(product);
+    this.products = products;
+  }
+
   addCustomizationQuestion(question: any) : Observable<any> {
     return this.http.post(`${AppConfig.API_URL}/pregunta`, question);
+  }
+
+  addCustomizationQuestionToLocalStorage(question: CustomizationQuestion, productId: any): void {
+    const products = this.products;
+    const productIndex = products.findIndex((product) => product.id === productId);
+    products[productIndex].customizationQuestions.push(question);
+    this.products = products;
   }
   
   addOption(option: any) : Observable<any> {
     return this.http.post(`${AppConfig.API_URL}/opcion`, option);
   }
 
-  getTotalPrice(product: Product | Menu): number {
-    let totalPrice = Number(product.price);
+  addCustomizationOptionToLocalStorage(option: CustomizationOption, customizationQuestionId: string): void {
+    const products = this.products;
+  
+    // Recorrer los productos para encontrar la pregunta
+    for (const product of products) {
+      const question = product.customizationQuestions.find(q => q.id === customizationQuestionId);
+      
+      if (question) {
+        // Verificar si la opción ya existe
+        const optionExists = question.options.some(o => o.id === option.id);
+  
+        if (!optionExists) {
+          // Agregar la nueva opción
+          question.options.push(option);
+          console.log(`Opción añadida a la pregunta "${question.name}" del producto "${product.name}".`);
+        } else {
+          console.log(`La opción ya existe en la pregunta "${question.name}".`);
+        }
+        
+        // Finalizar el bucle ya que hemos encontrado y actualizado
+        break;
+      }
+    }
+  
+    // Opcional: Actualizar localStorage si se usa para persistencia
+    localStorage.setItem('products', JSON.stringify(products));
+  }
+  
+
+  getTotalPrice(product: Product): number {
+    let totalPrice = Number(product.prices[0]);
 
     product.customizations.forEach((customization) => {
       customization.responses.forEach((response) => {
-        response.price = response.price || 0;
-        totalPrice += Math.round(response.price! * 100) / 100;
+        response.prices[0] = response.prices[0] || 0;
+        totalPrice += Math.round(response.prices[0]! * 100) / 100;
       });
     });
 
@@ -347,7 +399,7 @@ export class ProductService {
   }
 
   getTax(product: Product): number {
-    return Math.round(product.price * product.taxes!) / 100;
+    return Math.round(product.prices[0] * product.taxes!) / 100;
   }
 
   // Obtener productos filtrados por ID de familia
@@ -447,6 +499,8 @@ export class ProductService {
       .pipe(
         switchMap((response : any) => {
           console.log(`${type} añadido correctamente`, response);
+
+          // this.addToLocalStorage(type, productData.family, newItem);
   
           // Verificar si hay imagen para subir
           return productData.img && productData.img instanceof File
@@ -503,11 +557,10 @@ export class ProductService {
     updateMethod.call(this, productId, updatedItem)
       .pipe(
         switchMap((response : any) => {
-          console.log(`${type} actualizado correctamente`, response);
-  
+          console.log(`${type} actualizado correctamente`, response);          
+
           // Verificar si hay imagen para subir
           return productData.img && productData.img instanceof File
-
           // Si es un Modificador el response.id es de la tabla Articulos no de la tabla OpcionesPreguntasArticulo
             ? this.imageService.uploadImage('Articulos', response.id , 'imagen', productData.img)
             : of(null); // Observable vacío si no hay imagen
@@ -570,10 +623,27 @@ export class ProductService {
       }
     });
   }
+
+  addToLocalStorage(type: string, id: any, data: any, familyId: any) {
+    data.id = id;
+    // Dependiendo del tipo (producto, grupo de modificadores, modificador) se debe actualizar el array correspondiente
+    switch (type) {
+      case 'producto':
+        this.addProductToLocalStorage(data);
+        break;
+      case 'grupo de modificadores':
+        this.addCustomizationQuestionToLocalStorage(data, familyId);
+        break;
+      case 'modificador':
+        this.addCustomizationOptionToLocalStorage(data, familyId);
+        break;
+    }
+
+  }
   
-  createProduct(newId : string, productData: any) {
+  createProduct(id : string, productData: any) {
     const newProduct = {
-      id: newId,
+      id,
       name: productData.name,
       price_1: parseFloat(productData.price_1),
       price_2: parseFloat(productData.price_2),
@@ -590,9 +660,9 @@ export class ProductService {
     return newProduct;
   }
 
-  createCustomizationQuestion(newId : string, productData: any) {
+  createCustomizationQuestion(id : string, productData: any) {
     const newCustomizationQuestion = {
-      id: newId,
+      id,
       name: productData.name,
       productId: productData.family, // Asumiendo que family es el ID del producto asociado
       status: productData.status === 'Habilitado' ? 1 : 0,
@@ -605,10 +675,10 @@ export class ProductService {
     return newCustomizationQuestion;
   }
 
-  createOption(newId : string, productData: any) {
+  createOption(id : string, productData: any) {
 
     const newOption = {
-      id: newId,
+      id,
       name: productData.name,
       price_1: parseFloat(productData.price_1),
       price_2: parseFloat(productData.price_2),

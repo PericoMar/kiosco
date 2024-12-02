@@ -3,12 +3,10 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  ViewChild,
 } from '@angular/core';
-import { Menu, Product } from '../../interfaces/pedido';
+import { Product } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
-import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 import { ProductSuggestedComponent } from '../product-suggested/product-suggested.component';
 
 @Component({
@@ -20,7 +18,7 @@ import { ProductSuggestedComponent } from '../product-suggested/product-suggeste
 })
 export class SuggestionsComponent implements OnInit {
 
-  @Output() productSelected = new EventEmitter<Product | Menu>(); // Volver a emitir el evento al componente superior
+  @Output() productSelected = new EventEmitter<Product>(); // Volver a emitir el evento al componente superior
 
   selectedProduct!: Product
   productsSugered: Product[] = [];
@@ -36,7 +34,7 @@ export class SuggestionsComponent implements OnInit {
   }
 
     // Función que maneja el evento emitido por el hijo
-    onProductSelected(product: Product | Menu): void {
+    onProductSelected(product: Product): void {
       this.productSelected.emit(product);  // Volver a emitir el producto al abuelo
     }
 }

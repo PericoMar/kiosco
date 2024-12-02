@@ -6,15 +6,15 @@
             <button class="close-button" (click)="close()">×</button>
         </div>
         <div class="modal-content-questions">
-            <h2>{{ product.customizationQuestions?.[currentCustomizationIndex]?.name }}</h2>
+            <h2>{{ product.customizationQuestions[currentCustomizationIndex].name }}</h2>
             <div class="options-container">
-            @for (option of product.customizationQuestions?.[currentCustomizationIndex]?.options; track option.id) {
+            @for (option of product.customizationQuestions[currentCustomizationIndex].options; track option.id) {
                 <!-- Check box con la imagen (si tiene) y el nombre de la opcion -->
                 <div 
                 class="customization-option" 
                 [ngClass]="{'disabled-option' : 
                 !isOptionSelected(currentCustomizationIndex, option.id) && 
-                this.product.customizationQuestions?.[currentCustomizationIndex]?.maxChoices &&
+                this.product.customizationQuestions[currentCustomizationIndex].maxChoices &&
                 maxChoicesReached(currentCustomizationIndex)}"
                 (click)="selectOption(option)"
                 >
@@ -27,12 +27,12 @@
                 </div>
                 <div class="flex-center">
                     <input 
-                    [type]="product.customizationQuestions?.[currentCustomizationIndex]?.questionType === 'single' ? 'radio' : 'checkbox'"
+                    [type]="product.customizationQuestions[currentCustomizationIndex].questionType === 'single' ? 'radio' : 'checkbox'"
                     id="{{option.id}}"
                     [checked]="isOptionSelected(currentCustomizationIndex, option.id)"
-                    name="{{product.customizationQuestions?.[currentCustomizationIndex]?.name}}"
+                    name="{{product.customizationQuestions[currentCustomizationIndex].name}}"
                     [disabled]="!isOptionSelected(currentCustomizationIndex, option.id) && 
-                    this.product.customizationQuestions?.[currentCustomizationIndex]?.maxChoices &&
+                    this.product.customizationQuestions[currentCustomizationIndex].maxChoices &&
                     maxChoicesReached(currentCustomizationIndex)"
                     
                     />
@@ -42,7 +42,7 @@
                     </label>
                 </div>
                 <div class="price-container">
-                    <span class="price">{{ option.price && option.price != 0 ? '+'+option.price+'€' : '' }}</span>
+                    <span class="price">{{ option.prices[0] && option.prices[0] != 0 ? '+' + option.prices[0] +'€' : '' }}</span>
                 </div>
                 </div>
             }
@@ -55,7 +55,7 @@
 
             <div class="flex-column-baseline next-question">
             @if(!minChoicesReached(currentCustomizationIndex)){
-                <span class="alert-message">Selecciona al menos {{ product.customizationQuestions?.[currentCustomizationIndex]?.minChoices! > 1 ?  product.customizationQuestions?.[currentCustomizationIndex]?.minChoices+' opciones' : 'una opción'}}</span>
+                <span class="alert-message">Selecciona al menos {{ product.customizationQuestions[currentCustomizationIndex].minChoices! > 1 ?  product.customizationQuestions[currentCustomizationIndex].minChoices+' opciones' : 'una opción'}}</span>
             } @else {
                 <span class="alert-message hidden"></span> <!-- Mantén el espacio pero oculta el mensaje -->
             }

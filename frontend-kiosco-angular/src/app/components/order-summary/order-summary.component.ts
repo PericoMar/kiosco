@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { CartComponent } from '../cart/cart.component';
 import { OrderService } from '../../services/order.service';
-import { Menu, Order, Product } from '../../interfaces/pedido';
+import { Order, Product } from '../../interfaces/pedido';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
@@ -14,7 +13,7 @@ import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.com
 @Component({
   selector: 'app-order-summary',
   standalone: true,
-  imports: [CommonModule,CartComponent, EditModalComponent,SuggestionsComponent,ConfirmModalComponent],
+  imports: [CommonModule, EditModalComponent, SuggestionsComponent, ConfirmModalComponent],
   templateUrl: './order-summary.component.html',
   styleUrl: './order-summary.component.css',
   animations: [
@@ -40,14 +39,14 @@ export class OrderSummaryComponent {
 
   products!: Order;
   totalPrice: number = 0;
-  selectedProduct!: Product | Menu;
+  selectedProduct!: Product;
   isMenu!:Boolean;
 
   isDropdownOpen: { [key: number]: boolean } = {}; 
 
   @ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
   @ViewChild('editModal') editModal!: EditModalComponent;
-  editingProduct!: Product | Menu;
+  editingProduct!: Product;
 
   constructor(
     public cartService: OrderService,
@@ -63,11 +62,11 @@ export class OrderSummaryComponent {
     });
   }
 
-  subtractProduct(product: Product | Menu): void{
+  subtractProduct(product: Product): void{
     this.cartService.subtractProduct(product);
   }
 
-  addSameProduct(product: Product | Menu): void{
+  addSameProduct(product: Product): void{
     this.cartService.addProduct(product);
   }
   
@@ -86,7 +85,7 @@ export class OrderSummaryComponent {
     this.isDropdownOpen[index] = !this.isDropdownOpen[index];
   }
 
-  openEditModal(product : Product | Menu, index : number): void {
+  openEditModal(product : Product, index : number): void {
     const editingProduct = {...product};
     this.editingProduct = editingProduct
 
@@ -94,7 +93,7 @@ export class OrderSummaryComponent {
   }
 
 
-  onConfirmEdit(productDetails: { product: Product | Menu, quantity: number }): void {
+  onConfirmEdit(productDetails: { product: Product, quantity: number }): void {
     console.log(this.cartService.products);
     this.cartService.subtractProduct(this.editingProduct);
     console.log(this.cartService.products);
@@ -109,7 +108,7 @@ export class OrderSummaryComponent {
     this.confirmModal.open(product);
   }
 
-  onConfirmSuggered(productDetails: { product: Product | Menu, quantity: number }): void {
+  onConfirmSuggered(productDetails: { product: Product, quantity: number }): void {
     this.cartService.addProduct(productDetails.product, productDetails.quantity);
   }
 
@@ -117,7 +116,7 @@ export class OrderSummaryComponent {
     console.log('Cancelado');
   }
 
-  onConfirm(productDetails: { product: Product | Menu, quantity: number }): void {
+  onConfirm(productDetails: { product: Product, quantity: number }): void {
     this.totalPrice = this.cartService.totalPrice;
   }
 

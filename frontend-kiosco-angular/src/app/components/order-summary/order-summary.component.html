@@ -139,7 +139,7 @@
                   />
                   <p class="customization-value">{{ response.value }}</p>
                   <span>{{
-                    response.price ? "+" + response.price + "€" : "Gratis"
+                    response.prices[0] > 0 ? "+" + response.prices[0] + "€" : "Gratis"
                   }}</span>
                 </div>
               </div>

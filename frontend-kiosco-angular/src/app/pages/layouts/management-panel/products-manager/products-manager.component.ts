@@ -64,16 +64,33 @@ export class ProductsManagerComponent {
   refreshTable(changes: any) {
     console.log('Recargar tabla de productos');
     this.loadingData = true;
-    this.productService.getProductsObservable().subscribe({
-      next: (products) => {
-        this.productService.products = products;
-        this.dataSource = new MatTableDataSource<any>(this.productService.getProductsData());
-        this.hayProductosSinFamilia = this.productService.getProductsData().some((product: any) => product.familyId === '');
-        this.loadingData = false;
-
-      }
-    });
+    
+    // Función para configurar los productos y actualizar la tabla
+    const updateTable = (products: any[]) => {
+      this.dataSource = new MatTableDataSource<any>(products);
+      this.hayProductosSinFamilia = products.some((product: any) => product.familyId === '');
+      this.loadingData = false;
+    };
+  
+    if (this.productService.keyExists()) {
+      // Si existe la clave, obtén los datos desde localStorage
+      const products = this.productService.getProductsData();
+      updateTable(products);
+    } else {
+      // Si no existe la clave, obtiene los productos a través de un Observable
+      this.productService.getProductsObservable().subscribe({
+        next: (products) => {
+          this.productService.products = products;  // Asignar los productos al servicio
+          updateTable(products);  // Llamar a la función para actualizar la tabla
+        },
+        error: () => {
+          this.loadingData = false;  // Maneja el caso de error
+          console.error('Error al cargar los productos.');
+        }
+      });
+    }
   }
+  
 
   openProductModal(productId: number | null = null): void {
     if(this.families.length !== 0){

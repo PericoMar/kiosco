@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FamilyService } from '../../services/family.service';
-import { Menu, Product } from '../../interfaces/pedido';
+import { Product } from '../../interfaces/pedido';
 import { ProductService } from '../../services/product.service';
 import { ProductComponent } from '../product/product.component';
 

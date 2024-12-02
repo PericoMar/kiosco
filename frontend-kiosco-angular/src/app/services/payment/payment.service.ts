@@ -8,6 +8,7 @@ import { AppConfig } from '../../../config/app-config';
 import { Router } from '@angular/router';
 import { Order } from '../../interfaces/pedido';
 import { AlertModalComponent } from '../../components/modals/alert-modal/alert-modal.component';
+import { OrderService } from '../order.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +28,16 @@ export class PaymentService {
   constructor(
     private dialog: MatDialog,
     private printerService: PrinterService,
+    private orderService: OrderService,
     private http: HttpClient,
     private router: Router
   ) { }
 
-  openCardPaymentModal(amount: any): void {
-    if(amount > AppConfig.MINIMUM_CARD_AMOUNT){
+  openCardPaymentModal(): void {
+    if(this.orderService.totalPrice > AppConfig.MINIMUM_CARD_AMOUNT){
       const dialogRef = this.dialog.open(PaymentModalComponent, {
         width: '626px',
-        data: amount,
+        data: this.orderService.totalPrice,
         disableClose: true
       });
 
@@ -64,7 +66,7 @@ export class PaymentService {
 
     dialogRef.afterClosed().subscribe(retry => {
       if (retry) {
-        this.openCardPaymentModal(data);
+        this.openCardPaymentModal();
       }
     });
   }

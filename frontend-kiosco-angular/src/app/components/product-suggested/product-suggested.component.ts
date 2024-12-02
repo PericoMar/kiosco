@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Menu, Product } from '../../interfaces/pedido';
+import { Product } from '../../interfaces/pedido';
 import { OrderService } from '../../services/order.service';
 import { AppConfig } from '../../../config/app-config';
 import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
@@ -12,10 +12,10 @@ import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.com
   styleUrl: './product-suggested.component.css'
 })
 export class ProductSuggestedComponent {
-  @Input() product!: Product | Menu;
+  @Input() product!: Product;
 
   // Emitir evento cuando se haga clic en el producto
-  @Output() productSelected = new EventEmitter<Product | Menu>();
+  @Output() productSelected = new EventEmitter<Product>();
 
   noPhotoUrl = AppConfig.NO_PHOTO_URL;
   isMenu!:Boolean;

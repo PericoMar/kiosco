@@ -19,7 +19,7 @@ export interface CustomizationOption {
     id: string; // Opcional, puede no tener id
     value: string; // e.g., "Well done", "With ketchup"
     img?: string; // Opcional, puede no tener imagen
-    price?: number; // Opcional, puede no tener precio
+    prices: number[]; // Opcional, puede no tener precio
     allergens?: string[]; // Opcional, puede no tener alérgenos
 }
 
@@ -28,7 +28,7 @@ export interface CustomizationOption {
 export interface Product {
     id: string;
     name: string;
-    price: number;
+    prices: number[];
     status?: string;
     taxes?: number;
     img?: string;
@@ -40,23 +40,23 @@ export interface Product {
 }
 
 // Representa un menú que puede tener varios productos
-export interface Menu {
-    id: number;
-    name: string;
-    price: number;
-    img?: string;
-    familyId: string;
-    description: string;
-    products: Product[];  // Productos que componen el menú
-    customizations: CustomizationResponse[];  
-    customizationQuestions?: CustomizationQuestion[]; 
-}
+// export interface Menu {
+//     id: number;
+//     name: string;
+//     price: number;
+//     img?: string;
+//     familyId: string;
+//     description: string;
+//     products: Product[];  // Productos que componen el menú
+//     customizations: CustomizationResponse[];  
+//     customizationQuestions?: CustomizationQuestion[]; 
+// }
 
 // Representa un ítem de pedido que puede ser un producto o un menú
 export interface OrderItem {
     type: 'product' | 'menu';
     quantity: number;
-    details: Product | Menu;
+    details: Product;
 }
 
 // Representa un pedido que contiene varios items (productos y/o menús)

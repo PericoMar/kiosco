@@ -1,6 +1,6 @@
 // src/app/services/order.service.ts
 import { Injectable } from '@angular/core';
-import { Menu, Order, OrderItem, Product } from '../interfaces/pedido';
+import { Order, OrderItem, Product } from '../interfaces/pedido';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProductService } from './product.service';
 
@@ -67,7 +67,7 @@ export class OrderService {
     }, 0);
   }
 
-  addProduct(product: Product | Menu, quantity: number = 1): void {
+  addProduct(product: Product, quantity: number = 1): void {
 
     if (!this.cartProduct) {
         this.cartProduct = {
@@ -115,7 +115,7 @@ export class OrderService {
 }
 
 
-  subtractProduct(product: Product | Menu): void {
+  subtractProduct(product: Product): void {
     if (!this.cartProduct) return;
 
     const existingItemIndex = this.findProduct(product);
@@ -133,7 +133,7 @@ export class OrderService {
     }
   }
 
-  private findProduct(product: Product | Menu): number {
+  private findProduct(product: Product): number {
     if (!this.cartProduct) return -1;
 
     return this.cartProduct.items.findIndex(item =>

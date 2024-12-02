@@ -16,29 +16,29 @@ import { ImageService } from './image/image.service';
   providedIn: 'root',
 })
 export class FamilyService {
-  public families: Family[]
-   = [
-    {
-      id: "1",
-      name: "Pizzas",
-      img : "assets/pizza.png",
-    },
-    {
-      id: "2",
-      name: "Bebidas",
-      img : "assets/bebidas.png",
-    },
-    {
-      id: "3",
-      name: "Hamburguesas",
-      img : "assets/burguer.png",
-    },
-    {
-      id: "4",
-      name: "Postres",
-      img : "assets/postre.png",
-    }
-  ];
+  // public families: Family[]
+  //  = [
+  //   {
+  //     id: "1",
+  //     name: "Pizzas",
+  //     img : "assets/pizza.png",
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "Bebidas",
+  //     img : "assets/bebidas.png",
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "Hamburguesas",
+  //     img : "assets/burguer.png",
+  //   },
+  //   {
+  //     id: "4",
+  //     name: "Postres",
+  //     img : "assets/postre.png",
+  //   }
+  // ];
 
   constructor(private http: HttpClient,
     // private productService: ProductService,
@@ -48,8 +48,22 @@ export class FamilyService {
   ) { 
   }
 
+  private FAMILIES_LOCAL_STORAGE_KEY = 'families';
+
   private familyChangedSource = new Subject<any>();
   familyChanged$ = this.familyChangedSource.asObservable();
+
+  keyExists(key: string = 'families'): boolean {
+    return localStorage.getItem(key) !== null;
+  }
+
+  get families(): Family[] {
+    return JSON.parse(localStorage.getItem(this.FAMILIES_LOCAL_STORAGE_KEY) || '[]');
+  }
+
+  set families(families: Family[]) {
+    localStorage.setItem(this.FAMILIES_LOCAL_STORAGE_KEY, JSON.stringify(families));
+  }
 
   // Método para emitir cambios
   emitFamilyChange(changes: any): void {

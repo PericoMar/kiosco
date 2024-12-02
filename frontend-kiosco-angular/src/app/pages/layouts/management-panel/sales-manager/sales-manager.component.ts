@@ -45,11 +45,15 @@ export class SalesManagerComponent {
   ngOnInit() {
     this.refreshTable(null);
     this.families = this.familyService.getFamiliesData();
-    this.productService.getProductsObservable().subscribe({
-      next: (products) => {
-        this.products = products;
-      }
-    })
+    if(this.productService.keyExists()){
+      this.products = this.productService.products;
+    } else {
+      this.productService.getProductsObservable().subscribe({
+        next: (products) => {
+          this.products = products;
+        }
+      })
+    }
 
     const now = new Date();
     this.startMonth = this.getMonthString(now.getMonth(), now.getFullYear() - 1); // Un mes antes

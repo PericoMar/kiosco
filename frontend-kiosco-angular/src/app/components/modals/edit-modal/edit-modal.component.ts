@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CustomizationOption, Menu, Product } from '../../../interfaces/pedido';
+import { CustomizationOption, Product } from '../../../interfaces/pedido';
 import { ProductService } from '../../../services/product.service';
 import { AppConfig } from '../../../../config/app-config';
 import { CommonModule } from '@angular/common';
@@ -17,14 +17,14 @@ export class EditModalComponent {
   noPhotoUrl = AppConfig.NO_PHOTO_URL;
 
   // Producto o menú a confirmar
-  product!: Product | Menu;
+  product!: Product;
 
   // Respuesta de personalización antes de editar
   previousEditCustomization!: any;
 
   //Gestion de eventos del modal (sin librerias)
   @Output() confirmAction = new EventEmitter<{
-    product: Product | Menu;
+    product: Product;
     quantity: number;
   }>();
   @Output() cancelAction = new EventEmitter<void>();
@@ -173,7 +173,7 @@ export class EditModalComponent {
     );
   }
 
-  getTotalPrice(product: Product | Menu): number {
+  getTotalPrice(product: Product): number {
     return this.productService.getTotalPrice(product);
   }
 
@@ -202,7 +202,7 @@ export class EditModalComponent {
     }
 
     // Si son diferentes, crea un nuevo producto con la personalización actualizada
-    const newProduct: Product | Menu = { ...this.product }; // Clonamos el producto original
+    const newProduct: Product = { ...this.product }; // Clonamos el producto original
     console.log('Personalizaciones diferentes.', newProduct);
 
     newProduct.customizations = [...this.product.customizations]; // Asegurar una nueva copia del array de personalizaciones

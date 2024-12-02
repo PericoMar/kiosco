@@ -70,7 +70,7 @@ export class PaymentComponent {
       });
       this.router.navigate(['/confirm-page']);
     } else {
-      this.paymentService.openCardPaymentModal(order);
+      this.paymentService.openCardPaymentModal();
     }
   }
 

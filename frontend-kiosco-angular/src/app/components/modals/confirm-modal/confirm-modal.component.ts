@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CustomizationOption, Menu, Product } from '../../../interfaces/pedido';
+import { CustomizationOption, Product } from '../../../interfaces/pedido';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AppConfig } from '../../../../config/app-config';
 import { ProductService } from '../../../services/product.service';
@@ -34,10 +34,10 @@ export class ConfirmModalComponent{
   noPhotoUrl = AppConfig.NO_PHOTO_URL;
 
   // Producto o menú a confirmar
-  product!: Product | Menu
+  product!: Product
   
   //Gestion de eventos del modal (sin librerias)
-  @Output() confirmAction = new EventEmitter<{ product: Product | Menu, quantity: number }>();
+  @Output() confirmAction = new EventEmitter<{ product: Product, quantity: number }>();
   @Output() cancelAction = new EventEmitter<void>();
 
   // Cantidades
@@ -151,7 +151,7 @@ export class ConfirmModalComponent{
     return currentQuestion?.minChoices! == 0 || customizationResponse?.responses.length! >= currentQuestion?.minChoices!;
   }
 
-  getTotalPrice(product : Product | Menu): number {
+  getTotalPrice(product : Product): number {
     return this.productService.getTotalPrice(product);
   }
 
