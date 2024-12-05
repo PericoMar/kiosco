@@ -31,7 +31,7 @@ Prioridades:
     - Idiomas.
     - Publicidad.
     - Imagenes de las opciones.
-    - Porductos Favoritos
+    - Porductos Favoritos.
 
 - [] Importación por Excel.
 - [] Vista para menu.

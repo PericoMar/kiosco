@@ -38,6 +38,8 @@ export class PrinterService {
   constructor(private http : HttpClient) { }
 
   printTicket(order: any): Observable<any> {
-    return this.http.post(`${AppConfig.API_URL}/print-receipt-text`, {...order} );
+    return this.http.post(`${AppConfig.API_URL}/print-receipt`, {...order} );
   }
+
+
 }

@@ -3,10 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { PaymentModalComponent } from '../../components/modals/payment-modal/payment-modal.component';
 import { PrinterService } from '../printer/printer.service';
 import { HttpClient } from '@angular/common/http';
-import { last, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AppConfig } from '../../../config/app-config';
 import { Router } from '@angular/router';
-import { Order } from '../../interfaces/pedido';
 import { AlertModalComponent } from '../../components/modals/alert-modal/alert-modal.component';
 import { OrderService } from '../order.service';
 
@@ -14,15 +13,18 @@ import { OrderService } from '../order.service';
   providedIn: 'root'
 })
 export class PaymentService {
+  readonly MILISECONDS_TIMEOUT = 100000;
+  readonly MILISECONDS_POLLING = 1000;
 
   public statusMessages: Record<string, string> = {
+    Timeout: 'El tiempo de espera ha sido superado. Por favor, reinicie el proceso. Si el problema persiste, acuda a caja.',
     Captured: 'El pago se completó con éxito.',
     Declined: 'El pago fue denegado. Por favor, intente de nuevo.',
-    Expired: 'La sesión de pago ha expirado. Por favor, reinicie el proceso.',
+    Expired: 'La conexión con el datafono se ha perdido durante la transacción. Por favor, vaya a caja y pida una verfificación manual en el datafono de que se ha completado la operación.',
     Canceled: 'El pago fue cancelado.',
     SignatureVerificationRequired: 'Se requiere verificación de firma. Para pagar con tarjeta acuda a la caja.',
     Unauthorized: 'No se ha podido establecer conexión con el terminal de pago (Conexión no autorizada). Por favor, acuda a caja.',
-    '404': 'La conexión con el terminal de pago no se ha podido establecer, puede que este apagado o la conexión no esté bien establecida. Por favor, acuda a caja.'
+    '404': 'La conexión con el terminal de pago no se ha podido establecer, puede que este ocupado, apagado o la conexión no esté bien establecida. Por favor, acuda a caja.'
   };
 
   constructor(
@@ -44,6 +46,73 @@ export class PaymentService {
       dialogRef.afterClosed().subscribe(result => {
         if(!result.canceled){
           if(result.success){
+            this.printerService.printTicket({
+              "id": 12345,
+              "items": [
+                {
+                  "type": "product",
+                  "quantity": 2,
+                  "details": {
+                    "id": "prod-001",
+                    "name": "Hamburguesa Clásica",
+                    "price": 5.99,
+                    "taxes": 0.50,
+                    "img": "https://example.com/images/hamburguesa-clasica.jpg",
+                    "familyId": "family-001",
+                    "description": "Hamburguesa con lechuga, tomate y queso",
+                    "customizations": [
+                      {
+                        "customizationQuestionId": "cust-001",
+                        "name": "Nivel de cocción",
+                        "responses": [
+                          {
+                            "id": "option-001",
+                            "value": "Bien cocida",
+                            "price": 0
+                          }
+                        ]
+                      },
+                      {
+                        "customizationQuestionId": "cust-002",
+                        "name": "Salsa",
+                        "responses": [
+                          {
+                            "id": "option-002",
+                            "value": "Con ketchup",
+                            "price": 0.25
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "product",
+                  "quantity": 1,
+                  "details": {
+                    "id": "prod-002",
+                    "name": "Patatas Fritas",
+                    "price": 2.99,
+                    "taxes": 0.30,
+                    "img": "https://example.com/images/patatas-fritas.jpg",
+                    "familyId": "family-002",
+                    "description": "Patatas fritas crujientes",
+                    "customizations": []
+                  }
+                }
+              ],
+              "total": 15.02,
+              "date": "2024-09-26T14:30:00Z",
+              "consumptionOption": "Para llevar",
+              "paymentMethod": "Tarjeta"
+          }).subscribe({
+              next: (response) => {
+                console.log('Ticket impreso:', response);
+              },
+              error: (error) => {
+                console.error('Error al imprimir ticket:', error);
+              }
+            })
             this.router.navigate(['/confirm-page']);
           } else {
             const message = this.statusMessages[result.status] || 'Ha ocurrido un error.';
@@ -92,12 +161,12 @@ export class PaymentService {
             observer.error({ status: 'Error', data: error }); // Emitimos un error genérico
           },
         });
-      }, 2000);
+      }, this.MILISECONDS_POLLING);
   
       setTimeout(() => {
         clearInterval(interval);
         observer.error({ status: 'Timeout' }); // Error de tiempo agotado
-      }, 60000);
+      }, this.MILISECONDS_TIMEOUT);
     });
   }
   

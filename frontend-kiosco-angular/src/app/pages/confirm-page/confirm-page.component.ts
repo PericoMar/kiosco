@@ -20,6 +20,6 @@ export class ConfirmPageComponent {
       //Resetear el pedido (Aqui o en bd)
       this.cartService.clearOrder()
       this.router.navigate(['/']);
-    }, 5000);
+    }, 50000);
   }
 }

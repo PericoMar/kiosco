@@ -45,14 +45,20 @@ export class FamiliesManagerComponent {
   refreshTable(changes: any) {
     console.log('Recargar tabla de productos');
     this.loadingData = true;
-    this.familyService.getFamiliesObservable().subscribe({
-      next: (families) => {
-        this.familyService.families = families;
-        this.dataSource = new MatTableDataSource<any>(this.familyService.getFamiliesData());
-        this.loadingData = false;
 
-      }
-    });
+    if(this.familyService.keyExists()){
+      this.dataSource = new MatTableDataSource<any>(this.familyService.getFamiliesData());
+      this.loadingData = false;
+    } else {
+      this.familyService.getFamiliesObservable().subscribe({
+        next: (families) => {
+          this.familyService.families = families;
+          this.dataSource = new MatTableDataSource<any>(this.familyService.getFamiliesData());
+          this.loadingData = false;
+        }
+      });
+    }
+
   }
 
   openFamilyModal(){
