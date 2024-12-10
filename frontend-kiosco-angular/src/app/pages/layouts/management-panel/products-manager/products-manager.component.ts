@@ -48,11 +48,16 @@ export class ProductsManagerComponent {
   ) { }
 
   ngOnInit() {
-    this.familyService.getFamiliesObservable().subscribe({
-      next: (families) => {
-        this.families = families;
-      }
-    });
+    if(this.familyService.keyExists()){
+      this.families = this.familyService.families;
+    } else {
+      this.familyService.getFamiliesObservable().subscribe({
+        next: (families) => {
+          this.familyService.families = families;
+          this.families = families;
+        }
+      });
+    }
 
     this.refreshTable(null);
 
@@ -95,7 +100,7 @@ export class ProductsManagerComponent {
   
 
   openProductModal(productId: number | null = null): void {
-    if(this.families.length !== 0){
+    if(this.familyService.families.length !== 0){
       this.productService.openProductModal(productId);
     } else {
       this.snackbarService.openSnackBar('Añada primero alguna familia en la pagina de familias', 'Cerrar');

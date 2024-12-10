@@ -24,9 +24,15 @@ export class InactivePageComponent {
   ) {}
 
   ngOnInit(): void {
-    this.familyService.getFamiliesObservable().subscribe((families) => {
-      this.firstFamilyId = families[0].id;
-    });
+    if(this.familyService.keyExists()){
+      this.firstFamilyId = this.familyService.families[0].id;
+    } else {
+      this.familyService.getFamiliesObservable().subscribe({
+        next: (families) => {
+          this.firstFamilyId = families[0].id;
+        }
+      });
+    }
     this.startCountdown();
   }
 

@@ -589,7 +589,7 @@ export class ProductService {
   openDeleteProductModal(product: any): void {
     const dialogRef = this.dialog.open(DeleteModalComponent, {
       width: '500px',
-      data: { productType: product.productType, name: product.name, id: product.id }
+      data: { productType: product.productType, name: product.name, id: product.id, familyId: product.family }
     });
   
     dialogRef.afterClosed().subscribe(result => {
@@ -611,7 +611,15 @@ export class ProductService {
         if (deleteObservable) {
           deleteObservable.subscribe({
             next: () => {
-              this.snackbarService.openSnackBar(`${product.productType} eliminado con éxito`, 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+              // Llamar a la función correspondiente para borrar del localStorage
+              this.deleteFromLocalStorage(result.data);
+  
+              this.snackbarService.openSnackBar(
+                `${product.productType} eliminado con éxito`,
+                'Cerrar',
+                3000,
+                ['custom-snackbar', 'success-snackbar']
+              );
               this.emitProductChange({ type: product.productType });
             },
             error: (err) => {
@@ -623,6 +631,63 @@ export class ProductService {
       }
     });
   }
+  
+  // Función para borrar del localStorage según el tipo de producto
+  private deleteFromLocalStorage(product: any): void {
+    switch (product.productType) {
+      case 'Producto':
+        this.deleteProductFromLocalStorage(product.id);
+        break;
+      case 'Grupo de modificadores':
+        this.deleteCustomizationQuestionFromLocalStorage(product.family, product.id);
+        break;
+      case 'Modificador':
+        this.deleteOptionFromLocalStorage(product.family, product.id);
+        break;
+    }
+  }
+  
+  // Implementaciones específicas para borrar del localStorage
+  private deleteProductFromLocalStorage(productId: string): void {
+    this.products = this.products.filter(product => product.id !== productId);
+  }
+  
+  private deleteCustomizationQuestionFromLocalStorage(productId: string, questionId: string): void {
+    console.log('productId', productId);
+    console.log('questionId', questionId);
+    this.products = this.products.map(product => {
+      if (product.id === productId) {
+          return {
+              ...product,
+              customizationQuestions: product.customizationQuestions.filter(
+                  question => question.id !== questionId
+              )
+          };
+      }
+      return product;
+    });
+  }
+  
+  private deleteOptionFromLocalStorage(questionId:string, optionId: string): void {
+    this.products = this.products.map(product => {
+      const updatedQuestions = product.customizationQuestions.map(question => {
+          if (question.id === questionId) {
+              return {
+                  ...question,
+                  options: question.options.filter(option => option.id !== optionId)
+              };
+          }
+          return question;
+      });
+
+      return {
+          ...product,
+          customizationQuestions: updatedQuestions
+      };
+  });
+    
+  }
+  
 
   addToLocalStorage(type: string, id: any, data: any, familyId: any) {
     data.id = id;

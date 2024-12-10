@@ -51,7 +51,7 @@ export class OverviewComponent {
   }
 
   openProductModal(productId: number | null = null): void {
-    if(this.families.length !== 0){
+    if(this.familyService.families.length !== 0){
       this.productService.openProductModal(productId);
     } else {
       this.snackbarService.openSnackBar('Añada primero alguna familia en la pagina de familias.', 'Cerrar');

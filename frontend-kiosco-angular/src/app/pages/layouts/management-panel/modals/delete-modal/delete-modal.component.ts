@@ -26,7 +26,7 @@ export class DeleteModalComponent {
   }
 
   onDelete() {
-    this.dialogRef.close({id: this.data.id, productType: this.data.productType});  
+    this.dialogRef.close({id: this.data.id, productType: this.data.productType, data: this.data});  
   }
 
   close() {

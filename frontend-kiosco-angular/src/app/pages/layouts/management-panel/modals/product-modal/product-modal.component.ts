@@ -79,37 +79,41 @@ export class ProductModalComponent {
   
     // Usamos el getter directamente si la key existe en localStorage
     if (this.familyService.keyExists()) {
-      observables['families'] = this.familyService.families;  // Esto puede ser un observable o los datos desde el getter
+      this.families = this.familyService.families;  // Esto puede ser un observable o los datos desde el getter
     } else {
       observables['families'] = this.familyService.getFamiliesObservable();
     }
+
+    console.log(observables);
   
     if (this.productService.keyExists()) {
-      observables['products'] = this.productService.products;  // Usamos el getter
+      this.products = this.productService.products;  // Usamos el getter
     } else {
       observables['products'] = this.productService.getProductsObservable();
     }
   
     if (this.groupService.keyExists()) {
-      observables['groups'] = this.groupService.groups;
+      this.groups = this.groupService.groups;
     } else {
       observables['groups'] = this.groupService.getGroupsObservable();
     }
-  
-    forkJoin(observables).subscribe({
-      next: ({ families, products, groups } : any) => {
-        this.families = families;
-        this.products = products;
-        this.groups = groups;
-  
-        if (this.isEditMode) {
-          this.loadProductData(this.data.id!, this.data.productType);
+    
+    if(observables.length != 0){
+      forkJoin(observables).subscribe({
+        next: ({ families, products, groups } : any) => {
+          this.families = families;
+          this.products = products;
+          this.groups = groups;
+    
+          if (this.isEditMode) {
+            this.loadProductData(this.data.id!, this.data.productType);
+          }
+        },
+        error: (error) => {
+          console.error('Error al cargar datos:', error);
         }
-      },
-      error: (error) => {
-        console.error('Error al cargar datos:', error);
-      }
-    });
+      });
+    }
   
     this.onTipoProductoChange();
   }
@@ -135,11 +139,14 @@ export class ProductModalComponent {
   }
 
   onFamilyIdChange(): void {
-    this.familyService.getFamiliesObservable().subscribe(families => {
-      this.familyService.families = families;
+    if(this.familyService.keyExists()){
       this.products = this.productService.getProductsByFamilyId(this.familyId);
-    });
-    
+    } else {
+      this.familyService.getFamiliesObservable().subscribe(families => {
+        this.familyService.families = families;
+        this.products = this.productService.getProductsByFamilyId(this.familyId);
+      });
+    }
   }
 
   loadProductData(productId: number, productType: string): void {
