@@ -334,55 +334,13 @@ export class ProductService {
     return this.http.post(`${AppConfig.API_URL}/articulo`, product);
   }
 
-  addProductToLocalStorage(product: Product): void {
-    const products = this.products;
-    products.push(product);
-    this.products = products;
-  }
-
   addCustomizationQuestion(question: any) : Observable<any> {
     return this.http.post(`${AppConfig.API_URL}/pregunta`, question);
-  }
-
-  addCustomizationQuestionToLocalStorage(question: CustomizationQuestion, productId: any): void {
-    const products = this.products;
-    const productIndex = products.findIndex((product) => product.id === productId);
-    products[productIndex].customizationQuestions.push(question);
-    this.products = products;
   }
   
   addOption(option: any) : Observable<any> {
     return this.http.post(`${AppConfig.API_URL}/opcion`, option);
   }
-
-  addCustomizationOptionToLocalStorage(option: CustomizationOption, customizationQuestionId: string): void {
-    const products = this.products;
-  
-    // Recorrer los productos para encontrar la pregunta
-    for (const product of products) {
-      const question = product.customizationQuestions.find(q => q.id === customizationQuestionId);
-      
-      if (question) {
-        // Verificar si la opción ya existe
-        const optionExists = question.options.some(o => o.id === option.id);
-  
-        if (!optionExists) {
-          // Agregar la nueva opción
-          question.options.push(option);
-          console.log(`Opción añadida a la pregunta "${question.name}" del producto "${product.name}".`);
-        } else {
-          console.log(`La opción ya existe en la pregunta "${question.name}".`);
-        }
-        
-        // Finalizar el bucle ya que hemos encontrado y actualizado
-        break;
-      }
-    }
-  
-    // Opcional: Actualizar localStorage si se usa para persistencia
-    localStorage.setItem('products', JSON.stringify(products));
-  }
-  
 
   getTotalPrice(product: Product): number {
     let totalPrice = Number(product.prices[0]);
@@ -500,7 +458,7 @@ export class ProductService {
         switchMap((response : any) => {
           console.log(`${type} añadido correctamente`, response);
 
-          // this.addToLocalStorage(type, productData.family, newItem);
+          this.addToLocalStorage(type, response.articulo.id, newItem, productData.family);
   
           // Verificar si hay imagen para subir
           return productData.img && productData.img instanceof File
@@ -594,6 +552,8 @@ export class ProductService {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log('Datos recibidos del modal:', result);
+
         let deleteObservable;
   
         switch (product.productType) {
@@ -639,10 +599,10 @@ export class ProductService {
         this.deleteProductFromLocalStorage(product.id);
         break;
       case 'Grupo de modificadores':
-        this.deleteCustomizationQuestionFromLocalStorage(product.family, product.id);
+        this.deleteCustomizationQuestionFromLocalStorage(product.id);
         break;
       case 'Modificador':
-        this.deleteOptionFromLocalStorage(product.family, product.id);
+        this.deleteOptionFromLocalStorage(product.id);
         break;
     }
   }
@@ -652,44 +612,45 @@ export class ProductService {
     this.products = this.products.filter(product => product.id !== productId);
   }
   
-  private deleteCustomizationQuestionFromLocalStorage(productId: string, questionId: string): void {
-    console.log('productId', productId);
+  private deleteCustomizationQuestionFromLocalStorage(questionId: string): void {
+    console.log('products antes', this.products);
     console.log('questionId', questionId);
+
     this.products = this.products.map(product => {
-      if (product.id === productId) {
-          return {
-              ...product,
-              customizationQuestions: product.customizationQuestions.filter(
-                  question => question.id !== questionId
-              )
-          };
-      }
-      return product;
+        return {
+            ...product,
+            customizationQuestions: product.customizationQuestions.filter(
+                question => question.id !== questionId
+            )
+        };
     });
+
+    console.log('products después', this.products);
   }
-  
-  private deleteOptionFromLocalStorage(questionId:string, optionId: string): void {
+
+  private deleteOptionFromLocalStorage(optionId: string): void {
+    console.log('products antes', this.products);
+    console.log('optionId', optionId);
+
     this.products = this.products.map(product => {
-      const updatedQuestions = product.customizationQuestions.map(question => {
-          if (question.id === questionId) {
-              return {
-                  ...question,
-                  options: question.options.filter(option => option.id !== optionId)
-              };
-          }
-          return question;
-      });
+        const updatedQuestions = product.customizationQuestions.map(question => {
+            return {
+                ...question,
+                options: question.options.filter(option => option.id !== optionId)
+            };
+        });
 
-      return {
-          ...product,
-          customizationQuestions: updatedQuestions
-      };
-  });
-    
+        return {
+            ...product,
+            customizationQuestions: updatedQuestions
+        };
+    });
+
+    console.log('products después', this.products);
   }
   
-
   addToLocalStorage(type: string, id: any, data: any, familyId: any) {
+    console.log('Añadir al localStorage', type, id, data, familyId);
     data.id = id;
     // Dependiendo del tipo (producto, grupo de modificadores, modificador) se debe actualizar el array correspondiente
     switch (type) {
@@ -704,6 +665,73 @@ export class ProductService {
         break;
     }
 
+  }
+
+  addProductToLocalStorage(product: Product): void {
+    const products = this.products;
+    product = this.transformProductData([product])[0];
+
+    products.push(product);
+
+    console.log('products', products);
+    this.products = products;
+  }
+
+  transformProductData(rawProducts: any[]): Product[] {
+    return rawProducts.map(product => ({
+        allergens: Array.isArray(product.allergens)
+            ? product.allergens.filter((allergen : any) => allergen.trim() !== "")
+            : [],
+        customizationQuestions: product.customizationQuestions || [],
+        customizations: product.customizations || [],
+        description: product.description ? product.description : null,
+        familyId: product.familyId?.toString() || "",
+        id: product.id?.toString() || "",
+        img: product.img ? product.img : null,
+        name: product.name || "Sin nombre",
+        prices: [
+            ...(product.price_1 ? [product.price_1.toString()] : []),
+            ...(product.price_2 ? [product.price_2.toString()] : []),
+            ...(product.price_3 ? [product.price_3.toString()] : []),
+        ],
+        status: product.status === 1 ? "Habilitado" : "Deshabilitado",
+        taxes: product.iva?.toString() || "0"
+    }));
+}
+
+  addCustomizationQuestionToLocalStorage(question: CustomizationQuestion, productId: any): void {
+    const products = this.products;
+    const productIndex = products.findIndex((product) => product.id === productId);
+    products[productIndex].customizationQuestions.push(question);
+    this.products = products;
+  }
+
+  addCustomizationOptionToLocalStorage(option: CustomizationOption, customizationQuestionId: string): void {
+    const products = this.products;
+  
+    // Recorrer los productos para encontrar la pregunta
+    for (const product of products) {
+      const question = product.customizationQuestions.find(q => q.id === customizationQuestionId);
+      
+      if (question) {
+        // Verificar si la opción ya existe
+        const optionExists = question.options.some(o => o.id === option.id);
+  
+        if (!optionExists) {
+          // Agregar la nueva opción
+          question.options.push(option);
+          console.log(`Opción añadida a la pregunta "${question.name}" del producto "${product.name}".`);
+        } else {
+          console.log(`La opción ya existe en la pregunta "${question.name}".`);
+        }
+        
+        // Finalizar el bucle ya que hemos encontrado y actualizado
+        break;
+      }
+    }
+  
+    // Opcional: Actualizar localStorage si se usa para persistencia
+    localStorage.setItem('products', JSON.stringify(products));
   }
   
   createProduct(id : string, productData: any) {
