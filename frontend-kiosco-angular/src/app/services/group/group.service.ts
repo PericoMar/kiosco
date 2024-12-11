@@ -49,4 +49,12 @@ export class GroupService {
     return this.http.get<any[]>(`${AppConfig.API_URL}/preguntas`);
   }
 
+  addGroupToLocalStorage(group: any): void{
+    this.groups = [...this.groups, group];
+  }
+
+  deleteGroupFromLocalStorage(id: string): void {
+    this.groups = this.groups.filter(group => group.id !== id);
+  }
+
 }

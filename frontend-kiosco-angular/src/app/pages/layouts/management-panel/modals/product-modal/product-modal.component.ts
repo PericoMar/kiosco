@@ -57,7 +57,7 @@ export class ProductModalComponent {
       productType: ['Producto', Validators.required],
       name: ['', Validators.required],
       img: [null],
-      price_1: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?€?')],
+      price_1: ['', [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?€?')]],
       price_2: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')],
       price_3: ['', Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')],
       family: ['', Validators.required],
@@ -131,8 +131,12 @@ export class ProductModalComponent {
       //Si el tipo de producto es un grupo de modificadores, se le settea a price_1 el valor de 0
       if(value === 'Grupo de modificadores'){
         this.productForm.get('price_1')?.setValue('0');
+        this.productForm.get('price_2')?.setValue('0');
+        this.productForm.get('price_3')?.setValue('0');
       } else {
         this.productForm.get('price_1')?.setValue('');
+        this.productForm.get('price_2')?.setValue('');
+        this.productForm.get('price_3')?.setValue('');
       }
       this.familyId = '';
     });

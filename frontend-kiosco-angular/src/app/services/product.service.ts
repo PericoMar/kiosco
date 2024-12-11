@@ -11,6 +11,7 @@ import { ProductModalComponent } from '../pages/layouts/management-panel/modals/
 import { SnackbarService } from './snackBar/snackbar.service';
 import { DeleteModalComponent } from '../pages/layouts/management-panel/modals/delete-modal/delete-modal.component';
 import { ImageService } from './image/image.service';
+import { GroupService } from './group/group.service';
 
 
 
@@ -254,7 +255,8 @@ export class ProductService {
     private familyService: FamilyService,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private groupService: GroupService
   ) {}
 
   private PRODUCTS_LOCAL_STORAGE_KEY = 'products';
@@ -299,32 +301,36 @@ export class ProductService {
         allergens: product.allergens,
         type: 'producto',
       });
-  
-      // Agregar grupos de modificadores
-      product.customizationQuestions.forEach(question => {
-        productsData.push({
-          id: question.id,
-          productType: 'Grupo de modificadores',
-          name: question.name,
-          family: product.name, // El nombre del producto asociado
-          status: product.status!,
-          allergens: [], // Los grupos no tienen alérgenos
-          type: 'producto',
-        });
-  
-        // Agregar modificadores
-        question.options.forEach(option => {
+      
+      if(product.customizationQuestions){
+        // Agregar grupos de modificadores
+        product.customizationQuestions.forEach(question => {
           productsData.push({
-            id: option.id,
-            productType: 'Modificador',
-            name: option.value,
-            family: question.name, // El texto de la pregunta
+            id: question.id,
+            productType: 'Grupo de modificadores',
+            name: question.name,
+            family: product.name, // El nombre del producto asociado
             status: product.status!,
-            allergens: option.allergens!, // Los modificadores no tienen alérgenos
+            allergens: [], // Los grupos no tienen alérgenos
             type: 'producto',
           });
+    
+          // Agregar modificadores
+          if(question.options){
+            question.options.forEach(option => {
+              productsData.push({
+                id: option.id,
+                productType: 'Modificador',
+                name: option.value,
+                family: question.name, // El texto de la pregunta
+                status: product.status!,
+                allergens: option.allergens!, // Los modificadores no tienen alérgenos
+                type: 'producto',
+              });
+            });
+          }
         });
-      });
+      }
     });
   
     return productsData;
@@ -458,10 +464,10 @@ export class ProductService {
         switchMap((response : any) => {
           console.log(`${type} añadido correctamente`, response);
 
-          this.addToLocalStorage(type, response.articulo.id, newItem, productData.family);
+          this.addToLocalStorage(type, type == 'producto' ? response.articulo.id : response.opcion.id , newItem, productData.family);
   
           // Verificar si hay imagen para subir
-          return productData.img && productData.img instanceof File
+          return productData.img && productData.img instanceof File && type != 'grupo de modificadores'
             ? this.imageService.uploadImage('Articulos', response.articulo.id, 'imagen', productData.img)
             : of(null); // Observable vacío si no hay imagen
         })
@@ -517,6 +523,7 @@ export class ProductService {
         switchMap((response : any) => {
           console.log(`${type} actualizado correctamente`, response);          
 
+          this.updateToLocalStorage(type, productId, updatedItem, productData.family);
           // Verificar si hay imagen para subir
           return productData.img && productData.img instanceof File
           // Si es un Modificador el response.id es de la tabla Articulos no de la tabla OpcionesPreguntasArticulo
@@ -541,6 +548,43 @@ export class ProductService {
           console.error(`Error al actualizar ${type}:`, error);
         }
       });
+  }
+
+  // Función para actualizar en el localStorage según el tipo de producto
+  private updateToLocalStorage(type: string, id: any, data: any, familyId: any): void
+  {
+    data.id = id;
+    switch (type) {
+      case 'producto':
+        this.updateProductInLocalStorage(id, data);
+        break;
+      case 'grupo de modificadores':
+        this.updateCustomizationQuestionInLocalStorage(id, data, familyId);
+        break;
+      case 'modificador':
+        this.updateOptionInLocalStorage(id, data, familyId);
+        break;
+    }
+  }
+
+
+  // Implementaciones específicas para actualizar en el localStorage
+  private updateProductInLocalStorage(productId: string, productData: Product): void {
+    this.deleteProductFromLocalStorage(productId);
+    this.addProductToLocalStorage(productData);
+  }
+
+  private updateCustomizationQuestionInLocalStorage(questionId: string, questionData: CustomizationQuestion, productId: any): void {
+    this.deleteCustomizationQuestion(Number(questionId));
+    this.addCustomizationQuestionToLocalStorage(questionData, productId);
+
+    this.groupService.deleteGroupFromLocalStorage(questionId);
+    this.groupService.addGroupToLocalStorage({id: questionId, name: questionData.name})
+  }
+
+  private updateOptionInLocalStorage(optionId: string, optionData: CustomizationOption, questionId: any): void {
+    this.deleteOptionFromLocalStorage(optionId);
+    this.addCustomizationOptionToLocalStorage(optionData, questionId);
   }
   
 
@@ -625,6 +669,8 @@ export class ProductService {
         };
     });
 
+    this.groupService.deleteGroupFromLocalStorage(questionId);
+
     console.log('products después', this.products);
   }
 
@@ -690,20 +736,22 @@ export class ProductService {
         img: product.img ? product.img : null,
         name: product.name || "Sin nombre",
         prices: [
-            ...(product.price_1 ? [product.price_1.toString()] : []),
+            ...(product.price_1 ? [product.price_1.toString()] : ['0']),
             ...(product.price_2 ? [product.price_2.toString()] : []),
             ...(product.price_3 ? [product.price_3.toString()] : []),
         ],
         status: product.status === 1 ? "Habilitado" : "Deshabilitado",
         taxes: product.iva?.toString() || "0"
     }));
-}
+  }
 
   addCustomizationQuestionToLocalStorage(question: CustomizationQuestion, productId: any): void {
     const products = this.products;
     const productIndex = products.findIndex((product) => product.id === productId);
     products[productIndex].customizationQuestions.push(question);
     this.products = products;
+
+    this.groupService.addGroupToLocalStorage({id: question.id, name: question.name});
   }
 
   addCustomizationOptionToLocalStorage(option: CustomizationOption, customizationQuestionId: string): void {
@@ -712,12 +760,14 @@ export class ProductService {
     // Recorrer los productos para encontrar la pregunta
     for (const product of products) {
       const question = product.customizationQuestions.find(q => q.id === customizationQuestionId);
-      
+      console.log('question', question);
       if (question) {
         // Verificar si la opción ya existe
         const optionExists = question.options.some(o => o.id === option.id);
+        console.log('optionExists', optionExists);
   
         if (!optionExists) {
+          option = this.transformOptionData([option])[0];
           // Agregar la nueva opción
           question.options.push(option);
           console.log(`Opción añadida a la pregunta "${question.name}" del producto "${product.name}".`);
@@ -731,7 +781,25 @@ export class ProductService {
     }
   
     // Opcional: Actualizar localStorage si se usa para persistencia
-    localStorage.setItem('products', JSON.stringify(products));
+    this.products = products;
+  }
+
+  private transformOptionData(options : any[]): any[] {
+    return options.map(option => ({
+      allergens: Array.isArray(option.allergens)
+        ? option.allergens.filter((allergen : any) => allergen.trim() !== "")
+        : [],
+      description: option.description ? option.description : null,
+      id: option.id?.toString() || "",
+      value: option.name || "Sin nombre",
+      img: option.img ? option.img : null,
+      prices: [
+        ...(option.price_1 ? [option.price_1.toString()] : ['0']),
+        ...(option.price_2 ? [option.price_2.toString()] : []),
+        ...(option.price_3 ? [option.price_3.toString()] : []),
+      ],
+      status: option.status === 1 ? "Habilitado" : "Deshabilitado",
+    }));
   }
   
   createProduct(id : string, productData: any) {
