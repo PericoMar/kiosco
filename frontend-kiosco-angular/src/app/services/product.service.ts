@@ -251,6 +251,8 @@ export class ProductService {
 
   dataSource!: MatTableDataSource<any>;
 
+  tiposIVA = [{id: 1, tipo_iva:'10%'}, { id:2, tipo_iva:'21%' }, { id:3,tipo_iva: '4%' }, { id: 4, tipo_iva: '5%' }, { id: 5, tipo_iva: '0%'}];
+
   constructor(private http: HttpClient,
     private familyService: FamilyService,
     private dialog: MatDialog,
@@ -741,7 +743,7 @@ export class ProductService {
             ...(product.price_3 ? [product.price_3.toString()] : []),
         ],
         status: product.status === 1 ? "Habilitado" : "Deshabilitado",
-        taxes: product.iva?.toString() || "0"
+        taxes: parseFloat(this.getSelectedIVA(product.iva)) || 0
     }));
   }
 
@@ -866,6 +868,11 @@ export class ProductService {
     return allergens
       .map((selected, index) => (selected ? allergenNames[index] : ''))
       .filter((allergen) => allergen !== null);
+  }
+
+  private getSelectedIVA(ivaId :string) {
+    // Devolver el iva correspondiente a this.tiposIVA y quitarle el %
+    return this.tiposIVA.find(iva => iva.id === parseInt(ivaId))?.tipo_iva?.slice(0, -1) || '0';
   }
   
 }
