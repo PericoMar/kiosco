@@ -1,4 +1,10 @@
 <form class="modal-content" [formGroup]="familyForm">
+  @if(loadingFamily){
+    <main class="loading-content">
+      <app-spinner></app-spinner>
+      <p>Cargando familia...</p>
+    </main>
+  } @else {
     <div class="modal-header">
       <div class="image-container">
         <img [src]="familyImgUrl" alt="Imagen del producto" class="product-image" *ngIf="familyImgUrl">
@@ -100,20 +106,21 @@
         </div>
       </fieldset>
   
-  <footer class="dialog-actions">
-    <button class="delete-button" *ngIf="isEditMode" (click)="onDelete()">Eliminar</button>
-    @if(isEditMode){
-      <div class="space-between rigth-buttons">
+    <footer class="dialog-actions">
+      <button class="delete-button" *ngIf="isEditMode" (click)="onDelete()">Eliminar</button>
+      @if(isEditMode){
+        <div class="space-between rigth-buttons">
+          <button (click)="close()" class="cancel-button">Cancelar</button>
+          <button (click)="save()" class="save-button">
+            Guardar
+          </button>    
+        </div>
+      } @else {
         <button (click)="close()" class="cancel-button">Cancelar</button>
         <button (click)="save()" class="save-button">
           Guardar
-        </button>    
-      </div>
-    } @else {
-      <button (click)="close()" class="cancel-button">Cancelar</button>
-      <button (click)="save()" class="save-button">
-        Guardar
-      </button>
-    }
-  </footer>
+        </button>
+      }
+    </footer>
+  }
 </form>

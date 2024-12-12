@@ -150,7 +150,9 @@ export class FamilyService {
     this.addFamily(newFamily).pipe(
       switchMap((response) => {
         console.log('Familia añadido correctamente', response);
-    
+
+        this.addFamilyToLocalStorage(newFamily);
+
         // Verificar si productData.image está definido
         return familyData.img && familyData.img instanceof File
           ? this.imageService.uploadImage('Familias', response.familia.id, 'imagen', familyData.img)
@@ -176,6 +178,10 @@ export class FamilyService {
 
   }
 
+  addFamilyToLocalStorage(family: Family) {
+    this.families = [...this.families, family];
+  }
+
   updateFamilyData(familyId: number, familyData: any) {
 
     const family = {
@@ -188,7 +194,9 @@ export class FamilyService {
     this.updateFamily(familyId, family).pipe(
       switchMap((response) => {
         console.log('Familia añadido correctamente', response);
-    
+        
+        this.updateFamilyInLocalStorage(familyId, family);
+
         // Verificar si productData.image está definido
         return familyData.img && familyData.img instanceof File
           ? this.imageService.uploadImage('Familias', response.familia, 'imagen', familyData.img)
@@ -213,6 +221,11 @@ export class FamilyService {
     });    
   }
 
+  updateFamilyInLocalStorage(familyId: number, family: any) {
+    this.deleteFamilyFromLocalStorage(familyId);
+    this.addFamilyToLocalStorage(family);
+  }
+
   openDeleteFamilyModal(product: any): void {
     const dialogRef = this.dialog.open(DeleteModalComponent, {
       width: '500px',
@@ -221,6 +234,8 @@ export class FamilyService {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.deleteFamilyFromLocalStorage(product.id);
+
         this.deleteFamily(product.id).subscribe({
           next: (response) => {
             this.snackbarService.openSnackBar('Familia eliminada correctamente', 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
@@ -232,6 +247,10 @@ export class FamilyService {
         });
       }
     });
+  }
+
+  deleteFamilyFromLocalStorage(familyId: number) {
+    this.families = this.families.filter((family) => Number(family.id) !== familyId);
   }
 
   deleteFamily(familyId: number) : Observable<any> {

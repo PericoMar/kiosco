@@ -89,7 +89,7 @@
             </button>
         </header>
         <main class="table">
-            <app-table></app-table>
+            <app-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [loadingData]="loadingData"></app-table>
         </main>
     </section>
 </main>

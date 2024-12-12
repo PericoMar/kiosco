@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { PrinterService } from '../../../../../services/printer/printer.service';
 import { FamilyService } from '../../../../../services/family.service';
 import { AppConfig } from '../../../../../../config/app-config';
+import { SpinnerComponent } from '../../../../../components/spinner/spinner.component';
 
 @Component({
   selector: 'app-family-modal',
   standalone: true,
-  imports: [CommonModule ,FormsModule, ReactiveFormsModule],
+  imports: [CommonModule ,FormsModule, ReactiveFormsModule, SpinnerComponent],
   templateUrl: './family-modal.component.html',
   styleUrl: './family-modal.component.css'
 })

@@ -71,6 +71,7 @@ export class ProductModalComponent {
 
     if (this.isEditMode) {
       this.loadingProduct = true;
+      this.loadProductData(data.id!, data.productType);
     }
   }
 
@@ -105,9 +106,9 @@ export class ProductModalComponent {
           this.products = products;
           this.groups = groups;
     
-          if (this.isEditMode) {
-            this.loadProductData(this.data.id!, this.data.productType);
-          }
+          // if (this.isEditMode) {
+          //   this.loadProductData(this.data.id!, this.data.productType);
+          // }
         },
         error: (error) => {
           console.error('Error al cargar datos:', error);

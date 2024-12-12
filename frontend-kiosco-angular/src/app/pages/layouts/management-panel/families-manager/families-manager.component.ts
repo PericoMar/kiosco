@@ -43,13 +43,15 @@ export class FamiliesManagerComponent {
   } 
 
   refreshTable(changes: any) {
-    console.log('Recargar tabla de productos');
+    console.log('Recargar tabla de familias');
     this.loadingData = true;
 
     if(this.familyService.keyExists()){
+      console.log('Cargando familias desde local storage');
       this.dataSource = new MatTableDataSource<any>(this.familyService.getFamiliesData());
       this.loadingData = false;
     } else {
+      console.log('Cargando familias desde API');
       this.familyService.getFamiliesObservable().subscribe({
         next: (families) => {
           this.familyService.families = families;

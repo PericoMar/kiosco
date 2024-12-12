@@ -53,15 +53,15 @@ export class TableComponent {
     return this.displayedColumns.map(col => col.columnId).concat('actions');
   }
 
-  ngOnInit() {
-    this.dataSource = new MatTableDataSource<any>(this.productService.getProductsData());
-    // Definir el filtro personalizado
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      const dataStr = Object.values(data).join(' ').toLowerCase();
-      return dataStr.includes(filter);
-    };
+  // ngOnInit() {
+  //   this.dataSource = new MatTableDataSource<any>([]);
+  //   // Definir el filtro personalizado
+  //   this.dataSource.filterPredicate = (data: any, filter: string) => {
+  //     const dataStr = Object.values(data).join(' ').toLowerCase();
+  //     return dataStr.includes(filter);
+  //   };
 
-  }
+  // }
 
   ngAfterViewInit() {
     // Asigna el paginator después de que las vistas hayan sido inicializadas
@@ -72,6 +72,8 @@ export class TableComponent {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['dataSource'] && this.dataSource) {
       console.log('Cambios en la fuente de datos');
+      console.log(changes['dataSource']);
+      console.log(this.dataSource);
       // Set Timeout de 1 segundo
       setTimeout(() => {
         this.dataSource.paginator = this.paginator;

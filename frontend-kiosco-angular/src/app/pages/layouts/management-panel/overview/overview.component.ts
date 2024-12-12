@@ -9,6 +9,8 @@ import { ProductModalComponent } from '../modals/product-modal/product-modal.com
 import { ProductService } from '../../../../services/product.service';
 import { FamilyService } from '../../../../services/family.service';
 import { SnackbarService } from '../../../../services/snackBar/snackbar.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-overview',
@@ -20,6 +22,22 @@ import { SnackbarService } from '../../../../services/snackBar/snackbar.service'
 export class OverviewComponent {
   startMonth!: string;
   endMonth!: string;
+  loadingData: boolean = false;
+  hayProductosSinFamilia: boolean = false;
+  dataSource!: MatTableDataSource<any>;  
+
+  private productChangesSubscription!: Subscription;
+
+  displayedColumns: { columnId: string, columnName: string }[] = [
+    { columnId: 'id', columnName: 'Codigo' },
+    { columnId: 'productType', columnName: 'Tipo' },
+    { columnId: 'name', columnName: 'Nombre / Texto' },
+    // { columnId: 'price', columnName: 'Tarifa' },
+    { columnId: 'family', columnName: 'Familia / Grupo / Producto' },
+    { columnId: 'allergens', columnName: 'Alergenos' },
+    { columnId: 'status', columnName: 'Estado' },
+  ];
+
 
   constructor(private router : Router,
     private dialog : MatDialog,
@@ -37,9 +55,47 @@ export class OverviewComponent {
       }
     });
 
+    this.refreshTable(null);
+
+    this.productChangesSubscription = this.productService.productChanged$.subscribe(changes => {
+      this.refreshTable(changes);  // Llamar a la función para recargar la tabla
+    });
+
     const now = new Date();
     this.startMonth = this.getMonthString(now.getMonth(), now.getFullYear() - 1); // Un mes antes
     this.endMonth = this.getMonthString(now.getMonth(), now.getFullYear()); // Mes actual
+  }
+
+  refreshTable(changes: any) {
+    console.log('Recargar tabla de productos');
+    this.loadingData = true;
+    let productsData: any[] = [];
+
+    // Función para configurar los productos y actualizar la tabla
+    const updateTable = (products: any[]) => {
+      this.dataSource = new MatTableDataSource<any>(products);
+      this.hayProductosSinFamilia = products.some((product: any) => product.familyId === '');
+      this.loadingData = false; // Indicar que se han cargado los datos
+    };
+  
+    if (this.productService.keyExists()) {
+      // Si existe la clave, obtén los datos desde localStorage
+      productsData = this.productService.getProductsData();
+      updateTable(productsData);
+    } else {
+      // Si no existe la clave, obtiene los productos a través de un Observable
+      this.productService.getProductsObservable().subscribe({
+        next: (products) => {
+          this.productService.products = products;  // Asignar los productos al servicio
+          productsData = this.productService.getProductsData();  // Obtener los productos
+          updateTable(productsData);  // Llamar a la función para actualizar la tabla
+        },
+        error: () => {
+          this.loadingData = false;  // Maneja el caso de error
+          console.error('Error al cargar los productos.');
+        }
+      });
+    }
   }
 
   getMonthString(month: number, year: number): string {
