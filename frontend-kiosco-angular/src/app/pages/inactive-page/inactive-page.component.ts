@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FamilyService } from '../../services/family.service';
 import { OrderService } from '../../services/order.service';
 import { ScreenService } from '../../services/screen/screen.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-inactive-page',
@@ -20,14 +21,15 @@ export class InactivePageComponent {
     private router: Router,
     private familyService: FamilyService,
     private orderService: OrderService,
-    private screenService: ScreenService
+    private screenService: ScreenService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     if(this.familyService.keyExists()){
       this.firstFamilyId = this.familyService.families[0].id;
     } else {
-      this.familyService.getFamiliesObservable().subscribe({
+      this.familyService.getFamiliesObservable(this.userService.clienteId).subscribe({
         next: (families) => {
           this.firstFamilyId = families[0].id;
         }

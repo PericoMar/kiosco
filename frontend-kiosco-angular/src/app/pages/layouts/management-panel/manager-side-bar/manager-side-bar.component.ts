@@ -3,11 +3,13 @@ import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../../../services/user/user.service';
 import { User, UserWithoutPassword } from '../../../../interfaces/user';
 import { MatMenuModule } from '@angular/material/menu';
+import { __classPrivateFieldGet } from 'tslib';
+import { CapitalizePipe } from '../../../../pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-manager-side-bar',
   standalone: true,
-  imports: [RouterModule, MatMenuModule],
+  imports: [RouterModule, MatMenuModule, CapitalizePipe],
   templateUrl: './manager-side-bar.component.html',
   styleUrl: './manager-side-bar.component.css'
 })

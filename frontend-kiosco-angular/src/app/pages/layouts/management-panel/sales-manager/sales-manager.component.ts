@@ -8,6 +8,7 @@ import { FamilyService } from '../../../../services/family.service';
 import { FamilyData } from '../../../../interfaces/family-data';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../../../services/product.service';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-sales-manager',
@@ -39,7 +40,8 @@ export class SalesManagerComponent {
   constructor(
     private dialog : MatDialog,
     private familyService: FamilyService,
-    private productService: ProductService
+    private productService: ProductService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -48,7 +50,7 @@ export class SalesManagerComponent {
     if(this.productService.keyExists()){
       this.products = this.productService.products;
     } else {
-      this.productService.getProductsObservable().subscribe({
+      this.productService.getProductsObservable(this.userService.clienteId).subscribe({
         next: (products) => {
           this.products = products;
         }

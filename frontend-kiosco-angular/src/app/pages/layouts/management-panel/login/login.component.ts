@@ -23,11 +23,6 @@ export class LoginComponent {
   incorrectUser: boolean = false;
   loadingLogin: boolean = false;
 
-  users : User[] = [
-    { username: 'admin', password: 'admin', name: 'Admin', rol: 'admin' },
-    { username: 'eduardokong', password: 'user12', name: 'Eduardo', rol: 'Comercial' },
-  ];
-
   constructor(
     private router : Router,
     private userService : UserService,
@@ -55,49 +50,51 @@ export class LoginComponent {
     this.loadingLogin = true;
     event.preventDefault();
     
-    const foundUser : UserWithoutPassword = this.users.find(user => 
-      user.username === this.username && user.password === this.password
-    )!;
+    this.userService.login(this.username, this.password).subscribe({
+      next: (response : any) => {
+        const user: UserWithoutPassword = response.user;
+        this.handleLogin(user);
+      },
+      error: (error) => {
+        console.log(error);
+        this.loadingLogin = false;
+        this.incorrectUser = true;
+      }
+    });
+  }
 
-
-    
-    if (foundUser) {
-      // Si las credenciales son correctas
-      this.incorrectUser = false;
-      this.userService.saveUser(foundUser);
-      forkJoin({
-        products: this.productsService.getProductsObservable(),
-        families: this.familyService.getFamiliesObservable(),
-        groups: this.groupsService.getGroupsObservable()
-      }).subscribe({
-        next: ({ products, families, groups }) => {
-          if (products) {
-            this.productsService.products = products;
-            console.log(products);
-          }
-          if (families) {
-            this.familyService.families = families;
-            console.log(families);
-          }
-          if(groups) {
-            this.groupsService.groups = groups;
-            console.log(groups);
-          }
-          
-        },
-        error: (error) => {
-          console.log(error);
-          this.router.navigate(['/management-panel']);
-        },
-        complete: () => {
-          this.router.navigate(['/management-panel']);
-        }
-      });
-
-    } else {
-      // Si las credenciales son incorrectas
-      this.loadingLogin = false;
-      this.incorrectUser = true;
-    }
+  handleLogin(user: UserWithoutPassword) {
+     // Si las credenciales son correctas
+     this.incorrectUser = false;
+     this.userService.saveUser(user);
+     this.userService.clienteId = user.cliente_id;
+     forkJoin({
+       products: this.productsService.getProductsObservable(user.cliente_id),
+       families: this.familyService.getFamiliesObservable(user.cliente_id),
+       groups: this.groupsService.getGroupsObservable()
+     }).subscribe({
+       next: ({ products, families, groups }) => {
+         if (products) {
+           this.productsService.products = products;
+           console.log(products);
+         }
+         if (families) {
+           this.familyService.families = families;
+           console.log(families);
+         }
+         if(groups) {
+           this.groupsService.groups = groups;
+           console.log(groups);
+         }
+         
+       },
+       error: (error) => {
+         console.log(error);
+         this.router.navigate(['/management-panel']);
+       },
+       complete: () => {
+         this.router.navigate(['/management-panel']);
+       }
+     });
   }
 }

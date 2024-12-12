@@ -12,6 +12,7 @@ import { SnackbarService } from '../../../../../services/snackBar/snackbar.servi
 import { SpinnerComponent } from '../../../../../components/spinner/spinner.component';
 import { AppConfig } from '../../../../../../config/app-config';
 import { forkJoin } from 'rxjs';
+import { UserService } from '../../../../../services/user/user.service';
 
 @Component({
   selector: 'app-product-modal',
@@ -49,7 +50,8 @@ export class ProductModalComponent {
     private familyService: FamilyService,
     private groupService : GroupService,
     private productService: ProductService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private userService: UserService
   ) {
     console.log(data);
     this.isEditMode = !!data.id; // true si hay un id de producto
@@ -82,7 +84,7 @@ export class ProductModalComponent {
     if (this.familyService.keyExists()) {
       this.families = this.familyService.families;  // Esto puede ser un observable o los datos desde el getter
     } else {
-      observables['families'] = this.familyService.getFamiliesObservable();
+      observables['families'] = this.familyService.getFamiliesObservable(this.userService.clienteId);
     }
 
     console.log(observables);
@@ -90,7 +92,7 @@ export class ProductModalComponent {
     if (this.productService.keyExists()) {
       this.products = this.productService.products;  // Usamos el getter
     } else {
-      observables['products'] = this.productService.getProductsObservable();
+      observables['products'] = this.productService.getProductsObservable(this.userService.clienteId);
     }
   
     if (this.groupService.keyExists()) {
@@ -147,7 +149,7 @@ export class ProductModalComponent {
     if(this.familyService.keyExists()){
       this.products = this.productService.getProductsByFamilyId(this.familyId);
     } else {
-      this.familyService.getFamiliesObservable().subscribe(families => {
+      this.familyService.getFamiliesObservable(this.userService.clienteId).subscribe(families => {
         this.familyService.families = families;
         this.products = this.productService.getProductsByFamilyId(this.familyId);
       });

@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../pages/layouts/management-panel/modals/delete-modal/delete-modal.component';
 import { SnackbarService } from './snackBar/snackbar.service';
 import { ImageService } from './image/image.service';
+import { UserService } from './user/user.service';
 
 
 @Injectable({
@@ -44,7 +45,8 @@ export class FamilyService {
     // private productService: ProductService,
     private dialog : MatDialog,
     private snackbarService: SnackbarService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private userService: UserService 
   ) { 
   }
 
@@ -71,15 +73,15 @@ export class FamilyService {
   }
 
   addFamily(family: any): Observable<any> {
-    return this.http.post<Family>(`${AppConfig.API_URL}/familia`, family);
+    return this.http.post<Family>(`${AppConfig.API_URL}/familia/${this.userService.clienteId}`, family);
   }
 
   updateFamily(familyId: number, family: any): Observable<any> {
     return this.http.put<Family>(`${AppConfig.API_URL}/familia/${familyId}`, family);
   }
 
-  getFamiliesObservable(): Observable<Family[]> {
-    return this.http.get<Family[]>(`${AppConfig.API_URL}/familias`);
+  getFamiliesObservable(cliente_id: number): Observable<Family[]> {
+    return this.http.get<Family[]>(`${AppConfig.API_URL}/familias/${cliente_id}`);
   }
 
   getFamilyById(id: string): Family | undefined {
@@ -96,7 +98,7 @@ export class FamilyService {
 
   getFamilyName(id: string): string {
     let familyName = '';
-    this.getFamiliesObservable().subscribe(families => {
+    this.getFamiliesObservable(this.userService.clienteId).subscribe(families => {
       familyName = families.find((family) => family.id == id)?.name || '';
     });
     return familyName;

@@ -8,21 +8,21 @@ Kiosko:
     como los idiomas aún no funcionan habria que quitarlos y poner algo en su lugar
 
 Panel de gestión:
+- Cambios en BBDD
+    - [x] Crear tabla en BBDD Clientes/Establecimientos
+        - nombre, email, telefono, estado_suscripcion, fecha_alta, fecha_baja, num_kioscos
+    - Añadir diferenciador por cliente (cliente_id)
+        - [x] Tabla Kioscos
+        - [x] Tabla Familias
+        - [x] Tabla Impresoras
+        - [x] Tabla Usuarios
+        - [x] Tabla Productos
+        - [] Recoger Familias por cliente
+        - [] Recoger Productos por cliente
 - Gestión de usuarios
     - [] Generar los registros de los Usuarios
     - [] Comprobar login desde la BBDD
     - [] Mantener los datos del cliente en localStorage
-- Cambios en BBDD
-    - [] Crear tabla en BBDD Clientes/Establecimientos
-        - nombre, email, telefono, estado_suscripcion, fecha_alta, fecha_baja, num_kioscos
-    - Añadir diferenciador por cliente (cliente_id)
-        - [] Tabla Kioscos
-        - [] Tabla Familias
-        - [] Tabla Impresoras
-        - [] Tabla Usuarios
-        - [] Tabla Productos
-        - [] Recoger Familias por cliente
-        - [] Recoger Productos por cliente
 
 - Conexión de los dispositivos.
     - [] Gestión de rutas (Añadir el numero de serie del kiosco a la ruta)

@@ -41,8 +41,8 @@
             <div class="profile-container"  mat-icon-button [matMenuTriggerFor]="menu">
                 <img src="assets/svg/person-circle.svg" alt="Foto de perfil" class="profile-pic">
                 <div class="info-container">
-                    <p class="name">{{ user.name }}</p>
-                    <p class="role">{{ user.rol }}</p>
+                    <p class="name">{{ user.nombre }}</p>
+                    <p class="role">{{ user.rol | capitalize }}</p>
                 </div>
                 <div class="arrow">
                     &#9654; <!-- Flecha derecha -->

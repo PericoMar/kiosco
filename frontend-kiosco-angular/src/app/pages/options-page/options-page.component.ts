@@ -11,6 +11,7 @@ import { FamilyService } from '../../services/family.service';
 import { ProductService } from '../../services/product.service';
 import { forkJoin } from 'rxjs';
 import { SnackbarService } from '../../services/snackBar/snackbar.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-options-page',
@@ -30,7 +31,8 @@ export class OptionsPageComponent {
     public screenService: ScreenService,
     private familyService: FamilyService,
     private productsService: ProductService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private userService: UserService
   ) {      
     this.showAdvert = true;
     this.getAllData();
@@ -70,8 +72,8 @@ export class OptionsPageComponent {
 
   getAllData(): void {
     forkJoin([
-      this.familyService.getFamiliesObservable(),
-      this.productsService.getProductsObservable()
+      this.familyService.getFamiliesObservable(this.userService.clienteId),
+      this.productsService.getProductsObservable(this.userService.clienteId)
     ]).subscribe({
       next: ([families, products]) => {
         this.familyService.families = families;

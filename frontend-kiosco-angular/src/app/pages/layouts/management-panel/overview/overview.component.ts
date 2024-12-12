@@ -11,6 +11,7 @@ import { FamilyService } from '../../../../services/family.service';
 import { SnackbarService } from '../../../../services/snackBar/snackbar.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-overview',
@@ -43,13 +44,14 @@ export class OverviewComponent {
     private dialog : MatDialog,
     private productService : ProductService,
     private familyService : FamilyService,
-    private snackbarService : SnackbarService
+    private snackbarService : SnackbarService,
+    private userService : UserService
   ) { }
 
   families : any[] = [];
 
   ngOnInit() {
-    this.familyService.getFamiliesObservable().subscribe({
+    this.familyService.getFamiliesObservable(this.userService.clienteId).subscribe({
       next: (families) => {
         this.families = families;
       }
@@ -84,7 +86,7 @@ export class OverviewComponent {
       updateTable(productsData);
     } else {
       // Si no existe la clave, obtiene los productos a través de un Observable
-      this.productService.getProductsObservable().subscribe({
+      this.productService.getProductsObservable(this.userService.clienteId).subscribe({
         next: (products) => {
           this.productService.products = products;  // Asignar los productos al servicio
           productsData = this.productService.getProductsData();  // Obtener los productos

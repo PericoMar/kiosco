@@ -1,7 +1,10 @@
 export interface User {
-    username : string,
+    usuario : string,
     password : string,
-    name : string,
+    nombre : string,
+    cliente_id: number,
+    created_at : string,
+    updated_at : string,
     rol : string
 }
 

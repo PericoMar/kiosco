@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../../../config/app-config';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,9 @@ export class GroupService {
   //   }
   // ];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private userService: UserService
+  ) {
     
   }
 
@@ -46,7 +49,7 @@ export class GroupService {
   }
 
   getGroupsObservable(): Observable<any[]> {
-    return this.http.get<any[]>(`${AppConfig.API_URL}/preguntas`);
+    return this.http.get<any[]>(`${AppConfig.API_URL}/preguntas/${this.userService.clienteId}`);
   }
 
   addGroupToLocalStorage(group: any): void{

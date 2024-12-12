@@ -12,6 +12,7 @@ import { SnackbarService } from './snackBar/snackbar.service';
 import { DeleteModalComponent } from '../pages/layouts/management-panel/modals/delete-modal/delete-modal.component';
 import { ImageService } from './image/image.service';
 import { GroupService } from './group/group.service';
+import { UserService } from './user/user.service';
 
 
 
@@ -258,7 +259,8 @@ export class ProductService {
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private imageService: ImageService,
-    private groupService: GroupService
+    private groupService: GroupService,
+    private userService: UserService
   ) {}
 
   private PRODUCTS_LOCAL_STORAGE_KEY = 'products';
@@ -283,8 +285,8 @@ export class ProductService {
     this.productChangedSource.next(changes);
   }
 
-  getProductsObservable(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${AppConfig.API_URL}/articulos`)
+  getProductsObservable(cliente_id: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${AppConfig.API_URL}/articulos/${cliente_id}`);
   }
 
   getProductsData(): ProductData[] {
@@ -339,15 +341,15 @@ export class ProductService {
   }
 
   addProduct(product: any) : Observable<any> {
-    return this.http.post(`${AppConfig.API_URL}/articulo`, product);
+    return this.http.post(`${AppConfig.API_URL}/articulo/${this.userService.clienteId}`, product);
   }
 
   addCustomizationQuestion(question: any) : Observable<any> {
-    return this.http.post(`${AppConfig.API_URL}/pregunta`, question);
+    return this.http.post(`${AppConfig.API_URL}/pregunta/${this.userService.clienteId}`, question);
   }
   
   addOption(option: any) : Observable<any> {
-    return this.http.post(`${AppConfig.API_URL}/opcion`, option);
+    return this.http.post(`${AppConfig.API_URL}/opcion/${this.userService.clienteId}`, option);
   }
 
   getTotalPrice(product: Product): number {
@@ -402,15 +404,15 @@ export class ProductService {
   }
 
   updateProduct(productId: number, productData: any) {
-    return this.http.put(`${AppConfig.API_URL}/articulo/${productId}`, productData);
+    return this.http.put(`${AppConfig.API_URL}/articulo/${this.userService.clienteId}/${productId}`, productData);
   }
 
   updateCustomizationQuestion(productId: number, productData: any) {
-    return this.http.put(`${AppConfig.API_URL}/pregunta/${productId}`, productData);
+    return this.http.put(`${AppConfig.API_URL}/pregunta/${this.userService.clienteId}/${productId}`, productData);
   }
 
   updateOption(productId: number, productData: any) {
-    return this.http.put(`${AppConfig.API_URL}/opcion/${productId}`, productData);
+    return this.http.put(`${AppConfig.API_URL}/opcion/${this.userService.clienteId}/${productId}`, productData);
   }
 
   openProductModal(product: any = null): void {

@@ -4,6 +4,7 @@ import { TableComponent } from '../table/table.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FamilyModalComponent } from '../modals/family-modal/family-modal.component';
 import { FamilyService } from '../../../../services/family.service';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-families-manager',
@@ -31,7 +32,8 @@ export class FamiliesManagerComponent {
   dataSource!: MatTableDataSource<any>;
 
   constructor(private dialog : MatDialog,
-    private familyService: FamilyService
+    private familyService: FamilyService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -52,7 +54,7 @@ export class FamiliesManagerComponent {
       this.loadingData = false;
     } else {
       console.log('Cargando familias desde API');
-      this.familyService.getFamiliesObservable().subscribe({
+      this.familyService.getFamiliesObservable(this.userService.clienteId).subscribe({
         next: (families) => {
           this.familyService.families = families;
           this.dataSource = new MatTableDataSource<any>(this.familyService.getFamiliesData());

@@ -8,6 +8,7 @@ import { max, min, Subscription } from 'rxjs';
 import { ImportModalComponent } from '../modals/import-modal/import-modal.component';
 import { FamilyService } from '../../../../services/family.service';
 import { SnackbarService } from '../../../../services/snackBar/snackbar.service';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-products-manager',
@@ -44,14 +45,15 @@ export class ProductsManagerComponent {
   constructor(private dialog: MatDialog,
     private productService: ProductService,
     private familyService: FamilyService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
     if(this.familyService.keyExists()){
       this.families = this.familyService.families;
     } else {
-      this.familyService.getFamiliesObservable().subscribe({
+      this.familyService.getFamiliesObservable(this.userService.clienteId).subscribe({
         next: (families) => {
           this.familyService.families = families;
           this.families = families;
@@ -84,7 +86,7 @@ export class ProductsManagerComponent {
       updateTable(productsData);
     } else {
       // Si no existe la clave, obtiene los productos a través de un Observable
-      this.productService.getProductsObservable().subscribe({
+      this.productService.getProductsObservable(this.userService.clienteId).subscribe({
         next: (products) => {
           this.productService.products = products;  // Asignar los productos al servicio
           productsData = this.productService.getProductsData();  // Obtener los productos
