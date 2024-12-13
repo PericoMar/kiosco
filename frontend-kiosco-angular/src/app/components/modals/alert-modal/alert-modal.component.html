@@ -4,14 +4,16 @@
         <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
     </svg>
     <h2>{{ data.msg }}</h2>
-    <footer class="dialog-actions">
-        <button class="delete-button" (click)="close(false)" >Cancelar pago con tarjeta</button>
-        <button class="delete-button retry-button" (click)="close(true)" [disabled]="!canRetry">
-            @if(canRetry){
-                Reintentar
-            } @else {
-                <app-button-spinner></app-button-spinner>
-            }
-        </button>
-    </footer>
+    @if(paymentAlert){
+        <footer class="dialog-actions">
+            <button class="delete-button" (click)="close(false)" >Cancelar pago con tarjeta</button>
+            <button class="delete-button retry-button" (click)="close(true)" [disabled]="!canRetry">
+                @if(canRetry){
+                    Reintentar
+                } @else {
+                    <app-button-spinner></app-button-spinner>
+                }
+            </button>
+        </footer>
+    }
 </section>

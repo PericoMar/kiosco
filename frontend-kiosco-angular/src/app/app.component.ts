@@ -19,4 +19,5 @@ export class AppComponent {
   onRightClick(event: MouseEvent): void {
     event.preventDefault();
   }
+
 }

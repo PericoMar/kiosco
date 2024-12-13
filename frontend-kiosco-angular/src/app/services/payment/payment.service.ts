@@ -32,7 +32,7 @@ export class PaymentService {
     private printerService: PrinterService,
     private orderService: OrderService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
   ) { }
 
   openCardPaymentModal(): void {

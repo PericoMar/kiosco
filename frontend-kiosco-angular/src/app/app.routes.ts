@@ -13,42 +13,49 @@ import { DevicesManagerComponent } from './pages/layouts/management-panel/device
 import { OverviewComponent } from './pages/layouts/management-panel/overview/overview.component';
 import { LoginComponent } from './pages/layouts/management-panel/login/login.component';
 import { authGuard } from './guards/auth.guard';
+import { KioscoLayoutComponent } from './pages/layouts/kiosco-layout/kiosco-layout.component';
 
 export const routes: Routes = [
   {
-    path: '',
-    component: OptionsPageComponent,
+    path: 'kiosco/:numSerieKiosco',
+    component: KioscoLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: OptionsPageComponent,
+      },
+      {
+        path: 'products-selection',
+        component: MainLayoutComponent,
+        children: [{ path: 'family/:id', component: FamilySelectedPageComponent }],
+      },
+      {
+        path: 'payment',
+        component: PaymentComponent,
+      },
+      {
+        path: 'confirm-page',
+        component: ConfirmPageComponent,
+      },
+      {
+        path: 'inactive',
+        component: InactivePageComponent,
+      },
+    ],
   },
-  {
-    path: 'products-selection',
-    component: MainLayoutComponent,
-    children: [{ path: 'family/:id', component: FamilySelectedPageComponent }],
-  },
-  {
-    path: 'payment',
-    component: PaymentComponent,
-  },
-  {
-    path: 'confirm-page',
-    component: ConfirmPageComponent,
-  },
-  {
-    path: 'inactive',
-    component: InactivePageComponent
-  },
-  { path: 'login', 
-    component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'management-panel',
     component: ManagementPanelComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', component : OverviewComponent},
+      { path: '', component: OverviewComponent },
       { path: 'products', component: ProductsManagerComponent },
       { path: 'families', component: FamiliesManagerComponent },
       { path: 'sales', component: SalesManagerComponent },
-      { path: 'devices', component: DevicesManagerComponent }
-    ]
+      { path: 'devices', component: DevicesManagerComponent },
+    ],
   },
   { path: '**', redirectTo: 'login' },
 ];
+

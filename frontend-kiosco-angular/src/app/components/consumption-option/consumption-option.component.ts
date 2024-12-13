@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order.service';
 import { FamilyService } from '../../services/family.service';
 import { ProductService } from '../../services/product.service';
+import { UserService } from '../../services/user/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,7 @@ export class ConsumptionOptionComponent {
   constructor(
     private cartService: OrderService,
     public familyService: FamilyService,
+    public userService: UserService
   ) {}
   
 

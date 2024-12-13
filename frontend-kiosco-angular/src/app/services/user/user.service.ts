@@ -55,4 +55,9 @@ export class UserService {
   set clienteId(clienteId: any) {
     localStorage.setItem(this.CLIENTE_ID_KEY, clienteId);
   }
+
+  checkSubscriptionStatus(clienteId: any): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/estado-suscripcion/${clienteId}/kiosco`);
+  }
+
 }
