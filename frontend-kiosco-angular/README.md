@@ -17,12 +17,12 @@ Panel de gestión:
         - [x] Tabla Impresoras
         - [x] Tabla Usuarios
         - [x] Tabla Productos
-        - [] Recoger Familias por cliente
-        - [] Recoger Productos por cliente
+        - [x] Recoger Familias por cliente
+        - [x] Recoger Productos por cliente
 - Gestión de usuarios
-    - [] Generar los registros de los Usuarios
-    - [] Comprobar login desde la BBDD
-    - [] Mantener los datos del cliente en localStorage
+    - [x] Generar los registros de los Usuarios
+    - [x] Comprobar login desde la BBDD
+    - [x] Mantener los datos del cliente en localStorage
 
 - Conexión de los dispositivos.
     - [] Gestión de rutas (Añadir el numero de serie del kiosco a la ruta)
