@@ -53,7 +53,16 @@ export const routes: Routes = [
       { path: 'products', component: ProductsManagerComponent },
       { path: 'families', component: FamiliesManagerComponent },
       { path: 'sales', component: SalesManagerComponent },
-      { path: 'devices', component: DevicesManagerComponent },
+      {
+        path: 'devices',
+        canActivate: [authGuard], // Asegura que esta ruta esté protegida
+        children: [
+          { path: '', redirectTo: '/management-panel', pathMatch: 'full' }, // Redirección si no se especifica una subruta
+          { path: 'printers', component: DevicesManagerComponent },
+          { path: 'kiosks', component: DevicesManagerComponent },
+          { path: 'dataphones', component: DevicesManagerComponent },
+        ],
+      },
     ],
   },
   { path: '**', redirectTo: 'login' },

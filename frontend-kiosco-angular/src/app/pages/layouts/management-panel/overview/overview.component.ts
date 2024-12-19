@@ -12,11 +12,12 @@ import { SnackbarService } from '../../../../services/snackBar/snackbar.service'
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../../services/user/user.service';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-overview',
   standalone: true,
-  imports: [OverviewGraphComponent, TableComponent, CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [OverviewGraphComponent, TableComponent, CommonModule, ReactiveFormsModule, FormsModule, MatMenuModule],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.css'
 })
@@ -28,6 +29,12 @@ export class OverviewComponent {
   dataSource!: MatTableDataSource<any>;  
 
   private productChangesSubscription!: Subscription;
+
+  notifications: any[] = [
+    // { id: 1, message: 'Nueva impresora añadida.' },
+    // { id: 2, message: 'Nuevo datáfono disponible.' }
+  ];
+  showNotifications: boolean = false;
 
   displayedColumns: { columnId: string, columnName: string }[] = [
     { columnId: 'id', columnName: 'Codigo' },
@@ -134,5 +141,10 @@ export class OverviewComponent {
   updateProduct(productId: number, productData: any) {
     // Lógica para actualizar producto
     console.log('Actualizar producto', productId, productData);
+  }
+
+
+  toggleNotifications() {
+    this.showNotifications = !this.showNotifications;
   }
 }

@@ -19,13 +19,13 @@ export class DeviceModalComponent {
 
 
   constructor(
-    public dialogRef: MatDialogRef<ProductModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { familyId: number | null, name: string | null, status: string | null },
+    public dialogRef: MatDialogRef<DeviceModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { id: string, nombre: string, impresora_ip: string, estado: string, descripcion: string, cliente_id: string },
     private fb: FormBuilder,
     private printerService: PrinterService,
     private snackbarService: SnackbarService
   ) {
-    this.isEditMode = !!data.familyId; // true si hay un id de producto
+    this.isEditMode = !!data.id; // true si hay un id de producto
     this.deviceForm = this.fb.group({
       name: ['', Validators.required],
       status: ['Habilitado', Validators.required],
@@ -36,19 +36,19 @@ export class DeviceModalComponent {
     
 
     if (this.isEditMode) {
-      this.loadProductData(data.familyId!);
+      this.loadProductData(data.id);
     } 
   }
 
 
-  loadProductData(productId: number) {
+  loadProductData(productId: string) {
     // Lógica para cargar los datos del producto si es modo edición
     // Por ejemplo, hacer una petición al backend para obtener el producto
     console.log(`Cargar datos del producto con ID: ${productId}`);
   }
 
 
-  onDelete(id : number) {
+  onDelete(id : string) {
     // Lógica para eliminar el producto
     console.log('Eliminar producto');
   }

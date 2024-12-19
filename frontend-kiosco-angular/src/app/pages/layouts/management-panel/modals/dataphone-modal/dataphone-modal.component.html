@@ -1,0 +1,163 @@
+<form class="modal-content" [formGroup]="dataphoneForm">
+    <div class="modal-header">
+      <div class="image-container">
+        <h2 >
+            Añadir datafono
+        </h2>
+      </div>
+      <button (click)="close()" class="close-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+        </svg>
+      </button>
+    </div>
+
+
+    <fieldset class="form-group">
+      <header>
+        <label for="name">Nombre y estado<span class="input-mandatory"> *</span></label>
+      </header>
+      <div class="inputs-container">
+        <div class="input-container">
+            <input id="nombre" type="text" formControlName="nombre" placeholder="Ej: Datafono en KIOSCO-3" class="form-control" 
+            [ngClass]="{'invalid': dataphoneForm.controls['nombre'].invalid && dataphoneForm.controls['nombre'].touched}" />
+            <div *ngIf="dataphoneForm.controls['nombre'].hasError('required') && dataphoneForm.controls['nombre'].touched" class="error">
+              El nombre descriptivo es obligatorio
+            </div>
+          </div>
+        <span (click)="changeStatus()" [ngClass]="getStatusClass(this.dataphoneForm.value.estado)" class="status-text">
+          <!-- SVG Icono dinámico según el estado -->
+          <ng-container *ngIf="this.dataphoneForm.value.estado === 'Habilitado'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill status-icon" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.904 10.803L4.3 8.2a.717.717 0 1 0-1.014 1.014l2.969 2.97a.717.717 0 0 0 1.014 0l6.18-6.18a.717.717 0 1 0-1.014-1.014L6.904 10.803z"/>
+            </svg>
+          </ng-container>
+          <ng-container *ngIf="this.dataphoneForm.value.estado === 'Deshabilitado'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill status-icon" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+          </ng-container>
+          {{ this.dataphoneForm.value.estado }}
+        </span>
+        
+      </div>
+    </fieldset>
+
+    <hr class="divider">
+    <fieldset class="form-group">
+        <header>
+          <label for="num_serie">Num. serie<span class="input-mandatory"> *</span></label>
+        </header>
+        <div class="inputs-container">
+          <div class="input-container">
+              <input id="num_serie" type="text" formControlName="num_serie" placeholder="Ej: JSW329332139U" class="form-control" 
+              [ngClass]="{'invalid': dataphoneForm.controls['num_serie'].invalid && dataphoneForm.controls['num_serie'].touched}" />
+              <div *ngIf="dataphoneForm.controls['num_serie'].hasError('required') && dataphoneForm.controls['num_serie'].touched" class="error">
+                El numero de serie es obligatorio.
+              </div>
+            </div>
+        </div>
+      </fieldset>
+
+      <hr class="divider">
+    <fieldset class="form-group">
+        <header>
+          <label for="TID">TID y devoluciones activas<span class="input-mandatory"> *</span></label>
+          <span class="text-info">Si activa las devoluciones no podrá cobrar por este datafono.</span>
+        </header>
+        <div class="inputs-container">
+          <div class="input-container">
+              <input id="TID" type="text" formControlName="TID" placeholder="Ej: tm_sandbox_674ede97..." class="form-control" 
+              [ngClass]="{'invalid': dataphoneForm.controls['TID'].invalid && dataphoneForm.controls['TID'].touched}" />
+              <div *ngIf="dataphoneForm.controls['TID'].hasError('required') && dataphoneForm.controls['TID'].touched" class="error">
+                El TID del datafono es obligatorio.
+              </div>
+          </div>
+          <div class="devoluciones">
+            <div class="custom-checkbox">
+              <input
+                id="devoluciones"
+                type="checkbox"
+                formControlName="devoluciones"
+                class="checkbox-input"
+              />
+              <label for="devoluciones" class="checkbox-label"></label>
+            </div>
+            <div
+              *ngIf="
+                dataphoneForm.controls['devoluciones'].hasError('required') &&
+                dataphoneForm.controls['devoluciones'].touched
+              "
+              class="error"
+            >
+              Debes activar la opción si aplica devoluciones.
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+    <hr class="divider">
+    <fieldset class="form-group">
+      <header>
+        <label for="supervisor">Codigo supervisor</label>
+      </header>
+      <div class="inputs-container">
+        <div class="input-container">
+            <input id="supervisor" type="text" formControlName="supervisor" placeholder="Ej: 892138" class="form-control" 
+            [ngClass]="{'invalid': dataphoneForm.controls['supervisor'].invalid && dataphoneForm.controls['supervisor'].touched}" />
+            <div *ngIf="dataphoneForm.controls['supervisor'].hasError('required') && dataphoneForm.controls['supervisor'].touched" class="error">
+              La IP o nombre de la impresora es obligatorio.
+            </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <hr class="divider">
+    <fieldset class="form-group">
+        <header>
+          <label for="zona">Zona</label>
+        </header>
+        <div class="inputs-container">
+          <div class="input-container">
+              <input id="zona" type="text" formControlName="zona" placeholder="Ej: Barra" class="form-control" />
+            </div>
+        </div>
+      </fieldset>
+
+    <hr class="divider">
+      <fieldset class="form-group">
+        <header>
+          <label for="descripcion">Descripción</label>
+        </header>
+        <div class="inputs-container">
+          <div class="input-container">
+            <textarea id="descripcion" formControlName="descripcion" placeholder="Ej: Datafono para el kiosco de la zona de mesas." class="form-control"></textarea>
+          </div>
+        </div>
+      </fieldset>
+  
+  <footer class="dialog-actions">
+    <button class="delete-button" *ngIf="isEditMode" (click)="onDelete(data.id!)">Eliminar</button>
+    @if(isEditMode){
+      <div class="space-between rigth-buttons">
+        <button (click)="close()" class="cancel-button">Cancelar</button>
+        <button (click)="save()" class="save-button">
+          @if(loading){
+            <app-button-spinner></app-button-spinner>
+          } @else {
+            Guardar
+          }
+        </button>    
+      </div>
+    } @else {
+      <button (click)="close()" class="cancel-button">Cancelar</button>
+      <button (click)="save()" class="save-button">
+        @if(loading){
+          <app-button-spinner></app-button-spinner>
+        } @else {
+          Guardar
+        }
+      </button>
+    }
+  </footer>
+</form>

@@ -9,6 +9,9 @@ import { FamilyService } from '../../../../services/family.service';
 import { forkJoin } from 'rxjs';
 import { GroupService } from '../../../../services/group/group.service';
 import { ButtonSpinnerComponent } from '../../../../components/button-spinner/button-spinner.component';
+import { PaymentService } from '../../../../services/payment/payment.service';
+import { PrinterService } from '../../../../services/printer/printer.service';
+import { KioskService } from '../../../../services/kiosk/kiosk.service';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +31,10 @@ export class LoginComponent {
     private userService : UserService,
     private productsService : ProductService,
     private familyService : FamilyService,
-    private groupsService : GroupService
+    private paymentService : PaymentService,
+    private groupsService : GroupService,
+    private printerService : PrinterService,
+    private kioscosService : KioskService
   ) { }
 
   // Método para cambiar el tipo de input de la contraseña
@@ -71,9 +77,12 @@ export class LoginComponent {
      forkJoin({
        products: this.productsService.getProductsObservable(user.cliente_id),
        families: this.familyService.getFamiliesObservable(user.cliente_id),
+       dataphones: this.paymentService.getDataphonesObservable(user.cliente_id),
+       impresoras: this.printerService.getPrintersObservable(user.cliente_id),
+       kioscos: this.kioscosService.getKioscosObservable(user.cliente_id),
        groups: this.groupsService.getGroupsObservable()
      }).subscribe({
-       next: ({ products, families, groups }) => {
+       next: ({ products, families, dataphones, impresoras, kioscos, groups }) => {
          if (products) {
            this.productsService.products = products;
            console.log(products);
@@ -86,7 +95,18 @@ export class LoginComponent {
            this.groupsService.groups = groups;
            console.log(groups);
          }
-         
+         if(dataphones) {
+           this.paymentService.dataphones = dataphones;
+           console.log(dataphones);
+         }
+         if(impresoras) {
+           this.printerService.printers = impresoras;
+           console.log(impresoras);
+         }
+         if(kioscos){
+            this.kioscosService.kioscos = kioscos;
+            console.log(kioscos);
+         }
        },
        error: (error) => {
          console.log(error);

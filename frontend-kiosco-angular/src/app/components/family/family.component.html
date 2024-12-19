@@ -1,6 +1,6 @@
 <a [routerLink]="['family', family.id]" class="family-button" [ngClass]="{'selected' : familyIsSelected}">
     <div class="family-name">
-        <h2>{{ family.name }}</h2>
+        <app-family-option-title [title]="family.name" [selected]="familyIsSelected"></app-family-option-title>
         @if(familyIsSelected){
             <hr>
         }

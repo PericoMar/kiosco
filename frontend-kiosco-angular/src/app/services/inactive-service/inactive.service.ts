@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ScreenService } from '../screen/screen.service';
+import { KioskService } from '../kiosk/kiosk.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,8 @@ export class InactivityService {
   private readonly inactivityTime: number = 30000; // Tiempo de inactividad
   private isActive: boolean = true; // Flag para habilitar/deshabilitar
 
-  constructor(private router: Router
+  constructor(private router: Router,
+    private kioscoService: KioskService
   ) {
     this.setupEventListeners();
   }
@@ -45,7 +46,7 @@ export class InactivityService {
   // Redirigir o finalizar el pedido por inactividad
   private logoutUser() {
     if (!this.isActive) return;
-    this.router.navigate(['/inactive']);
+    this.router.navigate(['/kiosco', this.kioscoService.num_serie ,'inactive']);
   }
 }
 

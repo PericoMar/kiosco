@@ -4,6 +4,7 @@ import { FamilyService } from '../../services/family.service';
 import { OrderService } from '../../services/order.service';
 import { ScreenService } from '../../services/screen/screen.service';
 import { UserService } from '../../services/user/user.service';
+import { KioskService } from '../../services/kiosk/kiosk.service';
 
 @Component({
   selector: 'app-inactive-page',
@@ -22,7 +23,8 @@ export class InactivePageComponent {
     private familyService: FamilyService,
     private orderService: OrderService,
     private screenService: ScreenService,
-    private userService: UserService
+    private userService: UserService,
+    private kioscoService: KioskService
   ) {}
 
   ngOnInit(): void {
@@ -51,12 +53,12 @@ export class InactivePageComponent {
     clearInterval(this.countdownInterval);
     this.orderService.clearOrder();
     this.screenService.setDefaultScreenHeight();
-    this.router.navigate(['/']); // Redirigir a la página de inicio o donde desees
+    this.router.navigate(['/kiosco', this.kioscoService.num_serie]); // Redirigir a la página de inicio o donde desees
   }
 
   continueShopping() {
     clearInterval(this.countdownInterval);
-    this.router.navigate(['/products-selection/family/', this.firstFamilyId]); // Redirigir a la página de selección de productos
+    this.router.navigate(['/kiosco', this.kioscoService.num_serie, 'products-selection', 'family',this.firstFamilyId]); // Redirigir a la página de selección de productos
   }
 
   ngOnDestroy(): void {

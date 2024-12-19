@@ -8,6 +8,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ProductService } from '../../../../services/product.service';
 import { FamilyService } from '../../../../services/family.service';
 import { SpinnerComponent } from '../../../../components/spinner/spinner.component';
+import { PaymentService } from '../../../../services/payment/payment.service';
+import { KioskService } from '../../../../services/kiosk/kiosk.service';
 
 
 export interface ColumnDef {
@@ -84,6 +86,8 @@ export class TableComponent {
   constructor(
     private productService: ProductService,
     private familyService: FamilyService,
+    private paymentService: PaymentService,
+    private kioscoService: KioskService
   ) {
   }
 
@@ -150,6 +154,12 @@ export class TableComponent {
       case 'producto':
         this.productService.openProductModal(element);
         break;
+      case 'datafono':
+        this.paymentService.openDataphoneModal(element);
+        break;
+      case 'kiosco':
+        this.kioscoService.openKioscoModal(element);
+        break;
       default:
         console.error('Tipo de elemento desconocido');
     }
@@ -165,6 +175,12 @@ export class TableComponent {
         break;
       case 'producto':
         this.productService.openDeleteProductModal(element);
+        break;
+      case 'datafono':
+        this.paymentService.openDeleteDataphoneModal(element);
+        break;
+      case 'kiosco':
+        this.kioscoService.openDeleteKioscoModal(element);
         break;
       default:
         console.error('Tipo de elemento desconocido');

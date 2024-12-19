@@ -2,44 +2,50 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConfig } from '../../../config/app-config';
 import { Observable } from 'rxjs';
+import { Printer } from '../../interfaces/printer';
+import { SnackbarService } from '../snackBar/snackbar.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrinterService {
 
-  public printers: any[] = [
-    {
-      id: "1",
-      name: "Platos frios",
-      address: "192.213.432.232",
-      location: "Cocina"
-    },
-    {
-      id: "2",
-      name: "Bebidas",
-      address: "XP-80C",
-      location: "Barra"
-    },
-    {
-      id: "3",
-      name: "Platos calientes",
-      address: "124.432.432.123",
-      location: "Planchas"
-    },
-    {
-      id: "4",
-      name: "Horno",
-      address: "129.432.423.342",
-      location: "Horno"
-    }
-  ];
+  readonly PRINTERS_KEY = 'printers';
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient,
+    private snackbarService: SnackbarService
+  ) { }
+
+  getPrintersObservable(cliente_id: number) : Observable<any[]> {
+    return this.http.get<any[]>(`${AppConfig.API_URL}/impresoras/${cliente_id}`)
+  }
+
+  get printers(): Printer[] {
+    return JSON.parse(localStorage.getItem(this.PRINTERS_KEY) || '[]');
+  }
+
+  set printers(printers: Printer[]) {
+    localStorage.setItem(this.PRINTERS_KEY, JSON.stringify(printers));
+  }
+
+  addPrinter(printer: Printer): void {
+    this.printers = [...this.printers, printer];
+    this.addPrinterObservable(printer).subscribe({
+      next: () => {
+        this.snackbarService.openSnackBar(`Impresora añadida correctamente`, 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+      },
+      error: (error) => {
+        console.error('Error al añadir impresora', error);
+      }
+    })
+  }
+
+  addPrinterObservable(printer: Printer): Observable<any> {
+    return this.http.post(`${AppConfig.API_URL}/impresora`, {...printer});
+  }
 
   printTicket(order: any): Observable<any> {
     return this.http.post(`${AppConfig.API_URL}/print-receipt`, {...order} );
   }
-
 
 }

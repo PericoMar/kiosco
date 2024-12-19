@@ -45,7 +45,7 @@ aside{
     box-sizing: border-box;
 }
 
-.config {
+.notifications, .config {
     background-color: transparent;
     border: none;
     padding: 10px;
@@ -55,16 +55,43 @@ aside{
     justify-content: center;
     transition: all 0.3s ease;
     border-radius: 50%;
+    position:relative;
 }
 
-.config svg {
+.notifications svg, .config svg {
     color: #2d2d2d; /* Un tono más claro que el negro */
 }
 
-.config:hover {
+.notifications:hover, .config:hover {
     background-color: rgba(45, 45, 45, 0.1); /* Fondo con un poco de opacidad */
 }
 
+.notification-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgb(203, 3, 3);
+    color: white;
+    border-radius: 50%;
+    padding: 0px 4px;
+    font-size: 0.6rem;
+}
+
+.no-notifications-message {
+    color: #888;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .notification-item {
+    padding: 8px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .notification-item:last-child {
+    border-bottom: none;
+  }
+  
 
 .overview{
     height: 70%;
@@ -188,7 +215,7 @@ section.table-section{
     }
 
     main.table {
-        min-height: 220px;
+        min-height: 315px;
     }
 }
 
@@ -199,7 +226,7 @@ section.table-section{
     }
 
     main.table {
-        min-height: 220px;
+        min-height: 300px;
     }
 }
 

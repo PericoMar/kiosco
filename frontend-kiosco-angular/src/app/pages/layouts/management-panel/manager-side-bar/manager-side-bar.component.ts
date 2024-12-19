@@ -15,6 +15,7 @@ import { CapitalizePipe } from '../../../../pipes/capitalize.pipe';
 })
 export class ManagerSideBarComponent implements OnInit {
   user! : UserWithoutPassword;
+  isDropdownOpen = false;
 
   constructor(private userService : UserService,
     private router : Router
@@ -26,6 +27,11 @@ export class ManagerSideBarComponent implements OnInit {
 
   logout() {
     this.userService.removeUser();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']); 
   }
+
+  toggleDropdown() {
+      this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
 }
