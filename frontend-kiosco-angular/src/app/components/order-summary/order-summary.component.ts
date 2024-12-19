@@ -9,6 +9,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { EditModalComponent } from '../modals/edit-modal/edit-modal.component';
 import { SuggestionsComponent } from '../suggestions/suggestions.component';
 import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
+import { KioskService } from '../../services/kiosk/kiosk.service';
 
 @Component({
   selector: 'app-order-summary',
@@ -51,7 +52,8 @@ export class OrderSummaryComponent {
   constructor(
     public cartService: OrderService,
     private router: Router,
-    public productService: ProductService
+    public productService: ProductService,
+    private kioscoService : KioskService
   ) {}
 
   ngOnInit() {
@@ -72,7 +74,7 @@ export class OrderSummaryComponent {
   
   displayPaymentPage(): void{
     localStorage.setItem('order', JSON.stringify(this.products));
-    this.router.navigate(['/payment']);
+    this.router.navigate(['/kiosco', this.kioscoService.num_serie, 'payment']);
   }
 
   toggleCart(): void{

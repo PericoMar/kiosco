@@ -1,11 +1,11 @@
 import { Component, Injectable, Input, OnInit } from '@angular/core';
 import { ConsumptionOption } from '../../interfaces/consumption-option';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order.service';
 import { FamilyService } from '../../services/family.service';
-import { ProductService } from '../../services/product.service';
-import { UserService } from '../../services/user/user.service';
+import { KioskService } from '../../services/kiosk/kiosk.service';
+import { SnackbarService } from '../../services/snackBar/snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +19,8 @@ import { UserService } from '../../services/user/user.service';
 })
 export class ConsumptionOptionComponent {
   @Input() consumptionOption!: ConsumptionOption;
+
+  @Input() dataLoaded!: boolean;
   
   noPhotoOptionSrc: string = '../../../assets/svg/image.svg';
   firstFamilyId!: string;
@@ -26,11 +28,19 @@ export class ConsumptionOptionComponent {
   constructor(
     private cartService: OrderService,
     public familyService: FamilyService,
-    public userService: UserService
+    public kioscoService: KioskService,
+    private snackbarService: SnackbarService,
+    private router: Router
   ) {}
   
 
-  safeConsumptionOption(consumptionOption: string) {
-    this.cartService.setConsumptionOption(consumptionOption);
+  selectConsumptionOption(consumptionOption: string) {
+    if(this.dataLoaded){
+      this.cartService.setConsumptionOption(consumptionOption);
+      this.router.navigate(['/kiosco', this.kioscoService.num_serie, 'products-selection', 'family', this.familyService.getFirstFamilyId()])
+    } else {
+      this.snackbarService.openSnackBar('Espere a que se carguen los datos.', 'Cerrar');
+    }
+    
   }
 }

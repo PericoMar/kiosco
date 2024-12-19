@@ -2,11 +2,12 @@ import { Component, Input } from '@angular/core';
 import { Family } from '../../interfaces/family';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FamilyOptionTitleComponent } from './family-option-title/family-option-title.component';
 
 @Component({
   selector: 'app-family',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, FamilyOptionTitleComponent],
   templateUrl: './family.component.html',
   styleUrl: './family.component.css'
 })

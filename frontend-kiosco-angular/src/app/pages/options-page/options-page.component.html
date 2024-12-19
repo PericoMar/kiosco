@@ -9,7 +9,7 @@
     <main>
         <section class="consumption-opts">
             @for(consumptionOption of consumptionOptions; track $index){
-                <app-consumption-option [consumptionOption]="consumptionOption"></app-consumption-option>
+                <app-consumption-option [consumptionOption]="consumptionOption" [dataLoaded]="dataLoaded"></app-consumption-option>
             }
         </section>
         <section class="language-section">

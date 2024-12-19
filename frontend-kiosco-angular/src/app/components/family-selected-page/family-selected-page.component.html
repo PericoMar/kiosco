@@ -1,7 +1,5 @@
 <header>
-    <!-- GO back anchor -->
-    <!-- <a routerLink="/families" class="back">Volver</a> -->
-    <h1 class="text-center">{{ family.name }}</h1>
+    <app-family-title [title]="family.name"></app-family-title>
 </header>
 <section class="products" id="family-page-products">
     @for(product of products; track product.id){

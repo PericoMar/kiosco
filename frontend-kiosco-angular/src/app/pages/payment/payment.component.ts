@@ -11,6 +11,7 @@ import { ProductService } from '../../services/product.service';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PaymentService } from '../../services/payment/payment.service';
+import { KioskService } from '../../services/kiosk/kiosk.service';
 
 @Component({
   selector: 'app-payment',
@@ -34,7 +35,8 @@ export class PaymentComponent {
     private familyService: FamilyService,
     private router:Router,
     private printerService: PrinterService,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private kioscoService: KioskService
   ) {
     this.firstFamilyId = this.familyService.getFirstFamilyId();
   }
@@ -68,7 +70,7 @@ export class PaymentComponent {
           console.error(error);
         }
       });
-      this.router.navigate(['/confirm-page']);
+      this.router.navigate(['/kiosco', this.kioscoService.num_serie, 'confirm-page']);
     } else {
       this.paymentService.openCardPaymentModal();
     }

@@ -38,6 +38,6 @@ export class DeleteModalComponent {
 
     if(!this.data.productType) return '¿Estás seguro?';
 
-    return this.data.productType != 'Familia' ? `¿Estás seguro de que deseas eliminar este ${this.data.productType.toLowerCase()}?` : `¿Estás segura de que deseas eliminar esta ${this.data.productType.toLowerCase()}?`;
+    return this.data.productType != 'Familia' && this.data.productType != 'Impresora' ? `¿Estás seguro de que deseas eliminar este ${this.data.productType.toLowerCase()}?` : `¿Estás seguro de que deseas eliminar esta ${this.data.productType.toLowerCase()}?`;
   }
 }

@@ -6,6 +6,9 @@ Kiosko:
 - [] Meter alergenos en el kiosco.
 - [] Cambiar idiomas por formas de pago (Las tarjetas que acepta DOJO) 
     como los idiomas aún no funcionan habria que quitarlos y poner algo en su lugar
+- [x] Adaptar tamaño del texto a el espacio en las familias
+    - [x] Titulo
+    - [x] Opción
 
 Panel de gestión:
 - Cambios en BBDD
@@ -25,8 +28,8 @@ Panel de gestión:
     - [x] Mantener los datos del cliente en localStorage
 
 - Conexión de los dispositivos.
-    - [] Gestión de rutas (Añadir el numero de serie del kiosco a la ruta)
-    - [] Crear en BBDD Kioscos_Impresoras
+    - [x] Gestión de rutas (Añadir el numero de serie del kiosco a la ruta)
+    - [x] Crear en BBDD Kioscos_Impresoras
     - En la pagina de dispositivos
         - Diferenciar impresoras
             - [] Estilos de la tabla

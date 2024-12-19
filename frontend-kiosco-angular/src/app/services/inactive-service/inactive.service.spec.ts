@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
-import { InactiveService } from './inactive.service';
+import { InactivityService } from './inactive.service';
+
 
 describe('InactiveService', () => {
-  let service: InactiveService;
+  let service: InactivityService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(InactiveService);
+    service = TestBed.inject(InactivityService);
   });
 
   it('should be created', () => {

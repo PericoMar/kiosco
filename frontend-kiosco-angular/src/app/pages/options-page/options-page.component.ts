@@ -26,6 +26,7 @@ export class OptionsPageComponent {
   // }
 
   showAdvert: boolean = true;
+  dataLoaded: boolean = false;
 
   constructor(
     public screenService: ScreenService,
@@ -78,6 +79,7 @@ export class OptionsPageComponent {
       next: ([families, products]) => {
         this.familyService.families = families;
         this.productsService.products = products;
+        this.dataLoaded = true;
         this.snackbarService.openSnackBar('Datos cargados.', 'Cerrar');
         console.log('Families:', families);
         console.log('Products:', products);

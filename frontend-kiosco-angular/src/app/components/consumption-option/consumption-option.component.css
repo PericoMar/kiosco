@@ -23,6 +23,7 @@ h2 {
     color: inherit;
     transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out, border-color 0.3s ease;
     overflow: hidden; /* Evitar que el contenido se desborde del borde redondeado */
+    background-color: #f9f9f9;
 }
 
 .consumption-opt img {

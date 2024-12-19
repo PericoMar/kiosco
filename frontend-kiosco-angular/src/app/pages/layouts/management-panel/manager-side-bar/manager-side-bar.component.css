@@ -52,6 +52,77 @@
 
 .nav-item:hover{
     background-color: rgb(53, 53, 53);
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    border-radius: 10px;
+}
+
+li.nav-link, .nav-link {
+    margin-left: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding:10px 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    background-color: rgb(53, 53, 53);
+}
+
+.nav-link-icon {
+    /* Poner la imagen negra en blanco */
+    width: 16px;
+    height: 16px;
+    filter: grayscale(1) invert(1);
+}
+
+.arrow {
+    transition: transform 0.5s ease;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Flechita rotada cuando está abierto */
+.arrow.open {
+    transform: rotate(180deg);
+}
+
+/* Animación del menú desplegable */
+.dropdown-menu {
+    background-color: var(--manager-side-bar-background-color);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.dropdown-menu.show {
+    max-height: 300px; /* Ajusta según el contenido */
+    opacity: 1;
+}
+
+/* Estilo de los enlaces del menú */
+.dropdown-menu li {
+    margin: 0;
+}
+
+.dropdown-menu a:hover {
+    background-color: rgb(53, 53, 53);
 }
 
 

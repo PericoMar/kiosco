@@ -24,7 +24,7 @@ export class ProductsManagerComponent {
 
   elementType: string = 'Productos';
 
-  heigth: string = '60%';
+  heigth: string = '55%';
 
   displayedColumns: { columnId: string, columnName: string }[] = [
     { columnId: 'id', columnName: 'Codigo' },

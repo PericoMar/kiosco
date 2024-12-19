@@ -3,16 +3,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { PaymentModalComponent } from '../../components/modals/payment-modal/payment-modal.component';
 import { PrinterService } from '../printer/printer.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AppConfig } from '../../../config/app-config';
 import { Router } from '@angular/router';
 import { AlertModalComponent } from '../../components/modals/alert-modal/alert-modal.component';
 import { OrderService } from '../order.service';
+import { KioskService } from '../kiosk/kiosk.service';
+import { Dataphone } from '../../interfaces/dataphone';
+import { UserService } from '../user/user.service';
+import { DataphoneModalComponent } from '../../pages/layouts/management-panel/modals/dataphone-modal/dataphone-modal.component';
+import { DeleteModalComponent } from '../../pages/layouts/management-panel/modals/delete-modal/delete-modal.component';
+import { SnackbarService } from '../snackBar/snackbar.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
+  readonly DATAPHONE_KEY = 'dataphones';
+
   readonly MILISECONDS_TIMEOUT = 100000;
   readonly MILISECONDS_POLLING = 1000;
 
@@ -33,7 +41,120 @@ export class PaymentService {
     private orderService: OrderService,
     private http: HttpClient,
     private router: Router,
+    private kioscoService: KioskService,
+    private userService: UserService,
+    private snackbarService: SnackbarService
   ) { }
+
+  private dataphoneChangedSource = new Subject<any>();
+  dataphoneChanged$ = this.dataphoneChangedSource.asObservable();
+
+  emitDataphoneChange(changes: any): void {
+    this.dataphoneChangedSource.next(changes);
+  }
+
+  getDataphonesObservable(cliente_id: number) : Observable<Dataphone[]> {
+    return this.http.get<Dataphone[]>(`${AppConfig.API_URL}/datafonos/${cliente_id}`)
+  }
+
+  get dataphones(): Dataphone[] {
+      return JSON.parse(localStorage.getItem(this.DATAPHONE_KEY) || '[]');
+    }
+  
+  set dataphones(dataphones: Dataphone[]) {
+    localStorage.setItem(this.DATAPHONE_KEY, JSON.stringify(dataphones));
+  }
+
+  getDataphoneById(id: number): Dataphone {
+    return this.dataphones.find((dataphone) => dataphone.id === id)!;
+  }
+
+  addDataphoneObservable(dataphone: Dataphone): Observable<any> {
+    dataphone.cliente_id = this.userService.clienteId;
+    return this.http.post(`${AppConfig.API_URL}/datafono`, {...dataphone});
+  }
+
+  addDataphone(dataphone: Dataphone): void {
+    this.dataphones = [...this.dataphones, dataphone];
+  }
+
+  updateDataphoneObservable(dataphone: Dataphone): Observable<any> {
+    return this.http.put(`${AppConfig.API_URL}/datafono/${dataphone.id}`, {...dataphone});
+  }
+
+  updateDataphone(dataphone: Dataphone): void {
+    this.deleteDataphone(dataphone.id);
+    this.addDataphone(dataphone);
+  }
+
+  deleteDataphoneObservable(id: number): Observable<any> {
+    return this.http.delete(`${AppConfig.API_URL}/datafono/${id}`);
+  }
+
+  deleteDataphone(id: number): void {
+    this.dataphones = this.dataphones.filter((dataphone) => dataphone.id !== id);
+  }
+
+  openDataphoneModal(dataphone: Dataphone): void {
+    const dialogRef = this.dialog.open(DataphoneModalComponent, {
+      width: '700px',
+      data: { ...dataphone },
+    });
+    
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result.reload){
+        this.emitDataphoneChange({ type: 'dataphone' });
+      }
+    });
+  }
+
+  openDeleteDataphoneModal(dataphone: Dataphone): void {
+    const dialogRef = this.dialog.open(DeleteModalComponent, {
+      width: '500px',
+      data: { productType: 'Datafono', name: dataphone.nombre, id: dataphone.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteDataphone(dataphone.id);
+
+        this.deleteDataphoneObservable(dataphone.id).subscribe({
+          next: () => {
+            this.emitDataphoneChange({ type: 'dataphone' });
+            this.snackbarService.openSnackBar(`Datafono eliminado correctamente`, 'Cerrar', 3000, ['custom-snackbar', 'success-snackbar']);
+          },
+          error: (error) => {
+            console.error('Error al eliminar datafono', error);
+          }
+        });
+      }
+    });
+  }
+
+  getDataphonesData(): any[] {
+    return this.dataphones.map((dataphone) => {
+      return {
+        id : dataphone.id,
+        nombre : dataphone.nombre,
+        num_serie : dataphone.num_serie,
+        TID : dataphone.TID,
+        estado : dataphone.estado ? 'Habilitado' : 'Deshabilitado',
+        zona: dataphone.zona,
+        descripcion : dataphone.descripcion ? dataphone.descripcion : 'Sin descripción',
+        supervisor : dataphone.supervisor,
+        devoluciones : Number(dataphone.devoluciones) == 1 ? 'Devoluciones' : 'Cobros',
+        type: 'datafono'
+      }
+    });
+  }
+
+  dataphoneToString(id: number): string {
+    const dataphone = this.getDataphoneById(id);
+    // Si no tiene o numero de serie o nombre no debe aparecer el guion
+    if(!dataphone) return 'Sin datáfono';
+
+    return dataphone.num_serie && dataphone.nombre ? `${dataphone.nombre} - ${dataphone.num_serie}` : dataphone.nombre || dataphone.num_serie || 'Sin datáfono';
+  }
 
   openCardPaymentModal(): void {
     if(this.orderService.totalPrice > AppConfig.MINIMUM_CARD_AMOUNT){
@@ -113,7 +234,7 @@ export class PaymentService {
                 console.error('Error al imprimir ticket:', error);
               }
             })
-            this.router.navigate(['/confirm-page']);
+            this.router.navigate(['/kiosco', this.kioscoService.num_serie, 'confirm-page']);
           } else {
             const message = this.statusMessages[result.status] || 'Ha ocurrido un error.';
             this.openAlertModal({ msg: message, status: result.status, data: result.data, terminalSessionId: result.terminalSessionId });
@@ -169,7 +290,6 @@ export class PaymentService {
       }, this.MILISECONDS_TIMEOUT);
     });
   }
-  
 
   handleFinalResponse(response: any): void {
     if (response) {
